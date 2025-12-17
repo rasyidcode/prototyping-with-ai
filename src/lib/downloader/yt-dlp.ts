@@ -51,6 +51,7 @@ export async function extractWithYtDlp(
       raw: info,
     };
   } catch (err) {
+    console.error("Error: ", err);
     throw new Error(
       "No extractor available: ensure `yt-dlp` is installed and on PATH"
     );
