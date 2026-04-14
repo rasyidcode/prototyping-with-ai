@@ -1,0 +1,2191 @@
+date,skill,location,count
+2024-01-01,Go,Remote,30
+2024-01-01,Python,New York,79
+2024-01-01,Java,London,43
+2024-01-01,JavaScript,London,115
+2024-01-01,Data Science,London,111
+2024-01-01,DevOps,New York,45
+2024-01-02,Go,New York,93
+2024-01-02,Python,Remote,29
+2024-01-02,Java,New York,119
+2024-01-02,JavaScript,New York,72
+2024-01-02,Data Science,London,119
+2024-01-02,DevOps,Remote,101
+2024-01-03,Go,London,41
+2024-01-03,Python,Remote,47
+2024-01-03,Java,London,60
+2024-01-03,JavaScript,New York,110
+2024-01-03,Data Science,Remote,107
+2024-01-03,DevOps,Remote,26
+2024-01-04,Go,London,51
+2024-01-04,Python,Remote,33
+2024-01-04,Java,Remote,18
+2024-01-04,JavaScript,London,61
+2024-01-04,Data Science,New York,69
+2024-01-04,DevOps,London,66
+2024-01-05,Go,London,29
+2024-01-05,Python,London,79
+2024-01-05,Java,Remote,65
+2024-01-05,JavaScript,London,68
+2024-01-05,Data Science,New York,80
+2024-01-05,DevOps,San Francisco,88
+2024-01-06,Go,San Francisco,113
+2024-01-06,Python,New York,119
+2024-01-06,Java,New York,105
+2024-01-06,JavaScript,London,106
+2024-01-06,Data Science,San Francisco,75
+2024-01-06,DevOps,San Francisco,76
+2024-01-07,Go,London,30
+2024-01-07,Python,London,101
+2024-01-07,Java,Remote,106
+2024-01-07,JavaScript,London,86
+2024-01-07,Data Science,Remote,100
+2024-01-07,DevOps,London,85
+2024-01-08,Go,London,118
+2024-01-08,Python,San Francisco,70
+2024-01-08,Java,Remote,52
+2024-01-08,JavaScript,New York,16
+2024-01-08,Data Science,London,34
+2024-01-08,DevOps,London,117
+2024-01-09,Go,San Francisco,61
+2024-01-09,Python,London,48
+2024-01-09,Java,London,74
+2024-01-09,JavaScript,London,118
+2024-01-09,Data Science,New York,86
+2024-01-09,DevOps,Remote,52
+2024-01-10,Go,New York,73
+2024-01-10,Python,Remote,71
+2024-01-10,Java,San Francisco,72
+2024-01-10,JavaScript,London,69
+2024-01-10,Data Science,Remote,23
+2024-01-10,DevOps,Remote,78
+2024-01-11,Go,San Francisco,27
+2024-01-11,Python,London,110
+2024-01-11,Java,London,33
+2024-01-11,JavaScript,New York,16
+2024-01-11,Data Science,London,15
+2024-01-11,DevOps,New York,89
+2024-01-12,Go,San Francisco,93
+2024-01-12,Python,New York,46
+2024-01-12,Java,New York,94
+2024-01-12,JavaScript,Remote,111
+2024-01-12,Data Science,Remote,100
+2024-01-12,DevOps,New York,34
+2024-01-13,Go,London,55
+2024-01-13,Python,San Francisco,103
+2024-01-13,Java,San Francisco,84
+2024-01-13,JavaScript,San Francisco,75
+2024-01-13,Data Science,Remote,91
+2024-01-13,DevOps,London,25
+2024-01-14,Go,San Francisco,100
+2024-01-14,Python,Remote,32
+2024-01-14,Java,London,79
+2024-01-14,JavaScript,San Francisco,64
+2024-01-14,Data Science,San Francisco,81
+2024-01-14,DevOps,New York,63
+2024-01-15,Go,London,28
+2024-01-15,Python,New York,24
+2024-01-15,Java,Remote,59
+2024-01-15,JavaScript,New York,113
+2024-01-15,Data Science,London,18
+2024-01-15,DevOps,Remote,56
+2024-01-16,Go,Remote,72
+2024-01-16,Python,London,30
+2024-01-16,Java,San Francisco,74
+2024-01-16,JavaScript,San Francisco,34
+2024-01-16,Data Science,Remote,70
+2024-01-16,DevOps,San Francisco,73
+2024-01-17,Go,New York,101
+2024-01-17,Python,London,85
+2024-01-17,Java,San Francisco,19
+2024-01-17,JavaScript,San Francisco,97
+2024-01-17,Data Science,New York,20
+2024-01-17,DevOps,San Francisco,72
+2024-01-18,Go,New York,76
+2024-01-18,Python,San Francisco,31
+2024-01-18,Java,San Francisco,115
+2024-01-18,JavaScript,San Francisco,35
+2024-01-18,Data Science,Remote,64
+2024-01-18,DevOps,London,69
+2024-01-19,Go,London,25
+2024-01-19,Python,San Francisco,54
+2024-01-19,Java,San Francisco,59
+2024-01-19,JavaScript,London,48
+2024-01-19,Data Science,London,78
+2024-01-19,DevOps,London,51
+2024-01-20,Go,Remote,37
+2024-01-20,Python,London,81
+2024-01-20,Java,New York,71
+2024-01-20,JavaScript,Remote,82
+2024-01-20,Data Science,New York,119
+2024-01-20,DevOps,San Francisco,42
+2024-01-21,Go,New York,15
+2024-01-21,Python,Remote,73
+2024-01-21,Java,San Francisco,67
+2024-01-21,JavaScript,Remote,18
+2024-01-21,Data Science,Remote,35
+2024-01-21,DevOps,San Francisco,86
+2024-01-22,Go,Remote,29
+2024-01-22,Python,San Francisco,86
+2024-01-22,Java,Remote,87
+2024-01-22,JavaScript,Remote,87
+2024-01-22,Data Science,San Francisco,100
+2024-01-22,DevOps,Remote,27
+2024-01-23,Go,London,27
+2024-01-23,Python,New York,36
+2024-01-23,Java,New York,102
+2024-01-23,JavaScript,Remote,112
+2024-01-23,Data Science,San Francisco,107
+2024-01-23,DevOps,New York,97
+2024-01-24,Go,Remote,79
+2024-01-24,Python,New York,50
+2024-01-24,Java,Remote,52
+2024-01-24,JavaScript,Remote,35
+2024-01-24,Data Science,New York,47
+2024-01-24,DevOps,London,16
+2024-01-25,Go,Remote,114
+2024-01-25,Python,New York,68
+2024-01-25,Java,New York,22
+2024-01-25,JavaScript,New York,45
+2024-01-25,Data Science,New York,54
+2024-01-25,DevOps,Remote,27
+2024-01-26,Go,London,55
+2024-01-26,Python,New York,92
+2024-01-26,Java,Remote,66
+2024-01-26,JavaScript,San Francisco,92
+2024-01-26,Data Science,London,91
+2024-01-26,DevOps,New York,69
+2024-01-27,Go,Remote,102
+2024-01-27,Python,Remote,79
+2024-01-27,Java,Remote,64
+2024-01-27,JavaScript,Remote,119
+2024-01-27,Data Science,London,22
+2024-01-27,DevOps,Remote,18
+2024-01-28,Go,Remote,103
+2024-01-28,Python,New York,52
+2024-01-28,Java,London,53
+2024-01-28,JavaScript,New York,55
+2024-01-28,Data Science,Remote,84
+2024-01-28,DevOps,New York,40
+2024-01-29,Go,New York,107
+2024-01-29,Python,New York,35
+2024-01-29,Java,New York,30
+2024-01-29,JavaScript,Remote,31
+2024-01-29,Data Science,Remote,91
+2024-01-29,DevOps,London,18
+2024-01-30,Go,San Francisco,89
+2024-01-30,Python,London,60
+2024-01-30,Java,London,64
+2024-01-30,JavaScript,London,45
+2024-01-30,Data Science,San Francisco,99
+2024-01-30,DevOps,San Francisco,114
+2024-01-31,Go,New York,38
+2024-01-31,Python,London,99
+2024-01-31,Java,San Francisco,47
+2024-01-31,JavaScript,New York,44
+2024-01-31,Data Science,Remote,17
+2024-01-31,DevOps,London,84
+2024-02-01,Go,Remote,68
+2024-02-01,Python,San Francisco,55
+2024-02-01,Java,New York,95
+2024-02-01,JavaScript,New York,37
+2024-02-01,Data Science,Remote,98
+2024-02-01,DevOps,Remote,58
+2024-02-02,Go,New York,22
+2024-02-02,Python,San Francisco,95
+2024-02-02,Java,New York,75
+2024-02-02,JavaScript,San Francisco,43
+2024-02-02,Data Science,London,110
+2024-02-02,DevOps,Remote,105
+2024-02-03,Go,San Francisco,116
+2024-02-03,Python,Remote,86
+2024-02-03,Java,San Francisco,58
+2024-02-03,JavaScript,Remote,62
+2024-02-03,Data Science,London,73
+2024-02-03,DevOps,London,85
+2024-02-04,Go,Remote,115
+2024-02-04,Python,San Francisco,39
+2024-02-04,Java,London,95
+2024-02-04,JavaScript,London,34
+2024-02-04,Data Science,Remote,15
+2024-02-04,DevOps,London,119
+2024-02-05,Go,New York,116
+2024-02-05,Python,San Francisco,96
+2024-02-05,Java,Remote,25
+2024-02-05,JavaScript,Remote,62
+2024-02-05,Data Science,New York,32
+2024-02-05,DevOps,San Francisco,17
+2024-02-06,Go,Remote,104
+2024-02-06,Python,New York,88
+2024-02-06,Java,London,65
+2024-02-06,JavaScript,San Francisco,83
+2024-02-06,Data Science,New York,80
+2024-02-06,DevOps,San Francisco,25
+2024-02-07,Go,London,108
+2024-02-07,Python,Remote,57
+2024-02-07,Java,New York,54
+2024-02-07,JavaScript,San Francisco,109
+2024-02-07,Data Science,Remote,35
+2024-02-07,DevOps,Remote,52
+2024-02-08,Go,San Francisco,60
+2024-02-08,Python,San Francisco,64
+2024-02-08,Java,New York,110
+2024-02-08,JavaScript,London,92
+2024-02-08,Data Science,Remote,69
+2024-02-08,DevOps,San Francisco,118
+2024-02-09,Go,New York,107
+2024-02-09,Python,Remote,37
+2024-02-09,Java,San Francisco,84
+2024-02-09,JavaScript,New York,35
+2024-02-09,Data Science,New York,29
+2024-02-09,DevOps,New York,62
+2024-02-10,Go,Remote,62
+2024-02-10,Python,San Francisco,42
+2024-02-10,Java,San Francisco,91
+2024-02-10,JavaScript,New York,31
+2024-02-10,Data Science,London,56
+2024-02-10,DevOps,New York,28
+2024-02-11,Go,Remote,63
+2024-02-11,Python,Remote,93
+2024-02-11,Java,New York,97
+2024-02-11,JavaScript,London,59
+2024-02-11,Data Science,New York,78
+2024-02-11,DevOps,San Francisco,86
+2024-02-12,Go,London,60
+2024-02-12,Python,Remote,89
+2024-02-12,Java,New York,25
+2024-02-12,JavaScript,New York,114
+2024-02-12,Data Science,London,118
+2024-02-12,DevOps,Remote,114
+2024-02-13,Go,San Francisco,48
+2024-02-13,Python,Remote,36
+2024-02-13,Java,Remote,70
+2024-02-13,JavaScript,London,56
+2024-02-13,Data Science,Remote,66
+2024-02-13,DevOps,San Francisco,37
+2024-02-14,Go,London,118
+2024-02-14,Python,Remote,43
+2024-02-14,Java,Remote,112
+2024-02-14,JavaScript,London,67
+2024-02-14,Data Science,San Francisco,42
+2024-02-14,DevOps,San Francisco,71
+2024-02-15,Go,Remote,70
+2024-02-15,Python,New York,57
+2024-02-15,Java,Remote,55
+2024-02-15,JavaScript,Remote,71
+2024-02-15,Data Science,Remote,33
+2024-02-15,DevOps,Remote,44
+2024-02-16,Go,New York,33
+2024-02-16,Python,Remote,49
+2024-02-16,Java,London,88
+2024-02-16,JavaScript,London,96
+2024-02-16,Data Science,New York,66
+2024-02-16,DevOps,Remote,85
+2024-02-17,Go,London,101
+2024-02-17,Python,New York,58
+2024-02-17,Java,London,101
+2024-02-17,JavaScript,San Francisco,101
+2024-02-17,Data Science,Remote,69
+2024-02-17,DevOps,Remote,97
+2024-02-18,Go,London,22
+2024-02-18,Python,San Francisco,107
+2024-02-18,Java,Remote,16
+2024-02-18,JavaScript,Remote,86
+2024-02-18,Data Science,Remote,31
+2024-02-18,DevOps,London,89
+2024-02-19,Go,London,114
+2024-02-19,Python,Remote,76
+2024-02-19,Java,New York,16
+2024-02-19,JavaScript,San Francisco,111
+2024-02-19,Data Science,New York,96
+2024-02-19,DevOps,Remote,99
+2024-02-20,Go,New York,56
+2024-02-20,Python,San Francisco,114
+2024-02-20,Java,London,116
+2024-02-20,JavaScript,Remote,80
+2024-02-20,Data Science,Remote,94
+2024-02-20,DevOps,San Francisco,25
+2024-02-21,Go,New York,83
+2024-02-21,Python,San Francisco,27
+2024-02-21,Java,San Francisco,57
+2024-02-21,JavaScript,San Francisco,74
+2024-02-21,Data Science,San Francisco,92
+2024-02-21,DevOps,Remote,105
+2024-02-22,Go,London,25
+2024-02-22,Python,San Francisco,106
+2024-02-22,Java,New York,28
+2024-02-22,JavaScript,London,49
+2024-02-22,Data Science,San Francisco,20
+2024-02-22,DevOps,San Francisco,85
+2024-02-23,Go,Remote,75
+2024-02-23,Python,Remote,58
+2024-02-23,Java,London,55
+2024-02-23,JavaScript,London,47
+2024-02-23,Data Science,Remote,56
+2024-02-23,DevOps,London,19
+2024-02-24,Go,New York,32
+2024-02-24,Python,Remote,76
+2024-02-24,Java,London,47
+2024-02-24,JavaScript,Remote,40
+2024-02-24,Data Science,London,50
+2024-02-24,DevOps,San Francisco,53
+2024-02-25,Go,New York,89
+2024-02-25,Python,London,119
+2024-02-25,Java,Remote,23
+2024-02-25,JavaScript,New York,76
+2024-02-25,Data Science,Remote,80
+2024-02-25,DevOps,Remote,77
+2024-02-26,Go,Remote,99
+2024-02-26,Python,San Francisco,61
+2024-02-26,Java,San Francisco,24
+2024-02-26,JavaScript,Remote,112
+2024-02-26,Data Science,London,82
+2024-02-26,DevOps,New York,95
+2024-02-27,Go,San Francisco,92
+2024-02-27,Python,London,18
+2024-02-27,Java,San Francisco,45
+2024-02-27,JavaScript,San Francisco,69
+2024-02-27,Data Science,San Francisco,80
+2024-02-27,DevOps,Remote,116
+2024-02-28,Go,London,114
+2024-02-28,Python,Remote,32
+2024-02-28,Java,London,61
+2024-02-28,JavaScript,San Francisco,83
+2024-02-28,Data Science,San Francisco,34
+2024-02-28,DevOps,San Francisco,108
+2024-02-29,Go,New York,31
+2024-02-29,Python,New York,117
+2024-02-29,Java,Remote,50
+2024-02-29,JavaScript,San Francisco,119
+2024-02-29,Data Science,Remote,32
+2024-02-29,DevOps,Remote,84
+2024-03-01,Go,London,31
+2024-03-01,Python,San Francisco,36
+2024-03-01,Java,New York,103
+2024-03-01,JavaScript,San Francisco,111
+2024-03-01,Data Science,San Francisco,102
+2024-03-01,DevOps,London,67
+2024-03-02,Go,New York,84
+2024-03-02,Python,San Francisco,53
+2024-03-02,Java,Remote,80
+2024-03-02,JavaScript,New York,84
+2024-03-02,Data Science,London,74
+2024-03-02,DevOps,Remote,34
+2024-03-03,Go,New York,33
+2024-03-03,Python,New York,75
+2024-03-03,Java,New York,22
+2024-03-03,JavaScript,Remote,60
+2024-03-03,Data Science,New York,57
+2024-03-03,DevOps,San Francisco,35
+2024-03-04,Go,New York,119
+2024-03-04,Python,London,69
+2024-03-04,Java,San Francisco,40
+2024-03-04,JavaScript,San Francisco,45
+2024-03-04,Data Science,London,99
+2024-03-04,DevOps,Remote,42
+2024-03-05,Go,London,35
+2024-03-05,Python,London,107
+2024-03-05,Java,Remote,73
+2024-03-05,JavaScript,San Francisco,105
+2024-03-05,Data Science,London,54
+2024-03-05,DevOps,London,86
+2024-03-06,Go,San Francisco,26
+2024-03-06,Python,San Francisco,109
+2024-03-06,Java,New York,29
+2024-03-06,JavaScript,San Francisco,60
+2024-03-06,Data Science,San Francisco,29
+2024-03-06,DevOps,London,41
+2024-03-07,Go,London,39
+2024-03-07,Python,San Francisco,18
+2024-03-07,Java,Remote,97
+2024-03-07,JavaScript,Remote,51
+2024-03-07,Data Science,New York,65
+2024-03-07,DevOps,London,76
+2024-03-08,Go,Remote,49
+2024-03-08,Python,San Francisco,77
+2024-03-08,Java,San Francisco,28
+2024-03-08,JavaScript,San Francisco,86
+2024-03-08,Data Science,London,60
+2024-03-08,DevOps,New York,63
+2024-03-09,Go,Remote,104
+2024-03-09,Python,Remote,111
+2024-03-09,Java,New York,102
+2024-03-09,JavaScript,London,74
+2024-03-09,Data Science,New York,59
+2024-03-09,DevOps,Remote,119
+2024-03-10,Go,New York,52
+2024-03-10,Python,New York,25
+2024-03-10,Java,London,23
+2024-03-10,JavaScript,New York,87
+2024-03-10,Data Science,London,64
+2024-03-10,DevOps,London,93
+2024-03-11,Go,New York,84
+2024-03-11,Python,Remote,34
+2024-03-11,Java,New York,32
+2024-03-11,JavaScript,London,28
+2024-03-11,Data Science,San Francisco,26
+2024-03-11,DevOps,Remote,83
+2024-03-12,Go,New York,17
+2024-03-12,Python,New York,110
+2024-03-12,Java,New York,111
+2024-03-12,JavaScript,Remote,108
+2024-03-12,Data Science,San Francisco,106
+2024-03-12,DevOps,London,54
+2024-03-13,Go,Remote,45
+2024-03-13,Python,London,106
+2024-03-13,Java,San Francisco,103
+2024-03-13,JavaScript,San Francisco,66
+2024-03-13,Data Science,Remote,80
+2024-03-13,DevOps,New York,68
+2024-03-14,Go,San Francisco,77
+2024-03-14,Python,San Francisco,91
+2024-03-14,Java,San Francisco,71
+2024-03-14,JavaScript,New York,113
+2024-03-14,Data Science,London,90
+2024-03-14,DevOps,London,90
+2024-03-15,Go,New York,76
+2024-03-15,Python,San Francisco,78
+2024-03-15,Java,New York,64
+2024-03-15,JavaScript,London,82
+2024-03-15,Data Science,San Francisco,115
+2024-03-15,DevOps,San Francisco,52
+2024-03-16,Go,Remote,81
+2024-03-16,Python,London,49
+2024-03-16,Java,New York,109
+2024-03-16,JavaScript,San Francisco,60
+2024-03-16,Data Science,New York,82
+2024-03-16,DevOps,Remote,87
+2024-03-17,Go,San Francisco,118
+2024-03-17,Python,New York,90
+2024-03-17,Java,San Francisco,85
+2024-03-17,JavaScript,London,73
+2024-03-17,Data Science,New York,118
+2024-03-17,DevOps,New York,117
+2024-03-18,Go,London,118
+2024-03-18,Python,New York,66
+2024-03-18,Java,San Francisco,46
+2024-03-18,JavaScript,Remote,21
+2024-03-18,Data Science,San Francisco,111
+2024-03-18,DevOps,Remote,82
+2024-03-19,Go,New York,62
+2024-03-19,Python,San Francisco,47
+2024-03-19,Java,San Francisco,19
+2024-03-19,JavaScript,New York,105
+2024-03-19,Data Science,New York,72
+2024-03-19,DevOps,London,60
+2024-03-20,Go,New York,80
+2024-03-20,Python,London,39
+2024-03-20,Java,Remote,21
+2024-03-20,JavaScript,San Francisco,26
+2024-03-20,Data Science,New York,98
+2024-03-20,DevOps,San Francisco,50
+2024-03-21,Go,Remote,15
+2024-03-21,Python,New York,94
+2024-03-21,Java,Remote,75
+2024-03-21,JavaScript,San Francisco,24
+2024-03-21,Data Science,San Francisco,85
+2024-03-21,DevOps,New York,78
+2024-03-22,Go,Remote,84
+2024-03-22,Python,London,44
+2024-03-22,Java,New York,74
+2024-03-22,JavaScript,New York,46
+2024-03-22,Data Science,London,16
+2024-03-22,DevOps,New York,64
+2024-03-23,Go,San Francisco,71
+2024-03-23,Python,San Francisco,36
+2024-03-23,Java,San Francisco,36
+2024-03-23,JavaScript,Remote,79
+2024-03-23,Data Science,Remote,66
+2024-03-23,DevOps,San Francisco,97
+2024-03-24,Go,New York,74
+2024-03-24,Python,Remote,17
+2024-03-24,Java,San Francisco,24
+2024-03-24,JavaScript,San Francisco,87
+2024-03-24,Data Science,London,120
+2024-03-24,DevOps,San Francisco,103
+2024-03-25,Go,Remote,102
+2024-03-25,Python,London,37
+2024-03-25,Java,New York,85
+2024-03-25,JavaScript,New York,32
+2024-03-25,Data Science,London,119
+2024-03-25,DevOps,London,26
+2024-03-26,Go,London,95
+2024-03-26,Python,Remote,100
+2024-03-26,Java,Remote,80
+2024-03-26,JavaScript,New York,25
+2024-03-26,Data Science,Remote,98
+2024-03-26,DevOps,New York,45
+2024-03-27,Go,San Francisco,63
+2024-03-27,Python,San Francisco,53
+2024-03-27,Java,New York,54
+2024-03-27,JavaScript,Remote,18
+2024-03-27,Data Science,San Francisco,109
+2024-03-27,DevOps,London,106
+2024-03-28,Go,New York,90
+2024-03-28,Python,London,46
+2024-03-28,Java,San Francisco,111
+2024-03-28,JavaScript,London,92
+2024-03-28,Data Science,New York,29
+2024-03-28,DevOps,New York,31
+2024-03-29,Go,Remote,93
+2024-03-29,Python,London,33
+2024-03-29,Java,New York,47
+2024-03-29,JavaScript,Remote,71
+2024-03-29,Data Science,London,34
+2024-03-29,DevOps,New York,96
+2024-03-30,Go,New York,71
+2024-03-30,Python,San Francisco,27
+2024-03-30,Java,London,56
+2024-03-30,JavaScript,New York,118
+2024-03-30,Data Science,Remote,64
+2024-03-30,DevOps,London,71
+2024-03-31,Go,Remote,108
+2024-03-31,Python,London,47
+2024-03-31,Java,London,109
+2024-03-31,JavaScript,Remote,75
+2024-03-31,Data Science,San Francisco,55
+2024-03-31,DevOps,New York,28
+2024-04-01,Go,San Francisco,41
+2024-04-01,Python,Remote,104
+2024-04-01,Java,London,106
+2024-04-01,JavaScript,Remote,43
+2024-04-01,Data Science,New York,36
+2024-04-01,DevOps,London,44
+2024-04-02,Go,Remote,31
+2024-04-02,Python,London,97
+2024-04-02,Java,Remote,41
+2024-04-02,JavaScript,London,84
+2024-04-02,Data Science,Remote,103
+2024-04-02,DevOps,London,59
+2024-04-03,Go,San Francisco,46
+2024-04-03,Python,Remote,80
+2024-04-03,Java,San Francisco,19
+2024-04-03,JavaScript,San Francisco,53
+2024-04-03,Data Science,San Francisco,70
+2024-04-03,DevOps,London,71
+2024-04-04,Go,London,96
+2024-04-04,Python,New York,102
+2024-04-04,Java,Remote,93
+2024-04-04,JavaScript,New York,109
+2024-04-04,Data Science,Remote,117
+2024-04-04,DevOps,Remote,86
+2024-04-05,Go,San Francisco,67
+2024-04-05,Python,Remote,103
+2024-04-05,Java,Remote,117
+2024-04-05,JavaScript,London,59
+2024-04-05,Data Science,San Francisco,82
+2024-04-05,DevOps,London,16
+2024-04-06,Go,London,82
+2024-04-06,Python,Remote,64
+2024-04-06,Java,San Francisco,117
+2024-04-06,JavaScript,London,86
+2024-04-06,Data Science,New York,60
+2024-04-06,DevOps,San Francisco,28
+2024-04-07,Go,San Francisco,42
+2024-04-07,Python,London,77
+2024-04-07,Java,San Francisco,75
+2024-04-07,JavaScript,San Francisco,70
+2024-04-07,Data Science,New York,62
+2024-04-07,DevOps,New York,84
+2024-04-08,Go,New York,27
+2024-04-08,Python,London,42
+2024-04-08,Java,London,30
+2024-04-08,JavaScript,Remote,91
+2024-04-08,Data Science,New York,96
+2024-04-08,DevOps,San Francisco,68
+2024-04-09,Go,Remote,56
+2024-04-09,Python,New York,15
+2024-04-09,Java,Remote,23
+2024-04-09,JavaScript,San Francisco,99
+2024-04-09,Data Science,London,73
+2024-04-09,DevOps,New York,27
+2024-04-10,Go,San Francisco,120
+2024-04-10,Python,London,117
+2024-04-10,Java,San Francisco,58
+2024-04-10,JavaScript,New York,30
+2024-04-10,Data Science,San Francisco,59
+2024-04-10,DevOps,London,34
+2024-04-11,Go,New York,74
+2024-04-11,Python,London,85
+2024-04-11,Java,San Francisco,111
+2024-04-11,JavaScript,New York,26
+2024-04-11,Data Science,London,102
+2024-04-11,DevOps,New York,69
+2024-04-12,Go,London,71
+2024-04-12,Python,London,22
+2024-04-12,Java,Remote,75
+2024-04-12,JavaScript,New York,110
+2024-04-12,Data Science,London,21
+2024-04-12,DevOps,London,38
+2024-04-13,Go,New York,96
+2024-04-13,Python,San Francisco,47
+2024-04-13,Java,New York,69
+2024-04-13,JavaScript,San Francisco,59
+2024-04-13,Data Science,San Francisco,16
+2024-04-13,DevOps,Remote,92
+2024-04-14,Go,London,48
+2024-04-14,Python,New York,115
+2024-04-14,Java,San Francisco,103
+2024-04-14,JavaScript,New York,61
+2024-04-14,Data Science,New York,67
+2024-04-14,DevOps,Remote,88
+2024-04-15,Go,London,55
+2024-04-15,Python,Remote,93
+2024-04-15,Java,San Francisco,44
+2024-04-15,JavaScript,London,82
+2024-04-15,Data Science,New York,47
+2024-04-15,DevOps,Remote,86
+2024-04-16,Go,London,82
+2024-04-16,Python,London,52
+2024-04-16,Java,Remote,109
+2024-04-16,JavaScript,London,41
+2024-04-16,Data Science,Remote,35
+2024-04-16,DevOps,Remote,119
+2024-04-17,Go,Remote,48
+2024-04-17,Python,San Francisco,29
+2024-04-17,Java,San Francisco,15
+2024-04-17,JavaScript,Remote,91
+2024-04-17,Data Science,Remote,104
+2024-04-17,DevOps,New York,108
+2024-04-18,Go,Remote,99
+2024-04-18,Python,London,66
+2024-04-18,Java,London,93
+2024-04-18,JavaScript,London,92
+2024-04-18,Data Science,New York,101
+2024-04-18,DevOps,London,62
+2024-04-19,Go,London,111
+2024-04-19,Python,Remote,89
+2024-04-19,Java,London,87
+2024-04-19,JavaScript,New York,60
+2024-04-19,Data Science,Remote,112
+2024-04-19,DevOps,Remote,64
+2024-04-20,Go,Remote,116
+2024-04-20,Python,London,115
+2024-04-20,Java,Remote,16
+2024-04-20,JavaScript,London,67
+2024-04-20,Data Science,New York,20
+2024-04-20,DevOps,Remote,105
+2024-04-21,Go,New York,84
+2024-04-21,Python,Remote,29
+2024-04-21,Java,Remote,70
+2024-04-21,JavaScript,Remote,64
+2024-04-21,Data Science,Remote,105
+2024-04-21,DevOps,San Francisco,15
+2024-04-22,Go,New York,42
+2024-04-22,Python,San Francisco,24
+2024-04-22,Java,New York,37
+2024-04-22,JavaScript,Remote,105
+2024-04-22,Data Science,London,94
+2024-04-22,DevOps,New York,28
+2024-04-23,Go,San Francisco,52
+2024-04-23,Python,London,28
+2024-04-23,Java,New York,44
+2024-04-23,JavaScript,New York,103
+2024-04-23,Data Science,New York,28
+2024-04-23,DevOps,London,90
+2024-04-24,Go,San Francisco,19
+2024-04-24,Python,New York,71
+2024-04-24,Java,Remote,111
+2024-04-24,JavaScript,Remote,67
+2024-04-24,Data Science,London,86
+2024-04-24,DevOps,New York,39
+2024-04-25,Go,Remote,68
+2024-04-25,Python,Remote,34
+2024-04-25,Java,San Francisco,96
+2024-04-25,JavaScript,London,92
+2024-04-25,Data Science,New York,106
+2024-04-25,DevOps,London,23
+2024-04-26,Go,London,88
+2024-04-26,Python,London,120
+2024-04-26,Java,San Francisco,71
+2024-04-26,JavaScript,New York,115
+2024-04-26,Data Science,New York,51
+2024-04-26,DevOps,San Francisco,116
+2024-04-27,Go,San Francisco,70
+2024-04-27,Python,London,49
+2024-04-27,Java,San Francisco,82
+2024-04-27,JavaScript,Remote,41
+2024-04-27,Data Science,Remote,35
+2024-04-27,DevOps,New York,18
+2024-04-28,Go,London,39
+2024-04-28,Python,New York,64
+2024-04-28,Java,London,61
+2024-04-28,JavaScript,New York,24
+2024-04-28,Data Science,New York,61
+2024-04-28,DevOps,San Francisco,50
+2024-04-29,Go,Remote,39
+2024-04-29,Python,New York,47
+2024-04-29,Java,New York,53
+2024-04-29,JavaScript,New York,120
+2024-04-29,Data Science,San Francisco,103
+2024-04-29,DevOps,Remote,74
+2024-04-30,Go,San Francisco,115
+2024-04-30,Python,San Francisco,36
+2024-04-30,Java,Remote,39
+2024-04-30,JavaScript,New York,102
+2024-04-30,Data Science,Remote,64
+2024-04-30,DevOps,London,90
+2024-05-01,Go,San Francisco,61
+2024-05-01,Python,San Francisco,39
+2024-05-01,Java,London,61
+2024-05-01,JavaScript,San Francisco,23
+2024-05-01,Data Science,Remote,94
+2024-05-01,DevOps,New York,117
+2024-05-02,Go,Remote,86
+2024-05-02,Python,Remote,43
+2024-05-02,Java,New York,75
+2024-05-02,JavaScript,San Francisco,54
+2024-05-02,Data Science,London,49
+2024-05-02,DevOps,New York,65
+2024-05-03,Go,Remote,41
+2024-05-03,Python,Remote,30
+2024-05-03,Java,London,101
+2024-05-03,JavaScript,London,24
+2024-05-03,Data Science,Remote,55
+2024-05-03,DevOps,San Francisco,53
+2024-05-04,Go,New York,104
+2024-05-04,Python,Remote,23
+2024-05-04,Java,London,111
+2024-05-04,JavaScript,San Francisco,26
+2024-05-04,Data Science,San Francisco,98
+2024-05-04,DevOps,New York,84
+2024-05-05,Go,Remote,18
+2024-05-05,Python,New York,40
+2024-05-05,Java,Remote,95
+2024-05-05,JavaScript,Remote,27
+2024-05-05,Data Science,London,78
+2024-05-05,DevOps,Remote,102
+2024-05-06,Go,San Francisco,84
+2024-05-06,Python,Remote,20
+2024-05-06,Java,London,101
+2024-05-06,JavaScript,London,102
+2024-05-06,Data Science,London,103
+2024-05-06,DevOps,Remote,22
+2024-05-07,Go,San Francisco,61
+2024-05-07,Python,Remote,84
+2024-05-07,Java,Remote,86
+2024-05-07,JavaScript,London,117
+2024-05-07,Data Science,New York,83
+2024-05-07,DevOps,New York,96
+2024-05-08,Go,London,70
+2024-05-08,Python,New York,102
+2024-05-08,Java,New York,97
+2024-05-08,JavaScript,San Francisco,75
+2024-05-08,Data Science,London,99
+2024-05-08,DevOps,New York,66
+2024-05-09,Go,Remote,106
+2024-05-09,Python,Remote,30
+2024-05-09,Java,San Francisco,30
+2024-05-09,JavaScript,San Francisco,69
+2024-05-09,Data Science,San Francisco,97
+2024-05-09,DevOps,San Francisco,50
+2024-05-10,Go,New York,73
+2024-05-10,Python,New York,30
+2024-05-10,Java,London,109
+2024-05-10,JavaScript,San Francisco,59
+2024-05-10,Data Science,San Francisco,65
+2024-05-10,DevOps,San Francisco,119
+2024-05-11,Go,Remote,104
+2024-05-11,Python,Remote,37
+2024-05-11,Java,London,111
+2024-05-11,JavaScript,London,51
+2024-05-11,Data Science,London,120
+2024-05-11,DevOps,London,86
+2024-05-12,Go,New York,40
+2024-05-12,Python,London,65
+2024-05-12,Java,San Francisco,62
+2024-05-12,JavaScript,London,92
+2024-05-12,Data Science,Remote,48
+2024-05-12,DevOps,San Francisco,106
+2024-05-13,Go,Remote,108
+2024-05-13,Python,New York,85
+2024-05-13,Java,Remote,39
+2024-05-13,JavaScript,New York,38
+2024-05-13,Data Science,San Francisco,73
+2024-05-13,DevOps,San Francisco,43
+2024-05-14,Go,London,54
+2024-05-14,Python,London,74
+2024-05-14,Java,Remote,20
+2024-05-14,JavaScript,Remote,107
+2024-05-14,Data Science,New York,103
+2024-05-14,DevOps,New York,95
+2024-05-15,Go,London,50
+2024-05-15,Python,New York,58
+2024-05-15,Java,London,112
+2024-05-15,JavaScript,London,82
+2024-05-15,Data Science,Remote,110
+2024-05-15,DevOps,New York,68
+2024-05-16,Go,Remote,30
+2024-05-16,Python,New York,30
+2024-05-16,Java,San Francisco,81
+2024-05-16,JavaScript,Remote,46
+2024-05-16,Data Science,Remote,118
+2024-05-16,DevOps,Remote,43
+2024-05-17,Go,Remote,93
+2024-05-17,Python,Remote,16
+2024-05-17,Java,Remote,36
+2024-05-17,JavaScript,London,114
+2024-05-17,Data Science,London,50
+2024-05-17,DevOps,New York,81
+2024-05-18,Go,San Francisco,113
+2024-05-18,Python,Remote,49
+2024-05-18,Java,New York,65
+2024-05-18,JavaScript,London,37
+2024-05-18,Data Science,Remote,26
+2024-05-18,DevOps,New York,66
+2024-05-19,Go,New York,109
+2024-05-19,Python,New York,23
+2024-05-19,Java,New York,17
+2024-05-19,JavaScript,Remote,95
+2024-05-19,Data Science,San Francisco,96
+2024-05-19,DevOps,New York,17
+2024-05-20,Go,New York,77
+2024-05-20,Python,New York,113
+2024-05-20,Java,New York,90
+2024-05-20,JavaScript,New York,71
+2024-05-20,Data Science,San Francisco,40
+2024-05-20,DevOps,San Francisco,78
+2024-05-21,Go,New York,43
+2024-05-21,Python,London,62
+2024-05-21,Java,San Francisco,19
+2024-05-21,JavaScript,Remote,19
+2024-05-21,Data Science,London,82
+2024-05-21,DevOps,New York,72
+2024-05-22,Go,London,68
+2024-05-22,Python,New York,24
+2024-05-22,Java,London,54
+2024-05-22,JavaScript,Remote,45
+2024-05-22,Data Science,New York,25
+2024-05-22,DevOps,San Francisco,15
+2024-05-23,Go,San Francisco,18
+2024-05-23,Python,San Francisco,80
+2024-05-23,Java,New York,19
+2024-05-23,JavaScript,New York,54
+2024-05-23,Data Science,San Francisco,95
+2024-05-23,DevOps,New York,15
+2024-05-24,Go,San Francisco,54
+2024-05-24,Python,San Francisco,64
+2024-05-24,Java,London,111
+2024-05-24,JavaScript,London,26
+2024-05-24,Data Science,New York,78
+2024-05-24,DevOps,Remote,58
+2024-05-25,Go,San Francisco,37
+2024-05-25,Python,New York,20
+2024-05-25,Java,London,32
+2024-05-25,JavaScript,New York,71
+2024-05-25,Data Science,New York,80
+2024-05-25,DevOps,San Francisco,115
+2024-05-26,Go,London,114
+2024-05-26,Python,New York,75
+2024-05-26,Java,London,58
+2024-05-26,JavaScript,San Francisco,92
+2024-05-26,Data Science,San Francisco,89
+2024-05-26,DevOps,New York,41
+2024-05-27,Go,San Francisco,109
+2024-05-27,Python,London,40
+2024-05-27,Java,San Francisco,22
+2024-05-27,JavaScript,New York,77
+2024-05-27,Data Science,London,80
+2024-05-27,DevOps,Remote,30
+2024-05-28,Go,New York,86
+2024-05-28,Python,New York,32
+2024-05-28,Java,London,52
+2024-05-28,JavaScript,London,17
+2024-05-28,Data Science,Remote,75
+2024-05-28,DevOps,Remote,55
+2024-05-29,Go,Remote,84
+2024-05-29,Python,London,22
+2024-05-29,Java,San Francisco,65
+2024-05-29,JavaScript,Remote,119
+2024-05-29,Data Science,London,27
+2024-05-29,DevOps,London,78
+2024-05-30,Go,San Francisco,115
+2024-05-30,Python,Remote,119
+2024-05-30,Java,London,89
+2024-05-30,JavaScript,Remote,40
+2024-05-30,Data Science,New York,85
+2024-05-30,DevOps,Remote,32
+2024-05-31,Go,London,30
+2024-05-31,Python,San Francisco,102
+2024-05-31,Java,Remote,63
+2024-05-31,JavaScript,London,43
+2024-05-31,Data Science,San Francisco,65
+2024-05-31,DevOps,San Francisco,81
+2024-06-01,Go,New York,88
+2024-06-01,Python,San Francisco,99
+2024-06-01,Java,San Francisco,16
+2024-06-01,JavaScript,Remote,105
+2024-06-01,Data Science,San Francisco,34
+2024-06-01,DevOps,Remote,18
+2024-06-02,Go,London,32
+2024-06-02,Python,San Francisco,35
+2024-06-02,Java,New York,74
+2024-06-02,JavaScript,Remote,115
+2024-06-02,Data Science,London,20
+2024-06-02,DevOps,New York,22
+2024-06-03,Go,London,84
+2024-06-03,Python,Remote,16
+2024-06-03,Java,Remote,30
+2024-06-03,JavaScript,London,30
+2024-06-03,Data Science,New York,83
+2024-06-03,DevOps,New York,120
+2024-06-04,Go,San Francisco,44
+2024-06-04,Python,San Francisco,110
+2024-06-04,Java,San Francisco,58
+2024-06-04,JavaScript,Remote,64
+2024-06-04,Data Science,London,110
+2024-06-04,DevOps,San Francisco,108
+2024-06-05,Go,London,97
+2024-06-05,Python,San Francisco,82
+2024-06-05,Java,London,74
+2024-06-05,JavaScript,New York,103
+2024-06-05,Data Science,San Francisco,97
+2024-06-05,DevOps,London,27
+2024-06-06,Go,New York,95
+2024-06-06,Python,New York,37
+2024-06-06,Java,Remote,39
+2024-06-06,JavaScript,New York,66
+2024-06-06,Data Science,New York,73
+2024-06-06,DevOps,San Francisco,17
+2024-06-07,Go,San Francisco,31
+2024-06-07,Python,London,84
+2024-06-07,Java,London,112
+2024-06-07,JavaScript,Remote,91
+2024-06-07,Data Science,Remote,41
+2024-06-07,DevOps,San Francisco,43
+2024-06-08,Go,Remote,77
+2024-06-08,Python,London,114
+2024-06-08,Java,Remote,55
+2024-06-08,JavaScript,New York,19
+2024-06-08,Data Science,Remote,40
+2024-06-08,DevOps,New York,30
+2024-06-09,Go,New York,108
+2024-06-09,Python,San Francisco,70
+2024-06-09,Java,London,107
+2024-06-09,JavaScript,London,24
+2024-06-09,Data Science,New York,24
+2024-06-09,DevOps,Remote,36
+2024-06-10,Go,San Francisco,43
+2024-06-10,Python,Remote,95
+2024-06-10,Java,London,24
+2024-06-10,JavaScript,Remote,58
+2024-06-10,Data Science,London,19
+2024-06-10,DevOps,New York,84
+2024-06-11,Go,New York,113
+2024-06-11,Python,Remote,56
+2024-06-11,Java,New York,42
+2024-06-11,JavaScript,New York,64
+2024-06-11,Data Science,San Francisco,20
+2024-06-11,DevOps,New York,95
+2024-06-12,Go,San Francisco,33
+2024-06-12,Python,New York,59
+2024-06-12,Java,New York,35
+2024-06-12,JavaScript,San Francisco,60
+2024-06-12,Data Science,Remote,15
+2024-06-12,DevOps,New York,106
+2024-06-13,Go,Remote,25
+2024-06-13,Python,San Francisco,83
+2024-06-13,Java,Remote,91
+2024-06-13,JavaScript,New York,120
+2024-06-13,Data Science,San Francisco,118
+2024-06-13,DevOps,New York,51
+2024-06-14,Go,New York,87
+2024-06-14,Python,San Francisco,82
+2024-06-14,Java,San Francisco,118
+2024-06-14,JavaScript,London,80
+2024-06-14,Data Science,New York,109
+2024-06-14,DevOps,San Francisco,120
+2024-06-15,Go,San Francisco,62
+2024-06-15,Python,New York,108
+2024-06-15,Java,San Francisco,107
+2024-06-15,JavaScript,San Francisco,38
+2024-06-15,Data Science,London,42
+2024-06-15,DevOps,London,41
+2024-06-16,Go,London,116
+2024-06-16,Python,London,77
+2024-06-16,Java,Remote,20
+2024-06-16,JavaScript,New York,106
+2024-06-16,Data Science,Remote,61
+2024-06-16,DevOps,Remote,36
+2024-06-17,Go,Remote,64
+2024-06-17,Python,San Francisco,51
+2024-06-17,Java,San Francisco,47
+2024-06-17,JavaScript,London,111
+2024-06-17,Data Science,Remote,70
+2024-06-17,DevOps,San Francisco,24
+2024-06-18,Go,London,93
+2024-06-18,Python,Remote,54
+2024-06-18,Java,London,108
+2024-06-18,JavaScript,London,66
+2024-06-18,Data Science,Remote,20
+2024-06-18,DevOps,London,110
+2024-06-19,Go,San Francisco,26
+2024-06-19,Python,San Francisco,93
+2024-06-19,Java,New York,65
+2024-06-19,JavaScript,Remote,99
+2024-06-19,Data Science,New York,58
+2024-06-19,DevOps,London,51
+2024-06-20,Go,London,61
+2024-06-20,Python,London,16
+2024-06-20,Java,Remote,21
+2024-06-20,JavaScript,Remote,69
+2024-06-20,Data Science,San Francisco,104
+2024-06-20,DevOps,San Francisco,44
+2024-06-21,Go,London,80
+2024-06-21,Python,San Francisco,115
+2024-06-21,Java,London,64
+2024-06-21,JavaScript,New York,74
+2024-06-21,Data Science,London,16
+2024-06-21,DevOps,Remote,51
+2024-06-22,Go,London,51
+2024-06-22,Python,Remote,91
+2024-06-22,Java,New York,118
+2024-06-22,JavaScript,London,46
+2024-06-22,Data Science,New York,37
+2024-06-22,DevOps,London,55
+2024-06-23,Go,San Francisco,84
+2024-06-23,Python,San Francisco,119
+2024-06-23,Java,London,120
+2024-06-23,JavaScript,New York,64
+2024-06-23,Data Science,Remote,76
+2024-06-23,DevOps,London,64
+2024-06-24,Go,New York,60
+2024-06-24,Python,Remote,67
+2024-06-24,Java,New York,84
+2024-06-24,JavaScript,San Francisco,78
+2024-06-24,Data Science,San Francisco,20
+2024-06-24,DevOps,London,88
+2024-06-25,Go,San Francisco,36
+2024-06-25,Python,London,19
+2024-06-25,Java,Remote,67
+2024-06-25,JavaScript,London,46
+2024-06-25,Data Science,New York,26
+2024-06-25,DevOps,New York,15
+2024-06-26,Go,London,114
+2024-06-26,Python,New York,67
+2024-06-26,Java,San Francisco,18
+2024-06-26,JavaScript,San Francisco,111
+2024-06-26,Data Science,New York,36
+2024-06-26,DevOps,New York,78
+2024-06-27,Go,London,26
+2024-06-27,Python,San Francisco,93
+2024-06-27,Java,Remote,94
+2024-06-27,JavaScript,San Francisco,54
+2024-06-27,Data Science,San Francisco,78
+2024-06-27,DevOps,London,21
+2024-06-28,Go,San Francisco,108
+2024-06-28,Python,Remote,50
+2024-06-28,Java,New York,42
+2024-06-28,JavaScript,London,74
+2024-06-28,Data Science,London,49
+2024-06-28,DevOps,London,117
+2024-06-29,Go,San Francisco,49
+2024-06-29,Python,San Francisco,36
+2024-06-29,Java,London,29
+2024-06-29,JavaScript,London,104
+2024-06-29,Data Science,London,71
+2024-06-29,DevOps,San Francisco,91
+2024-06-30,Go,Remote,25
+2024-06-30,Python,Remote,26
+2024-06-30,Java,Remote,42
+2024-06-30,JavaScript,London,53
+2024-06-30,Data Science,London,97
+2024-06-30,DevOps,San Francisco,71
+2024-07-01,Go,Remote,97
+2024-07-01,Python,New York,37
+2024-07-01,Java,New York,83
+2024-07-01,JavaScript,San Francisco,117
+2024-07-01,Data Science,San Francisco,42
+2024-07-01,DevOps,San Francisco,24
+2024-07-02,Go,London,108
+2024-07-02,Python,London,105
+2024-07-02,Java,London,80
+2024-07-02,JavaScript,San Francisco,90
+2024-07-02,Data Science,London,36
+2024-07-02,DevOps,San Francisco,26
+2024-07-03,Go,San Francisco,82
+2024-07-03,Python,New York,113
+2024-07-03,Java,Remote,37
+2024-07-03,JavaScript,London,110
+2024-07-03,Data Science,Remote,26
+2024-07-03,DevOps,New York,100
+2024-07-04,Go,San Francisco,100
+2024-07-04,Python,Remote,96
+2024-07-04,Java,San Francisco,34
+2024-07-04,JavaScript,London,22
+2024-07-04,Data Science,San Francisco,52
+2024-07-04,DevOps,London,58
+2024-07-05,Go,London,56
+2024-07-05,Python,San Francisco,87
+2024-07-05,Java,New York,75
+2024-07-05,JavaScript,London,77
+2024-07-05,Data Science,Remote,42
+2024-07-05,DevOps,San Francisco,56
+2024-07-06,Go,New York,70
+2024-07-06,Python,London,105
+2024-07-06,Java,Remote,107
+2024-07-06,JavaScript,New York,55
+2024-07-06,Data Science,New York,24
+2024-07-06,DevOps,Remote,52
+2024-07-07,Go,Remote,93
+2024-07-07,Python,New York,67
+2024-07-07,Java,London,120
+2024-07-07,JavaScript,Remote,61
+2024-07-07,Data Science,New York,57
+2024-07-07,DevOps,London,18
+2024-07-08,Go,Remote,95
+2024-07-08,Python,Remote,106
+2024-07-08,Java,Remote,29
+2024-07-08,JavaScript,New York,84
+2024-07-08,Data Science,New York,15
+2024-07-08,DevOps,San Francisco,41
+2024-07-09,Go,Remote,23
+2024-07-09,Python,New York,69
+2024-07-09,Java,New York,48
+2024-07-09,JavaScript,San Francisco,85
+2024-07-09,Data Science,New York,74
+2024-07-09,DevOps,Remote,92
+2024-07-10,Go,London,97
+2024-07-10,Python,New York,23
+2024-07-10,Java,New York,24
+2024-07-10,JavaScript,Remote,29
+2024-07-10,Data Science,Remote,106
+2024-07-10,DevOps,Remote,48
+2024-07-11,Go,New York,63
+2024-07-11,Python,New York,61
+2024-07-11,Java,London,60
+2024-07-11,JavaScript,San Francisco,59
+2024-07-11,Data Science,San Francisco,94
+2024-07-11,DevOps,New York,111
+2024-07-12,Go,San Francisco,21
+2024-07-12,Python,Remote,59
+2024-07-12,Java,New York,88
+2024-07-12,JavaScript,San Francisco,95
+2024-07-12,Data Science,New York,98
+2024-07-12,DevOps,New York,85
+2024-07-13,Go,Remote,51
+2024-07-13,Python,New York,46
+2024-07-13,Java,Remote,116
+2024-07-13,JavaScript,San Francisco,37
+2024-07-13,Data Science,San Francisco,77
+2024-07-13,DevOps,London,42
+2024-07-14,Go,London,97
+2024-07-14,Python,Remote,87
+2024-07-14,Java,London,27
+2024-07-14,JavaScript,Remote,82
+2024-07-14,Data Science,San Francisco,51
+2024-07-14,DevOps,London,49
+2024-07-15,Go,Remote,53
+2024-07-15,Python,New York,107
+2024-07-15,Java,Remote,57
+2024-07-15,JavaScript,New York,92
+2024-07-15,Data Science,London,108
+2024-07-15,DevOps,Remote,62
+2024-07-16,Go,Remote,81
+2024-07-16,Python,San Francisco,70
+2024-07-16,Java,Remote,111
+2024-07-16,JavaScript,Remote,38
+2024-07-16,Data Science,London,56
+2024-07-16,DevOps,London,24
+2024-07-17,Go,San Francisco,105
+2024-07-17,Python,New York,48
+2024-07-17,Java,Remote,97
+2024-07-17,JavaScript,New York,66
+2024-07-17,Data Science,Remote,42
+2024-07-17,DevOps,Remote,78
+2024-07-18,Go,London,17
+2024-07-18,Python,Remote,89
+2024-07-18,Java,London,35
+2024-07-18,JavaScript,London,98
+2024-07-18,Data Science,New York,97
+2024-07-18,DevOps,Remote,97
+2024-07-19,Go,San Francisco,99
+2024-07-19,Python,New York,46
+2024-07-19,Java,New York,74
+2024-07-19,JavaScript,San Francisco,49
+2024-07-19,Data Science,New York,103
+2024-07-19,DevOps,Remote,77
+2024-07-20,Go,London,73
+2024-07-20,Python,London,71
+2024-07-20,Java,London,39
+2024-07-20,JavaScript,New York,98
+2024-07-20,Data Science,New York,83
+2024-07-20,DevOps,Remote,54
+2024-07-21,Go,London,24
+2024-07-21,Python,New York,120
+2024-07-21,Java,San Francisco,120
+2024-07-21,JavaScript,Remote,98
+2024-07-21,Data Science,London,20
+2024-07-21,DevOps,Remote,93
+2024-07-22,Go,San Francisco,69
+2024-07-22,Python,Remote,28
+2024-07-22,Java,Remote,39
+2024-07-22,JavaScript,London,50
+2024-07-22,Data Science,New York,112
+2024-07-22,DevOps,New York,80
+2024-07-23,Go,London,108
+2024-07-23,Python,Remote,112
+2024-07-23,Java,London,63
+2024-07-23,JavaScript,New York,83
+2024-07-23,Data Science,San Francisco,78
+2024-07-23,DevOps,Remote,103
+2024-07-24,Go,London,104
+2024-07-24,Python,Remote,66
+2024-07-24,Java,San Francisco,24
+2024-07-24,JavaScript,New York,33
+2024-07-24,Data Science,Remote,38
+2024-07-24,DevOps,Remote,85
+2024-07-25,Go,Remote,31
+2024-07-25,Python,New York,120
+2024-07-25,Java,San Francisco,118
+2024-07-25,JavaScript,Remote,101
+2024-07-25,Data Science,London,95
+2024-07-25,DevOps,London,112
+2024-07-26,Go,New York,83
+2024-07-26,Python,London,77
+2024-07-26,Java,London,81
+2024-07-26,JavaScript,Remote,80
+2024-07-26,Data Science,London,88
+2024-07-26,DevOps,New York,113
+2024-07-27,Go,London,77
+2024-07-27,Python,Remote,84
+2024-07-27,Java,London,55
+2024-07-27,JavaScript,London,58
+2024-07-27,Data Science,New York,69
+2024-07-27,DevOps,Remote,110
+2024-07-28,Go,Remote,61
+2024-07-28,Python,San Francisco,97
+2024-07-28,Java,London,107
+2024-07-28,JavaScript,New York,77
+2024-07-28,Data Science,London,84
+2024-07-28,DevOps,Remote,79
+2024-07-29,Go,New York,39
+2024-07-29,Python,San Francisco,65
+2024-07-29,Java,Remote,48
+2024-07-29,JavaScript,London,81
+2024-07-29,Data Science,London,23
+2024-07-29,DevOps,Remote,72
+2024-07-30,Go,San Francisco,81
+2024-07-30,Python,Remote,67
+2024-07-30,Java,San Francisco,20
+2024-07-30,JavaScript,New York,32
+2024-07-30,Data Science,New York,24
+2024-07-30,DevOps,San Francisco,71
+2024-07-31,Go,New York,32
+2024-07-31,Python,Remote,41
+2024-07-31,Java,Remote,73
+2024-07-31,JavaScript,Remote,19
+2024-07-31,Data Science,New York,82
+2024-07-31,DevOps,London,75
+2024-08-01,Go,Remote,74
+2024-08-01,Python,Remote,103
+2024-08-01,Java,London,60
+2024-08-01,JavaScript,New York,90
+2024-08-01,Data Science,New York,18
+2024-08-01,DevOps,San Francisco,64
+2024-08-02,Go,San Francisco,93
+2024-08-02,Python,San Francisco,109
+2024-08-02,Java,London,32
+2024-08-02,JavaScript,London,26
+2024-08-02,Data Science,Remote,50
+2024-08-02,DevOps,New York,113
+2024-08-03,Go,Remote,108
+2024-08-03,Python,Remote,42
+2024-08-03,Java,New York,30
+2024-08-03,JavaScript,San Francisco,56
+2024-08-03,Data Science,London,78
+2024-08-03,DevOps,London,39
+2024-08-04,Go,London,66
+2024-08-04,Python,Remote,113
+2024-08-04,Java,New York,76
+2024-08-04,JavaScript,London,54
+2024-08-04,Data Science,San Francisco,40
+2024-08-04,DevOps,New York,43
+2024-08-05,Go,Remote,36
+2024-08-05,Python,San Francisco,62
+2024-08-05,Java,London,113
+2024-08-05,JavaScript,New York,76
+2024-08-05,Data Science,San Francisco,43
+2024-08-05,DevOps,London,108
+2024-08-06,Go,Remote,49
+2024-08-06,Python,New York,116
+2024-08-06,Java,San Francisco,52
+2024-08-06,JavaScript,New York,120
+2024-08-06,Data Science,London,88
+2024-08-06,DevOps,San Francisco,50
+2024-08-07,Go,San Francisco,81
+2024-08-07,Python,San Francisco,54
+2024-08-07,Java,Remote,30
+2024-08-07,JavaScript,San Francisco,42
+2024-08-07,Data Science,New York,58
+2024-08-07,DevOps,San Francisco,116
+2024-08-08,Go,New York,80
+2024-08-08,Python,Remote,96
+2024-08-08,Java,Remote,104
+2024-08-08,JavaScript,London,117
+2024-08-08,Data Science,Remote,51
+2024-08-08,DevOps,Remote,24
+2024-08-09,Go,London,83
+2024-08-09,Python,San Francisco,65
+2024-08-09,Java,London,98
+2024-08-09,JavaScript,San Francisco,24
+2024-08-09,Data Science,San Francisco,61
+2024-08-09,DevOps,Remote,18
+2024-08-10,Go,San Francisco,96
+2024-08-10,Python,Remote,65
+2024-08-10,Java,New York,23
+2024-08-10,JavaScript,London,120
+2024-08-10,Data Science,London,38
+2024-08-10,DevOps,Remote,119
+2024-08-11,Go,San Francisco,84
+2024-08-11,Python,New York,60
+2024-08-11,Java,London,37
+2024-08-11,JavaScript,New York,118
+2024-08-11,Data Science,Remote,21
+2024-08-11,DevOps,London,33
+2024-08-12,Go,Remote,60
+2024-08-12,Python,New York,69
+2024-08-12,Java,Remote,56
+2024-08-12,JavaScript,San Francisco,26
+2024-08-12,Data Science,New York,21
+2024-08-12,DevOps,New York,95
+2024-08-13,Go,New York,72
+2024-08-13,Python,London,54
+2024-08-13,Java,Remote,56
+2024-08-13,JavaScript,London,57
+2024-08-13,Data Science,San Francisco,113
+2024-08-13,DevOps,San Francisco,104
+2024-08-14,Go,Remote,41
+2024-08-14,Python,San Francisco,81
+2024-08-14,Java,San Francisco,21
+2024-08-14,JavaScript,London,34
+2024-08-14,Data Science,Remote,106
+2024-08-14,DevOps,New York,47
+2024-08-15,Go,San Francisco,81
+2024-08-15,Python,San Francisco,43
+2024-08-15,Java,Remote,79
+2024-08-15,JavaScript,New York,41
+2024-08-15,Data Science,Remote,116
+2024-08-15,DevOps,New York,118
+2024-08-16,Go,London,103
+2024-08-16,Python,San Francisco,29
+2024-08-16,Java,London,33
+2024-08-16,JavaScript,Remote,62
+2024-08-16,Data Science,Remote,44
+2024-08-16,DevOps,San Francisco,54
+2024-08-17,Go,Remote,116
+2024-08-17,Python,London,51
+2024-08-17,Java,Remote,49
+2024-08-17,JavaScript,Remote,99
+2024-08-17,Data Science,Remote,25
+2024-08-17,DevOps,Remote,118
+2024-08-18,Go,San Francisco,94
+2024-08-18,Python,San Francisco,109
+2024-08-18,Java,New York,91
+2024-08-18,JavaScript,New York,74
+2024-08-18,Data Science,San Francisco,112
+2024-08-18,DevOps,London,106
+2024-08-19,Go,San Francisco,26
+2024-08-19,Python,London,103
+2024-08-19,Java,New York,42
+2024-08-19,JavaScript,San Francisco,98
+2024-08-19,Data Science,Remote,72
+2024-08-19,DevOps,London,33
+2024-08-20,Go,New York,80
+2024-08-20,Python,London,55
+2024-08-20,Java,London,81
+2024-08-20,JavaScript,Remote,21
+2024-08-20,Data Science,New York,108
+2024-08-20,DevOps,San Francisco,102
+2024-08-21,Go,London,114
+2024-08-21,Python,New York,66
+2024-08-21,Java,Remote,33
+2024-08-21,JavaScript,San Francisco,45
+2024-08-21,Data Science,Remote,117
+2024-08-21,DevOps,Remote,75
+2024-08-22,Go,San Francisco,103
+2024-08-22,Python,New York,73
+2024-08-22,Java,London,108
+2024-08-22,JavaScript,New York,39
+2024-08-22,Data Science,New York,79
+2024-08-22,DevOps,New York,87
+2024-08-23,Go,London,83
+2024-08-23,Python,London,35
+2024-08-23,Java,San Francisco,74
+2024-08-23,JavaScript,London,31
+2024-08-23,Data Science,Remote,50
+2024-08-23,DevOps,San Francisco,56
+2024-08-24,Go,Remote,78
+2024-08-24,Python,London,43
+2024-08-24,Java,New York,96
+2024-08-24,JavaScript,San Francisco,49
+2024-08-24,Data Science,New York,30
+2024-08-24,DevOps,New York,52
+2024-08-25,Go,San Francisco,77
+2024-08-25,Python,New York,66
+2024-08-25,Java,San Francisco,50
+2024-08-25,JavaScript,Remote,36
+2024-08-25,Data Science,Remote,28
+2024-08-25,DevOps,New York,34
+2024-08-26,Go,Remote,65
+2024-08-26,Python,London,76
+2024-08-26,Java,Remote,72
+2024-08-26,JavaScript,San Francisco,99
+2024-08-26,Data Science,New York,67
+2024-08-26,DevOps,New York,61
+2024-08-27,Go,Remote,82
+2024-08-27,Python,San Francisco,84
+2024-08-27,Java,San Francisco,81
+2024-08-27,JavaScript,San Francisco,119
+2024-08-27,Data Science,New York,90
+2024-08-27,DevOps,London,72
+2024-08-28,Go,New York,19
+2024-08-28,Python,New York,43
+2024-08-28,Java,Remote,72
+2024-08-28,JavaScript,New York,78
+2024-08-28,Data Science,New York,64
+2024-08-28,DevOps,London,30
+2024-08-29,Go,London,91
+2024-08-29,Python,London,76
+2024-08-29,Java,Remote,53
+2024-08-29,JavaScript,London,72
+2024-08-29,Data Science,San Francisco,80
+2024-08-29,DevOps,London,78
+2024-08-30,Go,New York,79
+2024-08-30,Python,London,74
+2024-08-30,Java,London,105
+2024-08-30,JavaScript,New York,105
+2024-08-30,Data Science,Remote,39
+2024-08-30,DevOps,San Francisco,31
+2024-08-31,Go,Remote,64
+2024-08-31,Python,London,105
+2024-08-31,Java,London,104
+2024-08-31,JavaScript,San Francisco,20
+2024-08-31,Data Science,San Francisco,70
+2024-08-31,DevOps,Remote,71
+2024-09-01,Go,London,49
+2024-09-01,Python,New York,50
+2024-09-01,Java,Remote,57
+2024-09-01,JavaScript,London,78
+2024-09-01,Data Science,San Francisco,100
+2024-09-01,DevOps,San Francisco,42
+2024-09-02,Go,Remote,73
+2024-09-02,Python,San Francisco,112
+2024-09-02,Java,London,69
+2024-09-02,JavaScript,San Francisco,102
+2024-09-02,Data Science,Remote,16
+2024-09-02,DevOps,London,47
+2024-09-03,Go,New York,27
+2024-09-03,Python,San Francisco,30
+2024-09-03,Java,New York,42
+2024-09-03,JavaScript,San Francisco,75
+2024-09-03,Data Science,Remote,21
+2024-09-03,DevOps,New York,54
+2024-09-04,Go,Remote,100
+2024-09-04,Python,New York,88
+2024-09-04,Java,San Francisco,62
+2024-09-04,JavaScript,New York,38
+2024-09-04,Data Science,London,68
+2024-09-04,DevOps,London,17
+2024-09-05,Go,Remote,79
+2024-09-05,Python,San Francisco,48
+2024-09-05,Java,New York,119
+2024-09-05,JavaScript,San Francisco,73
+2024-09-05,Data Science,London,68
+2024-09-05,DevOps,New York,59
+2024-09-06,Go,San Francisco,117
+2024-09-06,Python,London,112
+2024-09-06,Java,San Francisco,102
+2024-09-06,JavaScript,Remote,62
+2024-09-06,Data Science,Remote,95
+2024-09-06,DevOps,London,107
+2024-09-07,Go,New York,56
+2024-09-07,Python,Remote,71
+2024-09-07,Java,London,111
+2024-09-07,JavaScript,London,31
+2024-09-07,Data Science,New York,20
+2024-09-07,DevOps,San Francisco,25
+2024-09-08,Go,San Francisco,22
+2024-09-08,Python,London,64
+2024-09-08,Java,London,38
+2024-09-08,JavaScript,London,91
+2024-09-08,Data Science,London,41
+2024-09-08,DevOps,London,72
+2024-09-09,Go,London,65
+2024-09-09,Python,London,93
+2024-09-09,Java,London,24
+2024-09-09,JavaScript,London,90
+2024-09-09,Data Science,San Francisco,112
+2024-09-09,DevOps,London,24
+2024-09-10,Go,New York,49
+2024-09-10,Python,Remote,87
+2024-09-10,Java,San Francisco,18
+2024-09-10,JavaScript,London,118
+2024-09-10,Data Science,London,87
+2024-09-10,DevOps,London,52
+2024-09-11,Go,San Francisco,35
+2024-09-11,Python,Remote,53
+2024-09-11,Java,New York,109
+2024-09-11,JavaScript,Remote,20
+2024-09-11,Data Science,New York,72
+2024-09-11,DevOps,Remote,114
+2024-09-12,Go,New York,97
+2024-09-12,Python,San Francisco,78
+2024-09-12,Java,Remote,67
+2024-09-12,JavaScript,New York,60
+2024-09-12,Data Science,San Francisco,53
+2024-09-12,DevOps,London,91
+2024-09-13,Go,Remote,47
+2024-09-13,Python,San Francisco,16
+2024-09-13,Java,San Francisco,59
+2024-09-13,JavaScript,London,27
+2024-09-13,Data Science,London,20
+2024-09-13,DevOps,San Francisco,70
+2024-09-14,Go,London,83
+2024-09-14,Python,San Francisco,55
+2024-09-14,Java,New York,59
+2024-09-14,JavaScript,New York,103
+2024-09-14,Data Science,London,52
+2024-09-14,DevOps,London,21
+2024-09-15,Go,New York,67
+2024-09-15,Python,San Francisco,107
+2024-09-15,Java,Remote,76
+2024-09-15,JavaScript,Remote,20
+2024-09-15,Data Science,London,112
+2024-09-15,DevOps,New York,103
+2024-09-16,Go,San Francisco,65
+2024-09-16,Python,San Francisco,99
+2024-09-16,Java,San Francisco,64
+2024-09-16,JavaScript,San Francisco,51
+2024-09-16,Data Science,London,29
+2024-09-16,DevOps,New York,115
+2024-09-17,Go,London,72
+2024-09-17,Python,Remote,53
+2024-09-17,Java,Remote,109
+2024-09-17,JavaScript,San Francisco,88
+2024-09-17,Data Science,Remote,85
+2024-09-17,DevOps,Remote,103
+2024-09-18,Go,San Francisco,31
+2024-09-18,Python,Remote,36
+2024-09-18,Java,Remote,18
+2024-09-18,JavaScript,Remote,44
+2024-09-18,Data Science,London,25
+2024-09-18,DevOps,New York,69
+2024-09-19,Go,San Francisco,49
+2024-09-19,Python,San Francisco,51
+2024-09-19,Java,New York,85
+2024-09-19,JavaScript,London,118
+2024-09-19,Data Science,New York,34
+2024-09-19,DevOps,San Francisco,66
+2024-09-20,Go,Remote,91
+2024-09-20,Python,New York,64
+2024-09-20,Java,London,111
+2024-09-20,JavaScript,New York,37
+2024-09-20,Data Science,Remote,17
+2024-09-20,DevOps,New York,79
+2024-09-21,Go,San Francisco,22
+2024-09-21,Python,San Francisco,56
+2024-09-21,Java,London,51
+2024-09-21,JavaScript,London,80
+2024-09-21,Data Science,San Francisco,61
+2024-09-21,DevOps,New York,19
+2024-09-22,Go,New York,60
+2024-09-22,Python,London,38
+2024-09-22,Java,London,120
+2024-09-22,JavaScript,London,62
+2024-09-22,Data Science,London,54
+2024-09-22,DevOps,New York,84
+2024-09-23,Go,New York,19
+2024-09-23,Python,New York,16
+2024-09-23,Java,San Francisco,20
+2024-09-23,JavaScript,San Francisco,40
+2024-09-23,Data Science,San Francisco,19
+2024-09-23,DevOps,London,22
+2024-09-24,Go,Remote,62
+2024-09-24,Python,London,78
+2024-09-24,Java,San Francisco,25
+2024-09-24,JavaScript,London,45
+2024-09-24,Data Science,London,114
+2024-09-24,DevOps,London,35
+2024-09-25,Go,San Francisco,97
+2024-09-25,Python,Remote,19
+2024-09-25,Java,San Francisco,59
+2024-09-25,JavaScript,New York,40
+2024-09-25,Data Science,New York,66
+2024-09-25,DevOps,New York,82
+2024-09-26,Go,Remote,48
+2024-09-26,Python,San Francisco,40
+2024-09-26,Java,London,71
+2024-09-26,JavaScript,New York,118
+2024-09-26,Data Science,New York,19
+2024-09-26,DevOps,New York,35
+2024-09-27,Go,New York,38
+2024-09-27,Python,London,103
+2024-09-27,Java,London,64
+2024-09-27,JavaScript,San Francisco,29
+2024-09-27,Data Science,Remote,16
+2024-09-27,DevOps,San Francisco,57
+2024-09-28,Go,San Francisco,105
+2024-09-28,Python,San Francisco,85
+2024-09-28,Java,New York,57
+2024-09-28,JavaScript,New York,78
+2024-09-28,Data Science,Remote,26
+2024-09-28,DevOps,Remote,67
+2024-09-29,Go,London,72
+2024-09-29,Python,San Francisco,23
+2024-09-29,Java,Remote,69
+2024-09-29,JavaScript,San Francisco,104
+2024-09-29,Data Science,New York,47
+2024-09-29,DevOps,New York,40
+2024-09-30,Go,Remote,30
+2024-09-30,Python,London,106
+2024-09-30,Java,San Francisco,99
+2024-09-30,JavaScript,San Francisco,20
+2024-09-30,Data Science,Remote,36
+2024-09-30,DevOps,San Francisco,113
+2024-10-01,Go,San Francisco,97
+2024-10-01,Python,New York,75
+2024-10-01,Java,San Francisco,63
+2024-10-01,JavaScript,San Francisco,41
+2024-10-01,Data Science,Remote,83
+2024-10-01,DevOps,New York,28
+2024-10-02,Go,San Francisco,21
+2024-10-02,Python,Remote,87
+2024-10-02,Java,San Francisco,110
+2024-10-02,JavaScript,Remote,51
+2024-10-02,Data Science,New York,35
+2024-10-02,DevOps,San Francisco,50
+2024-10-03,Go,San Francisco,30
+2024-10-03,Python,London,55
+2024-10-03,Java,London,108
+2024-10-03,JavaScript,New York,34
+2024-10-03,Data Science,San Francisco,16
+2024-10-03,DevOps,Remote,106
+2024-10-04,Go,London,72
+2024-10-04,Python,Remote,30
+2024-10-04,Java,New York,39
+2024-10-04,JavaScript,Remote,91
+2024-10-04,Data Science,San Francisco,61
+2024-10-04,DevOps,New York,30
+2024-10-05,Go,New York,113
+2024-10-05,Python,New York,114
+2024-10-05,Java,London,67
+2024-10-05,JavaScript,San Francisco,103
+2024-10-05,Data Science,Remote,85
+2024-10-05,DevOps,New York,48
+2024-10-06,Go,Remote,28
+2024-10-06,Python,London,67
+2024-10-06,Java,New York,38
+2024-10-06,JavaScript,New York,69
+2024-10-06,Data Science,San Francisco,24
+2024-10-06,DevOps,New York,101
+2024-10-07,Go,New York,115
+2024-10-07,Python,Remote,65
+2024-10-07,Java,Remote,51
+2024-10-07,JavaScript,Remote,59
+2024-10-07,Data Science,New York,96
+2024-10-07,DevOps,Remote,94
+2024-10-08,Go,New York,77
+2024-10-08,Python,San Francisco,81
+2024-10-08,Java,New York,50
+2024-10-08,JavaScript,San Francisco,94
+2024-10-08,Data Science,Remote,110
+2024-10-08,DevOps,Remote,43
+2024-10-09,Go,New York,94
+2024-10-09,Python,New York,95
+2024-10-09,Java,New York,90
+2024-10-09,JavaScript,New York,77
+2024-10-09,Data Science,Remote,23
+2024-10-09,DevOps,Remote,76
+2024-10-10,Go,San Francisco,90
+2024-10-10,Python,Remote,19
+2024-10-10,Java,Remote,18
+2024-10-10,JavaScript,New York,107
+2024-10-10,Data Science,New York,82
+2024-10-10,DevOps,San Francisco,59
+2024-10-11,Go,New York,58
+2024-10-11,Python,New York,23
+2024-10-11,Java,London,89
+2024-10-11,JavaScript,San Francisco,55
+2024-10-11,Data Science,New York,22
+2024-10-11,DevOps,Remote,46
+2024-10-12,Go,Remote,66
+2024-10-12,Python,New York,34
+2024-10-12,Java,Remote,40
+2024-10-12,JavaScript,London,19
+2024-10-12,Data Science,Remote,63
+2024-10-12,DevOps,Remote,27
+2024-10-13,Go,Remote,31
+2024-10-13,Python,London,89
+2024-10-13,Java,New York,73
+2024-10-13,JavaScript,San Francisco,57
+2024-10-13,Data Science,London,44
+2024-10-13,DevOps,London,57
+2024-10-14,Go,New York,33
+2024-10-14,Python,New York,22
+2024-10-14,Java,New York,27
+2024-10-14,JavaScript,London,85
+2024-10-14,Data Science,San Francisco,56
+2024-10-14,DevOps,London,20
+2024-10-15,Go,New York,16
+2024-10-15,Python,New York,106
+2024-10-15,Java,San Francisco,59
+2024-10-15,JavaScript,New York,78
+2024-10-15,Data Science,New York,16
+2024-10-15,DevOps,San Francisco,72
+2024-10-16,Go,New York,76
+2024-10-16,Python,London,111
+2024-10-16,Java,San Francisco,36
+2024-10-16,JavaScript,Remote,53
+2024-10-16,Data Science,Remote,89
+2024-10-16,DevOps,New York,87
+2024-10-17,Go,Remote,50
+2024-10-17,Python,San Francisco,33
+2024-10-17,Java,New York,98
+2024-10-17,JavaScript,San Francisco,115
+2024-10-17,Data Science,San Francisco,26
+2024-10-17,DevOps,New York,88
+2024-10-18,Go,San Francisco,15
+2024-10-18,Python,Remote,69
+2024-10-18,Java,Remote,108
+2024-10-18,JavaScript,New York,19
+2024-10-18,Data Science,London,81
+2024-10-18,DevOps,Remote,92
+2024-10-19,Go,San Francisco,95
+2024-10-19,Python,New York,65
+2024-10-19,Java,London,63
+2024-10-19,JavaScript,New York,113
+2024-10-19,Data Science,San Francisco,42
+2024-10-19,DevOps,London,49
+2024-10-20,Go,Remote,95
+2024-10-20,Python,London,104
+2024-10-20,Java,London,100
+2024-10-20,JavaScript,Remote,88
+2024-10-20,Data Science,New York,95
+2024-10-20,DevOps,Remote,73
+2024-10-21,Go,Remote,69
+2024-10-21,Python,San Francisco,46
+2024-10-21,Java,New York,29
+2024-10-21,JavaScript,London,78
+2024-10-21,Data Science,Remote,31
+2024-10-21,DevOps,London,119
+2024-10-22,Go,Remote,56
+2024-10-22,Python,New York,102
+2024-10-22,Java,New York,91
+2024-10-22,JavaScript,San Francisco,19
+2024-10-22,Data Science,San Francisco,19
+2024-10-22,DevOps,Remote,52
+2024-10-23,Go,San Francisco,49
+2024-10-23,Python,San Francisco,57
+2024-10-23,Java,London,94
+2024-10-23,JavaScript,New York,58
+2024-10-23,Data Science,London,77
+2024-10-23,DevOps,San Francisco,71
+2024-10-24,Go,Remote,90
+2024-10-24,Python,New York,50
+2024-10-24,Java,New York,61
+2024-10-24,JavaScript,San Francisco,53
+2024-10-24,Data Science,New York,80
+2024-10-24,DevOps,London,58
+2024-10-25,Go,New York,49
+2024-10-25,Python,San Francisco,19
+2024-10-25,Java,Remote,108
+2024-10-25,JavaScript,New York,108
+2024-10-25,Data Science,Remote,75
+2024-10-25,DevOps,San Francisco,27
+2024-10-26,Go,New York,34
+2024-10-26,Python,Remote,82
+2024-10-26,Java,New York,70
+2024-10-26,JavaScript,London,45
+2024-10-26,Data Science,Remote,45
+2024-10-26,DevOps,Remote,62
+2024-10-27,Go,San Francisco,70
+2024-10-27,Python,London,100
+2024-10-27,Java,Remote,79
+2024-10-27,JavaScript,London,108
+2024-10-27,Data Science,New York,31
+2024-10-27,DevOps,New York,41
+2024-10-28,Go,New York,62
+2024-10-28,Python,New York,69
+2024-10-28,Java,London,67
+2024-10-28,JavaScript,Remote,63
+2024-10-28,Data Science,Remote,15
+2024-10-28,DevOps,San Francisco,105
+2024-10-29,Go,Remote,67
+2024-10-29,Python,London,26
+2024-10-29,Java,San Francisco,21
+2024-10-29,JavaScript,London,45
+2024-10-29,Data Science,London,88
+2024-10-29,DevOps,San Francisco,60
+2024-10-30,Go,London,81
+2024-10-30,Python,San Francisco,54
+2024-10-30,Java,London,39
+2024-10-30,JavaScript,Remote,69
+2024-10-30,Data Science,San Francisco,119
+2024-10-30,DevOps,San Francisco,51
+2024-10-31,Go,London,119
+2024-10-31,Python,Remote,58
+2024-10-31,Java,New York,65
+2024-10-31,JavaScript,San Francisco,113
+2024-10-31,Data Science,Remote,113
+2024-10-31,DevOps,London,90
+2024-11-01,Go,New York,104
+2024-11-01,Python,San Francisco,35
+2024-11-01,Java,San Francisco,77
+2024-11-01,JavaScript,London,108
+2024-11-01,Data Science,New York,101
+2024-11-01,DevOps,New York,45
+2024-11-02,Go,Remote,76
+2024-11-02,Python,London,96
+2024-11-02,Java,New York,24
+2024-11-02,JavaScript,San Francisco,48
+2024-11-02,Data Science,New York,47
+2024-11-02,DevOps,Remote,84
+2024-11-03,Go,Remote,77
+2024-11-03,Python,San Francisco,58
+2024-11-03,Java,San Francisco,117
+2024-11-03,JavaScript,Remote,113
+2024-11-03,Data Science,Remote,39
+2024-11-03,DevOps,San Francisco,89
+2024-11-04,Go,San Francisco,106
+2024-11-04,Python,London,32
+2024-11-04,Java,San Francisco,94
+2024-11-04,JavaScript,New York,28
+2024-11-04,Data Science,Remote,93
+2024-11-04,DevOps,New York,27
+2024-11-05,Go,New York,71
+2024-11-05,Python,San Francisco,106
+2024-11-05,Java,London,73
+2024-11-05,JavaScript,San Francisco,59
+2024-11-05,Data Science,London,25
+2024-11-05,DevOps,New York,35
+2024-11-06,Go,Remote,49
+2024-11-06,Python,London,107
+2024-11-06,Java,San Francisco,27
+2024-11-06,JavaScript,San Francisco,50
+2024-11-06,Data Science,Remote,104
+2024-11-06,DevOps,London,105
+2024-11-07,Go,Remote,58
+2024-11-07,Python,London,113
+2024-11-07,Java,New York,34
+2024-11-07,JavaScript,Remote,61
+2024-11-07,Data Science,Remote,50
+2024-11-07,DevOps,London,111
+2024-11-08,Go,San Francisco,49
+2024-11-08,Python,San Francisco,31
+2024-11-08,Java,London,96
+2024-11-08,JavaScript,London,27
+2024-11-08,Data Science,San Francisco,101
+2024-11-08,DevOps,London,57
+2024-11-09,Go,London,107
+2024-11-09,Python,Remote,53
+2024-11-09,Java,New York,113
+2024-11-09,JavaScript,New York,73
+2024-11-09,Data Science,Remote,41
+2024-11-09,DevOps,Remote,45
+2024-11-10,Go,San Francisco,87
+2024-11-10,Python,London,64
+2024-11-10,Java,London,44
+2024-11-10,JavaScript,London,110
+2024-11-10,Data Science,New York,105
+2024-11-10,DevOps,London,21
+2024-11-11,Go,New York,54
+2024-11-11,Python,San Francisco,74
+2024-11-11,Java,Remote,97
+2024-11-11,JavaScript,London,87
+2024-11-11,Data Science,Remote,54
+2024-11-11,DevOps,London,33
+2024-11-12,Go,New York,105
+2024-11-12,Python,New York,101
+2024-11-12,Java,New York,32
+2024-11-12,JavaScript,Remote,69
+2024-11-12,Data Science,London,24
+2024-11-12,DevOps,New York,26
+2024-11-13,Go,New York,18
+2024-11-13,Python,San Francisco,56
+2024-11-13,Java,Remote,119
+2024-11-13,JavaScript,New York,87
+2024-11-13,Data Science,London,20
+2024-11-13,DevOps,New York,56
+2024-11-14,Go,San Francisco,48
+2024-11-14,Python,San Francisco,91
+2024-11-14,Java,San Francisco,18
+2024-11-14,JavaScript,New York,51
+2024-11-14,Data Science,New York,16
+2024-11-14,DevOps,New York,54
+2024-11-15,Go,London,56
+2024-11-15,Python,Remote,111
+2024-11-15,Java,Remote,52
+2024-11-15,JavaScript,London,100
+2024-11-15,Data Science,London,17
+2024-11-15,DevOps,London,25
+2024-11-16,Go,London,49
+2024-11-16,Python,San Francisco,73
+2024-11-16,Java,Remote,28
+2024-11-16,JavaScript,San Francisco,61
+2024-11-16,Data Science,New York,109
+2024-11-16,DevOps,Remote,49
+2024-11-17,Go,New York,44
+2024-11-17,Python,Remote,34
+2024-11-17,Java,Remote,53
+2024-11-17,JavaScript,San Francisco,25
+2024-11-17,Data Science,New York,25
+2024-11-17,DevOps,Remote,75
+2024-11-18,Go,Remote,16
+2024-11-18,Python,Remote,55
+2024-11-18,Java,San Francisco,57
+2024-11-18,JavaScript,New York,118
+2024-11-18,Data Science,San Francisco,51
+2024-11-18,DevOps,New York,102
+2024-11-19,Go,London,49
+2024-11-19,Python,London,83
+2024-11-19,Java,New York,91
+2024-11-19,JavaScript,New York,24
+2024-11-19,Data Science,Remote,32
+2024-11-19,DevOps,Remote,28
+2024-11-20,Go,London,76
+2024-11-20,Python,Remote,96
+2024-11-20,Java,London,79
+2024-11-20,JavaScript,Remote,111
+2024-11-20,Data Science,San Francisco,21
+2024-11-20,DevOps,London,118
+2024-11-21,Go,New York,75
+2024-11-21,Python,London,86
+2024-11-21,Java,Remote,85
+2024-11-21,JavaScript,London,26
+2024-11-21,Data Science,Remote,81
+2024-11-21,DevOps,London,92
+2024-11-22,Go,New York,89
+2024-11-22,Python,New York,44
+2024-11-22,Java,Remote,74
+2024-11-22,JavaScript,New York,80
+2024-11-22,Data Science,London,91
+2024-11-22,DevOps,Remote,89
+2024-11-23,Go,New York,26
+2024-11-23,Python,Remote,17
+2024-11-23,Java,London,50
+2024-11-23,JavaScript,London,56
+2024-11-23,Data Science,Remote,57
+2024-11-23,DevOps,London,101
+2024-11-24,Go,Remote,25
+2024-11-24,Python,San Francisco,78
+2024-11-24,Java,Remote,117
+2024-11-24,JavaScript,New York,81
+2024-11-24,Data Science,San Francisco,40
+2024-11-24,DevOps,Remote,74
+2024-11-25,Go,New York,40
+2024-11-25,Python,London,36
+2024-11-25,Java,Remote,45
+2024-11-25,JavaScript,London,73
+2024-11-25,Data Science,London,98
+2024-11-25,DevOps,Remote,17
+2024-11-26,Go,New York,22
+2024-11-26,Python,Remote,119
+2024-11-26,Java,London,80
+2024-11-26,JavaScript,New York,110
+2024-11-26,Data Science,San Francisco,102
+2024-11-26,DevOps,New York,49
+2024-11-27,Go,London,61
+2024-11-27,Python,San Francisco,49
+2024-11-27,Java,New York,118
+2024-11-27,JavaScript,San Francisco,42
+2024-11-27,Data Science,New York,78
+2024-11-27,DevOps,San Francisco,67
+2024-11-28,Go,New York,49
+2024-11-28,Python,New York,93
+2024-11-28,Java,San Francisco,45
+2024-11-28,JavaScript,New York,78
+2024-11-28,Data Science,San Francisco,89
+2024-11-28,DevOps,San Francisco,75
+2024-11-29,Go,San Francisco,48
+2024-11-29,Python,San Francisco,99
+2024-11-29,Java,London,93
+2024-11-29,JavaScript,London,120
+2024-11-29,Data Science,New York,75
+2024-11-29,DevOps,London,45
+2024-11-30,Go,San Francisco,48
+2024-11-30,Python,London,107
+2024-11-30,Java,Remote,19
+2024-11-30,JavaScript,Remote,77
+2024-11-30,Data Science,Remote,56
+2024-11-30,DevOps,New York,17
+2024-12-01,Go,Remote,93
+2024-12-01,Python,London,15
+2024-12-01,Java,San Francisco,44
+2024-12-01,JavaScript,San Francisco,87
+2024-12-01,Data Science,New York,44
+2024-12-01,DevOps,San Francisco,29
+2024-12-02,Go,London,24
+2024-12-02,Python,New York,20
+2024-12-02,Java,Remote,107
+2024-12-02,JavaScript,Remote,77
+2024-12-02,Data Science,London,97
+2024-12-02,DevOps,London,28
+2024-12-03,Go,London,99
+2024-12-03,Python,San Francisco,85
+2024-12-03,Java,Remote,30
+2024-12-03,JavaScript,Remote,90
+2024-12-03,Data Science,San Francisco,15
+2024-12-03,DevOps,San Francisco,47
+2024-12-04,Go,New York,42
+2024-12-04,Python,New York,51
+2024-12-04,Java,Remote,56
+2024-12-04,JavaScript,London,23
+2024-12-04,Data Science,San Francisco,101
+2024-12-04,DevOps,San Francisco,60
+2024-12-05,Go,Remote,83
+2024-12-05,Python,San Francisco,68
+2024-12-05,Java,San Francisco,25
+2024-12-05,JavaScript,San Francisco,24
+2024-12-05,Data Science,London,72
+2024-12-05,DevOps,San Francisco,90
+2024-12-06,Go,San Francisco,69
+2024-12-06,Python,New York,76
+2024-12-06,Java,New York,26
+2024-12-06,JavaScript,London,77
+2024-12-06,Data Science,Remote,103
+2024-12-06,DevOps,London,47
+2024-12-07,Go,Remote,114
+2024-12-07,Python,San Francisco,28
+2024-12-07,Java,San Francisco,104
+2024-12-07,JavaScript,San Francisco,93
+2024-12-07,Data Science,London,62
+2024-12-07,DevOps,New York,94
+2024-12-08,Go,New York,82
+2024-12-08,Python,San Francisco,74
+2024-12-08,Java,San Francisco,64
+2024-12-08,JavaScript,Remote,26
+2024-12-08,Data Science,Remote,27
+2024-12-08,DevOps,Remote,118
+2024-12-09,Go,London,48
+2024-12-09,Python,New York,18
+2024-12-09,Java,San Francisco,98
+2024-12-09,JavaScript,San Francisco,109
+2024-12-09,Data Science,San Francisco,115
+2024-12-09,DevOps,San Francisco,40
+2024-12-10,Go,Remote,103
+2024-12-10,Python,London,55
+2024-12-10,Java,New York,56
+2024-12-10,JavaScript,Remote,55
+2024-12-10,Data Science,Remote,43
+2024-12-10,DevOps,San Francisco,54
+2024-12-11,Go,San Francisco,56
+2024-12-11,Python,San Francisco,27
+2024-12-11,Java,New York,15
+2024-12-11,JavaScript,Remote,104
+2024-12-11,Data Science,New York,97
+2024-12-11,DevOps,Remote,33
+2024-12-12,Go,San Francisco,42
+2024-12-12,Python,New York,103
+2024-12-12,Java,Remote,113
+2024-12-12,JavaScript,Remote,50
+2024-12-12,Data Science,London,115
+2024-12-12,DevOps,San Francisco,58
+2024-12-13,Go,San Francisco,98
+2024-12-13,Python,San Francisco,105
+2024-12-13,Java,San Francisco,41
+2024-12-13,JavaScript,San Francisco,80
+2024-12-13,Data Science,London,77
+2024-12-13,DevOps,Remote,53
+2024-12-14,Go,New York,21
+2024-12-14,Python,San Francisco,37
+2024-12-14,Java,San Francisco,79
+2024-12-14,JavaScript,San Francisco,32
+2024-12-14,Data Science,Remote,79
+2024-12-14,DevOps,New York,90
+2024-12-15,Go,San Francisco,73
+2024-12-15,Python,Remote,17
+2024-12-15,Java,Remote,70
+2024-12-15,JavaScript,San Francisco,35
+2024-12-15,Data Science,New York,89
+2024-12-15,DevOps,San Francisco,111
+2024-12-16,Go,New York,58
+2024-12-16,Python,Remote,112
+2024-12-16,Java,Remote,56
+2024-12-16,JavaScript,New York,71
+2024-12-16,Data Science,Remote,114
+2024-12-16,DevOps,Remote,60
+2024-12-17,Go,San Francisco,46
+2024-12-17,Python,San Francisco,83
+2024-12-17,Java,New York,91
+2024-12-17,JavaScript,Remote,80
+2024-12-17,Data Science,London,27
+2024-12-17,DevOps,Remote,54
+2024-12-18,Go,San Francisco,24
+2024-12-18,Python,New York,37
+2024-12-18,Java,London,71
+2024-12-18,JavaScript,San Francisco,62
+2024-12-18,Data Science,Remote,64
+2024-12-18,DevOps,New York,65
+2024-12-19,Go,London,52
+2024-12-19,Python,New York,115
+2024-12-19,Java,Remote,76
+2024-12-19,JavaScript,Remote,19
+2024-12-19,Data Science,Remote,25
+2024-12-19,DevOps,New York,63
+2024-12-20,Go,Remote,67
+2024-12-20,Python,San Francisco,50
+2024-12-20,Java,New York,68
+2024-12-20,JavaScript,London,105
+2024-12-20,Data Science,Remote,39
+2024-12-20,DevOps,New York,45
+2024-12-21,Go,London,115
+2024-12-21,Python,New York,111
+2024-12-21,Java,London,111
+2024-12-21,JavaScript,New York,56
+2024-12-21,Data Science,Remote,30
+2024-12-21,DevOps,London,21
+2024-12-22,Go,San Francisco,18
+2024-12-22,Python,San Francisco,25
+2024-12-22,Java,New York,42
+2024-12-22,JavaScript,New York,23
+2024-12-22,Data Science,Remote,48
+2024-12-22,DevOps,Remote,48
+2024-12-23,Go,Remote,111
+2024-12-23,Python,London,107
+2024-12-23,Java,New York,27
+2024-12-23,JavaScript,Remote,70
+2024-12-23,Data Science,San Francisco,72
+2024-12-23,DevOps,New York,43
+2024-12-24,Go,London,117
+2024-12-24,Python,Remote,93
+2024-12-24,Java,San Francisco,41
+2024-12-24,JavaScript,Remote,90
+2024-12-24,Data Science,Remote,48
+2024-12-24,DevOps,Remote,63
+2024-12-25,Go,San Francisco,95
+2024-12-25,Python,New York,77
+2024-12-25,Java,New York,57
+2024-12-25,JavaScript,London,16
+2024-12-25,Data Science,New York,34
+2024-12-25,DevOps,San Francisco,27
+2024-12-26,Go,New York,87
+2024-12-26,Python,New York,54
+2024-12-26,Java,San Francisco,31
+2024-12-26,JavaScript,Remote,34
+2024-12-26,Data Science,New York,22
+2024-12-26,DevOps,London,109
+2024-12-27,Go,San Francisco,81
+2024-12-27,Python,San Francisco,98
+2024-12-27,Java,San Francisco,64
+2024-12-27,JavaScript,London,39
+2024-12-27,Data Science,London,86
+2024-12-27,DevOps,London,96
+2024-12-28,Go,Remote,110
+2024-12-28,Python,New York,84
+2024-12-28,Java,London,75
+2024-12-28,JavaScript,New York,108
+2024-12-28,Data Science,Remote,46
+2024-12-28,DevOps,New York,35
+2024-12-29,Go,London,78
+2024-12-29,Python,Remote,99
+2024-12-29,Java,London,30
+2024-12-29,JavaScript,Remote,59
+2024-12-29,Data Science,San Francisco,78
+2024-12-29,DevOps,Remote,79
+2024-12-30,Go,London,50
+2024-12-30,Python,London,65
+2024-12-30,Java,London,97
+2024-12-30,JavaScript,London,71
+2024-12-30,Data Science,San Francisco,113
+2024-12-30,DevOps,Remote,50
