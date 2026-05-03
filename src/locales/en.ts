@@ -61,5 +61,18 @@ export const en = {
     demoCredentials: "Demo credentials: user@example.com / password",
     invalidCredentials: "Invalid credentials.",
     somethingWentWrong: "Something went wrong.",
+    noAccount: "Don't have an account? Sign up",
+  },
+  register: {
+    title: "Create Account",
+    subtitle: "Join us to manage your finances",
+    nameLabel: "Name",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    signUpButton: "Sign Up",
+    signingUpText: "Signing up...",
+    alreadyHaveAccount: "Already have an account? Sign in",
+    errorEmailTaken: "Email is already taken.",
+    somethingWentWrong: "Something went wrong.",
   }
 };

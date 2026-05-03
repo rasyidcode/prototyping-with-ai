@@ -1,16 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState } from "react";
-import { authenticate } from "./actions";
-import { Activity, LogIn, Globe } from "lucide-react";
+import { registerUser } from "./actions";
+import { Activity, UserPlus, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const { t, language, setLanguage } = useLanguage();
   const [errorMessage, formAction, isPending] = useActionState(
-    authenticate,
+    registerUser,
     undefined,
   );
 
@@ -41,16 +41,33 @@ export default function LoginPage() {
             <Activity size={32} />
           </div>
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-            {t.app.title}
+            {t.register.title}
           </h1>
-          <p className="text-slate-400 mt-2">{t.login.subtitle}</p>
+          <p className="text-slate-400 mt-2">{t.register.subtitle}</p>
         </div>
 
         <div className="glass-card rounded-3xl p-8">
           <form action={formAction} className="space-y-6">
             <div>
+              <label className="block text-sm font-medium text-slate-400 mb-2" htmlFor="name">
+                {t.register.nameLabel}
+              </label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                placeholder="John Doe"
+                required
+                className={cn(
+                  "w-full bg-slate-900/50 border border-slate-700/50 rounded-xl px-4 py-3",
+                  "text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 transition-all"
+                )}
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-slate-400 mb-2" htmlFor="email">
-                {t.login.emailLabel}
+                {t.register.emailLabel}
               </label>
               <input
                 id="email"
@@ -62,13 +79,12 @@ export default function LoginPage() {
                   "w-full bg-slate-900/50 border border-slate-700/50 rounded-xl px-4 py-3",
                   "text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 transition-all"
                 )}
-                defaultValue=""
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-400 mb-2" htmlFor="password">
-                {t.login.passwordLabel}
+                {t.register.passwordLabel}
               </label>
               <input
                 id="password"
@@ -76,20 +92,20 @@ export default function LoginPage() {
                 name="password"
                 placeholder="••••••••"
                 required
+                minLength={6}
                 className={cn(
                   "w-full bg-slate-900/50 border border-slate-700/50 rounded-xl px-4 py-3",
                   "text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 transition-all"
                 )}
-                defaultValue=""
               />
             </div>
 
             {errorMessage && (
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                 <p className="text-sm text-red-400 text-center">
-                  {errorMessage === "invalidCredentials" 
-                    ? t.login.invalidCredentials 
-                    : t.login.somethingWentWrong}
+                  {errorMessage === "errorEmailTaken" 
+                    ? t.register.errorEmailTaken 
+                    : t.register.somethingWentWrong}
                 </p>
               </div>
             )}
@@ -102,17 +118,17 @@ export default function LoginPage() {
                 isPending ? "opacity-70 cursor-not-allowed" : ""
               )}
             >
-              {isPending ? t.login.signingInText : (
+              {isPending ? t.register.signingUpText : (
                 <>
-                  <LogIn size={18} />
-                  {t.login.signInButton}
+                  <UserPlus size={18} />
+                  {t.register.signUpButton}
                 </>
               )}
             </button>
             
             <p className="text-sm text-center text-slate-500 mt-4">
-              <Link href="/register" className="hover:text-brand-400 transition-colors">
-                {t.login.noAccount}
+              <Link href="/login" className="hover:text-brand-400 transition-colors">
+                {t.register.alreadyHaveAccount}
               </Link>
             </p>
           </form>

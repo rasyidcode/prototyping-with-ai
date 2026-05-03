@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { getTransactions, addTransaction as addTransactionAction, updateTransaction as updateTransactionAction, deleteTransaction as deleteTransactionAction } from "@/actions/transactions";
 
 export type TransactionType = "income" | "expense";
 
@@ -19,9 +20,9 @@ export interface Transaction {
 
 interface ExpenseContextType {
   transactions: Transaction[];
-  addTransaction: (transaction: Omit<Transaction, "id">) => void;
-  deleteTransaction: (id: string) => void;
-  editTransaction: (id: string, updatedTransaction: Omit<Transaction, "id">) => void;
+  addTransaction: (transaction: Omit<Transaction, "id">) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
+  editTransaction: (id: string, updatedTransaction: Omit<Transaction, "id">) => Promise<void>;
   editingTransaction: Transaction | null;
   setEditingTransaction: (transaction: Transaction | null) => void;
   isLoading: boolean;
@@ -34,52 +35,78 @@ export function ExpenseProvider({ children }: { children: React.ReactNode }) {
   const [editingTransaction, setEditingTransaction] = useState<Transaction | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load from local storage on mount
+  // Load from database on mount
   useEffect(() => {
-    const saved = localStorage.getItem("transactions") || localStorage.getItem("expenses"); // fallback to old key
-    if (saved) {
+    async function loadData() {
       try {
-        const parsed = JSON.parse(saved);
-        // Migration for old data
-        const migrated = parsed.map((item: any) => ({
-          ...item,
-          type: item.type || "expense"
-        }));
-        setTransactions(migrated);
+        const data = await getTransactions();
+        setTransactions(data as Transaction[]);
       } catch (e) {
-        console.error("Failed to parse transactions from local storage");
+        console.error("Failed to fetch transactions", e);
+      } finally {
+        setIsLoading(false);
       }
     }
-    setIsLoading(false);
+    loadData();
   }, []);
 
-  // Save to local storage on change
-  useEffect(() => {
-    if (!isLoading) {
-      localStorage.setItem("transactions", JSON.stringify(transactions));
-    }
-  }, [transactions, isLoading]);
-
-  const addTransaction = (transaction: Omit<Transaction, "id">) => {
+  const addTransaction = async (transaction: Omit<Transaction, "id">) => {
     const newTransaction = {
       ...transaction,
       id: crypto.randomUUID(),
     };
-    setTransactions((prev) => [newTransaction, ...prev]);
+    
+    // Optimistic update
+    setTransactions((prev) => [newTransaction as Transaction, ...prev]);
+    
+    // Persist to DB
+    try {
+      await addTransactionAction(newTransaction as Transaction);
+    } catch (error) {
+      console.error("Failed to add transaction to DB", error);
+      // Revert optimistic update on error
+      setTransactions((prev) => prev.filter(t => t.id !== newTransaction.id));
+    }
   };
 
-  const deleteTransaction = (id: string) => {
+  const deleteTransaction = async (id: string) => {
+    // Keep a backup for rollback
+    const previousTransactions = [...transactions];
+    
+    // Optimistic update
     setTransactions((prev) => prev.filter((t) => t.id !== id));
     if (editingTransaction?.id === id) {
       setEditingTransaction(null);
     }
+    
+    // Persist to DB
+    try {
+      await deleteTransactionAction(id);
+    } catch (error) {
+      console.error("Failed to delete transaction from DB", error);
+      // Revert optimistic update
+      setTransactions(previousTransactions);
+    }
   };
 
-  const editTransaction = (id: string, updatedTransaction: Omit<Transaction, "id">) => {
+  const editTransaction = async (id: string, updatedTransaction: Omit<Transaction, "id">) => {
+    const previousTransactions = [...transactions];
+    const newTx = { ...updatedTransaction, id };
+    
+    // Optimistic update
     setTransactions((prev) => 
-      prev.map((t) => (t.id === id ? { ...updatedTransaction, id } : t))
+      prev.map((t) => (t.id === id ? newTx as Transaction : t))
     );
     setEditingTransaction(null);
+    
+    // Persist to DB
+    try {
+      await updateTransactionAction(id, newTx as Transaction);
+    } catch (error) {
+      console.error("Failed to update transaction in DB", error);
+      // Revert optimistic update
+      setTransactions(previousTransactions);
+    }
   };
 
   return (

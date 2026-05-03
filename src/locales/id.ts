@@ -61,5 +61,18 @@ export const id = {
     demoCredentials: "Kredensial demo: user@example.com / password",
     invalidCredentials: "Kredensial tidak valid.",
     somethingWentWrong: "Terjadi kesalahan.",
+    noAccount: "Belum punya akun? Daftar",
+  },
+  register: {
+    title: "Buat Akun",
+    subtitle: "Bergabunglah untuk mengelola keuangan Anda",
+    nameLabel: "Nama",
+    emailLabel: "Email",
+    passwordLabel: "Kata Sandi",
+    signUpButton: "Daftar",
+    signingUpText: "Mendaftar...",
+    alreadyHaveAccount: "Sudah punya akun? Masuk",
+    errorEmailTaken: "Email sudah digunakan.",
+    somethingWentWrong: "Terjadi kesalahan.",
   }
 };
