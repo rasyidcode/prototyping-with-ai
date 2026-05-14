@@ -8,6 +8,15 @@ interface AuraEffectProps {
   className?: string;
 }
 
+const particles = [
+  { x: "8%", duration: 2.2, delay: 0.1, size: 28 },
+  { x: "24%", duration: 3.1, delay: 0.8, size: 38 },
+  { x: "41%", duration: 2.6, delay: 1.3, size: 32 },
+  { x: "57%", duration: 3.7, delay: 0.4, size: 46 },
+  { x: "73%", duration: 2.9, delay: 1.7, size: 35 },
+  { x: "89%", duration: 3.4, delay: 1.0, size: 42 },
+];
+
 export const AuraEffect = ({ type, className }: AuraEffectProps) => {
   if (type === "none") return null;
 
@@ -50,24 +59,24 @@ export const AuraEffect = ({ type, className }: AuraEffectProps) => {
         }}
       />
       <div className="absolute inset-0 overflow-hidden">
-        {[...Array(6)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
-            initial={{ y: "100%", x: Math.random() * 100 + "%", opacity: 0 }}
+            initial={{ y: "100%", x: particle.x, opacity: 0 }}
             animate={{ 
               y: "-20%", 
               opacity: [0, 1, 0],
               scale: [1, 1.5, 0.8]
             }}
             transition={{
-              duration: 2 + Math.random() * 2,
+              duration: particle.duration,
               repeat: Infinity,
-              delay: Math.random() * 2
+              delay: particle.delay
             }}
             className="absolute"
             style={{ color: current.color.replace("0.4", "1") }}
           >
-            <current.icon size={24 + Math.random() * 24} />
+            <current.icon size={particle.size} />
           </motion.div>
         ))}
       </div>

@@ -80,7 +80,7 @@ export default function App() {
         createdAt: Date.now(),
       };
       setHistory(prev => [newEntry, ...prev]);
-    } catch (err) {
+    } catch {
       setError("The transformation was interrupted by an enemy Stand! (AI Error)");
       setStep("config");
     }
@@ -486,4 +486,3 @@ export default function App() {
     </div>
   );
 }
-
