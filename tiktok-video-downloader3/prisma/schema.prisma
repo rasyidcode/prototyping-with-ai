@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "sqlite"
+}
+
+model DownloadRecord {
+    id           String   @id @default(cuid())
+    videoUrl     String   @unique
+    videoId      String
+    title        String?
+    author       String?
+    quality      String   @default("high")
+    downloadedAt DateTime @default(now())
+    status       String   @default("success") // success | failed
+    errorMessage String?
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@index([videoId])
+    @@index([downloadedAt])
+}
