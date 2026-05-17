@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C Online Compiler</title>
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background-color: #1e1e1e;
+        color: #d4d4d4;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+      header {
+        background-color: #333;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #444;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        background-color: #0e639c;
+        color: white;
+        border: none;
+        padding: 6px 15px;
+        cursor: pointer;
+        border-radius: 2px;
+        font-weight: bold;
+      }
+      button:hover {
+        background-color: #1177bb;
+      }
+      button:disabled {
+        background-color: #555;
+        cursor: not-allowed;
+      }
+      #main-container {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+      }
+      #editor {
+        flex: 1;
+        height: 100%;
+      }
+      #output-container {
+        width: 400px;
+        background-color: #000;
+        border-left: 1px solid #444;
+        display: flex;
+        flex-direction: column;
+      }
+      #output-header {
+        background-color: #252526;
+        padding: 5px 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+        color: #aaa;
+      }
+      #output {
+        flex: 1;
+        padding: 10px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-size: 14px;
+        overflow-y: auto;
+        white-space: pre-wrap;
+      }
+      .error { color: #f48771; }
+      .system { color: #75beff; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo">C Online Compiler</div>
+        <div class="controls">
+          <select id="compiler-select">
+            <option value="syrusakbary/tcc">TCC (Fast)</option>
+            <option value="clang/clang">Clang (Full)</option>
+          </select>
+          <button id="run-btn">Run</button>
+        </div>
+      </header>
+      <div id="main-container">
+        <div id="editor"></div>
+        <div id="output-container">
+          <div id="output-header">Output</div>
+          <div id="output"></div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
