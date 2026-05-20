@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple HR System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>Simple HR System</h1>
+        <p>Employee and leave management</p>
+      </div>
+      <button id="seedBtn" class="secondary">Seed Demo Data</button>
+    </header>
+
+    <main class="layout">
+      <section class="card stats">
+        <h2>Dashboard</h2>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <span>Total Employees</span>
+            <strong id="totalEmployees">0</strong>
+          </div>
+          <div class="stat-item">
+            <span>Pending Leaves</span>
+            <strong id="pendingLeaves">0</strong>
+          </div>
+          <div class="stat-item">
+            <span>Approved Leaves</span>
+            <strong id="approvedLeaves">0</strong>
+          </div>
+          <div class="stat-item">
+            <span>Rejected Leaves</span>
+            <strong id="rejectedLeaves">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Add Employee</h2>
+        <form id="employeeForm" class="form-grid">
+          <input id="name" placeholder="Full name" required />
+          <input id="email" type="email" placeholder="Email" required />
+          <input id="role" placeholder="Role" required />
+          <input id="department" placeholder="Department" required />
+          <input id="joinDate" type="date" required />
+          <button type="submit">Save Employee</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>Employees</h2>
+          <input id="searchEmployees" placeholder="Search by name or department" />
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="employeeTable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Create Leave Request</h2>
+        <form id="leaveForm" class="form-grid leave-grid">
+          <select id="employeeSelect" required>
+            <option value="">Select employee</option>
+          </select>
+          <input id="leaveStart" type="date" required />
+          <input id="leaveEnd" type="date" required />
+          <select id="leaveType" required>
+            <option value="">Leave type</option>
+            <option value="Annual">Annual</option>
+            <option value="Sick">Sick</option>
+            <option value="Unpaid">Unpaid</option>
+          </select>
+          <input id="leaveReason" placeholder="Reason" required />
+          <button type="submit">Submit Leave</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="section-head">
+          <h2>Leave Requests</h2>
+          <select id="leaveFilter">
+            <option value="All">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Type</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leaveTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

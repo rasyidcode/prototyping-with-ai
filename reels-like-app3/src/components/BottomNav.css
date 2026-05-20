@@ -1,0 +1,42 @@
+.bottom-nav {
+    height: 50px;
+    width: 100%;
+    background: black;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+    flex-shrink: 0;
+    /* Prevent shrinking when feed expands */
+}
+
+.nav-item {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.nav-item.active {
+    opacity: 1;
+}
+
+.nav-item.add-btn {
+    background: white;
+    /* Contrast for emphasis */
+    color: black;
+    width: 40px;
+    height: 25px;
+    /* Boxy 'Add' button style */
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+.nav-item.add-btn span {
+    font-size: 16px;
+    font-weight: bold;
+}

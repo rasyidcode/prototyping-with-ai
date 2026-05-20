@@ -1,0 +1,236 @@
+.video-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    scroll-snap-align: start;
+    /* Critical for scroll snap */
+    overflow: hidden;
+}
+
+.video-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures video fills screen like a Reel */
+    display: block;
+}
+
+/* Header */
+.video-header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Overlay UI */
+.video-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+    pointer-events: none;
+    /* Let clicks pass through to video */
+}
+
+/* Allow pointer events on specific interactive elements */
+.actions-sidebar,
+.video-footer {
+    pointer-events: auto;
+}
+
+/* Sidebar Actions */
+.actions-sidebar {
+    position: absolute;
+    right: 10px;
+    bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.action-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.action-item .icon {
+    font-size: 28px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.action-item .icon:active {
+    transform: scale(1.2);
+}
+
+.action-item .count {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Footer Info */
+.video-footer {
+    margin-right: 60px;
+    /* Space for sidebar */
+    margin-bottom: 20px;
+    color: white;
+    text-align: left;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.user-info .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ddd;
+    margin-right: 10px;
+}
+
+.user-info strong {
+    margin-right: 10px;
+    font-size: 16px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.follow-btn {
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.description {
+    font-size: 14px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.song-ticker {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.music-icon {
+    margin-right: 10px;
+}
+
+/* Play Icon Overlay */
+.play-icon-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+    z-index: 20;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.5);
+    }
+}
+
+/* Big Heart Animation */
+.big-heart-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    color: var(--color-accent);
+    /* Use our accent color */
+    pointer-events: none;
+    animation: popAndFade 0.8s ease-out forwards;
+    z-index: 30;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes popAndFade {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+
+    40% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Progress Bar */
+.progress-container {
+    position: absolute;
+    bottom: 0px;
+    /* Right at the very edge */
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    z-index: 15;
+}
+
+.progress-bar {
+    height: 100%;
+    background: white;
+    transition: width 0.1s linear;
+}
+
+/* Mute Toggle */
+.mute-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
+    font-size: 24px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.3);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
