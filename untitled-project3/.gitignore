@@ -1,0 +1,46 @@
+# Composer
+vendor/
+composer.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Private keys and secrets
+keys/private.key
+keys/*.pem
+.secrets/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# PHP and web server
+.php-cs-fixer.cache
+.phpunit.cache
+*.log
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+
+# Session files
+/tmp/
+/cache/
+
+# Local development
+.vagrant/
+Vagrantfile
+docker-compose.override.yml
