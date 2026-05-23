@@ -11,26 +11,9 @@ import {
 import { questions } from "./data/questions";
 import { getLiveTriviaState, formatQuestionNumber } from "./lib/liveTrivia";
 import { calculateScore } from "./lib/scoring";
-import { filterQuestions } from "./lib/questionRotation";
 import { loadStats, saveStats } from "./lib/storage";
-import type { TriviaCategory, TriviaDifficulty, TriviaStats } from "./types";
+import type { TriviaStats } from "./types";
 
-const categoryLabels: Record<TriviaCategory | "all", string> = {
-  all: "All",
-  heroes: "Heroes",
-  abilities: "Abilities",
-  items: "Items",
-  mechanics: "Mechanics",
-  objectives: "Objectives",
-  roles: "Roles",
-};
-
-const difficultyLabels: Record<TriviaDifficulty | "all", string> = {
-  all: "All",
-  easy: "Easy",
-  medium: "Medium",
-  hard: "Hard",
-};
 
 type AnswerState =
   | { status: "idle" }
@@ -67,35 +50,22 @@ function formatTime(totalSeconds: number) {
   return minutes + ":" + seconds;
 }
 
-function makeAnswerKey(
-  questionNumber: number,
-  category: TriviaCategory | "all",
-  difficulty: TriviaDifficulty | "all",
-) {
-  return questionNumber + ":" + category + ":" + difficulty;
+function makeAnswerKey(questionNumber: number) {
+  return questionNumber.toString();
 }
 
 export function App() {
   const [stats, setStats] = useState<TriviaStats>(() => loadStats());
-  const [category, setCategory] = useState<TriviaCategory | "all">(stats.lastCategory);
-  const [difficulty, setDifficulty] = useState<TriviaDifficulty | "all">(stats.lastDifficulty);
   const [run, setRun] = useState<LiveRunState>(() => createInitialRun());
   const [nowMs, setNowMs] = useState(() => Date.now());
   const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, AnswerState>>({});
 
-  const activePool = useMemo(
-    () => filterQuestions(questions, category, difficulty),
-    [category, difficulty],
-  );
-
   const liveState = useMemo(
-    () => (activePool.length > 0 ? getLiveTriviaState({ nowMs, pool: activePool }) : null),
-    [activePool, nowMs],
+    () => (questions.length > 0 ? getLiveTriviaState({ nowMs, pool: questions }) : null),
+    [nowMs],
   );
 
-  const answerKey = liveState
-    ? makeAnswerKey(liveState.questionNumber, category, difficulty)
-    : "no-question";
+  const answerKey = liveState ? makeAnswerKey(liveState.questionNumber) : "no-question";
   const answerState = answeredQuestions[answerKey] ?? { status: "idle" };
 
   useEffect(() => {
@@ -103,10 +73,6 @@ export function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    const nextStats = { ...stats, lastCategory: category, lastDifficulty: difficulty };
-    saveStats(nextStats);
-  }, [category, difficulty, stats]);
 
   const recordAnswer = useCallback(
     (selectedIndex: number | null, remainingSeconds: number) => {
@@ -146,14 +112,14 @@ export function App() {
           correct: current.correct + (isCorrect ? 1 : 0),
         };
 
-        const nextStats = {
+        const nextStats: TriviaStats = {
           ...stats,
           bestScore: Math.max(stats.bestScore, nextRun.score),
           totalAnswered: stats.totalAnswered + 1,
           totalCorrect: stats.totalCorrect + (isCorrect ? 1 : 0),
           longestStreak: Math.max(stats.longestStreak, nextRun.longestStreak),
-          lastCategory: category,
-          lastDifficulty: difficulty,
+          lastCategory: "all",
+          lastDifficulty: "all",
         };
         setStats(nextStats);
         saveStats(nextStats);
@@ -161,7 +127,7 @@ export function App() {
         return nextRun;
       });
     },
-    [answerKey, answerState.status, category, difficulty, liveState, run.streak, stats],
+    [answerKey, answerState.status, liveState, run.streak, stats],
   );
 
   useEffect(() => {
@@ -203,28 +169,11 @@ export function App() {
         </div>
       </section>
 
-      <section className="control-strip" aria-label="Trivia filters">
-        <SegmentedControl
-          label="Category"
-          value={category}
-          options={Object.entries(categoryLabels)}
-          onChange={(value) => setCategory(value as TriviaCategory | "all")}
-        />
-        <SegmentedControl
-          label="Difficulty"
-          value={difficulty}
-          options={Object.entries(difficultyLabels)}
-          onChange={(value) => setDifficulty(value as TriviaDifficulty | "all")}
-        />
-      </section>
-
       <section className="play-surface">
         {liveState ? (
           <article className="question-panel">
             <div className="question-meta">
               <span>{formatQuestionNumber(liveState.questionNumber)}</span>
-              <span>{categoryLabels[liveState.question.category]}</span>
-              <span>{difficultyLabels[liveState.question.difficulty]}</span>
               <span>{liveState.remainingSeconds}s</span>
             </div>
             <div className="timer-track" aria-label={liveState.remainingSeconds + " seconds remaining"}>
@@ -280,7 +229,7 @@ export function App() {
         ) : (
           <article className="start-panel">
             <p className="eyebrow">No questions available</p>
-            <h2>Try another filter.</h2>
+            <h2>Question bank is empty.</h2>
           </article>
         )}
 
@@ -316,32 +265,3 @@ function Metric({
   );
 }
 
-function SegmentedControl({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: [string, string][];
-  onChange: (value: string) => void;
-}) {
-  return (
-    <fieldset className="segmented">
-      <legend>{label}</legend>
-      <div>
-        {options.map(([optionValue, optionLabel]) => (
-          <button
-            aria-pressed={value === optionValue}
-            key={optionValue}
-            onClick={() => onChange(optionValue)}
-            type="button"
-          >
-            {optionLabel}
-          </button>
-        ))}
-      </div>
-    </fieldset>
-  );
-}

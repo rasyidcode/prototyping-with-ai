@@ -10,6 +10,8 @@ describe("App", () => {
     expect(screen.getAllByText(/^#\d/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /^answer [a-d]:/i })).toHaveLength(4);
+    expect(screen.queryByText("Category")).not.toBeInTheDocument();
+    expect(screen.queryByText("Difficulty")).not.toBeInTheDocument();
   });
 
   it("shows answer feedback and prevents duplicate answers", async () => {
