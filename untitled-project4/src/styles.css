@@ -193,12 +193,16 @@ button {
 .answers {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(72px, auto);
+  align-items: stretch;
   gap: 8px;
   padding: 0 18px;
 }
 
 .answer-button {
+  position: relative;
   min-height: 72px;
+  height: 100%;
   display: grid;
   grid-template-columns: minmax(18px, auto) minmax(0, 1fr);
   align-items: center;
@@ -224,6 +228,7 @@ button {
 }
 
 .answer-letter {
+  position: relative;
   align-self: start;
   color: #b9f9ff;
   font-size: 1.02rem;
@@ -251,10 +256,14 @@ button {
 
 .answer-correct .answer-letter::after {
   content: "✓";
+  position: absolute;
+  left: 0;
+  top: 24px;
   display: block;
-  margin-top: 12px;
+  margin: 0;
   color: var(--cyan);
   font-size: 1.2rem;
+  line-height: 1;
 }
 
 .answer-wrong {
@@ -366,6 +375,7 @@ button {
 }
 
 .is-answered .answers {
+  grid-auto-rows: minmax(58px, auto);
   gap: 7px;
 }
 
@@ -375,7 +385,7 @@ button {
 }
 
 .is-answered .answer-correct .answer-letter::after {
-  margin-top: 4px;
+  top: 20px;
 }
 
 @media (max-width: 680px) {
@@ -403,6 +413,7 @@ button {
   }
 
   .answers {
+    grid-auto-rows: minmax(64px, auto);
     padding: 0 12px;
   }
 
@@ -410,6 +421,10 @@ button {
     min-height: 64px;
     padding: 8px;
     gap: 8px;
+  }
+
+  .is-answered .answers {
+    grid-auto-rows: minmax(54px, auto);
   }
 
   .is-answered .answer-button {
