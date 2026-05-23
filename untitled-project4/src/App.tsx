@@ -9,11 +9,17 @@ type AnswerState =
   | { status: "idle" }
   | {
       status: "answered";
-      selectedIndex: number | null;
+      selectedIndex: number;
       isCorrect: boolean;
       points: number;
       timeBonus: number;
       streakBonus: number;
+    }
+  | {
+      status: "timed-out";
+      points: 0;
+      timeBonus: 0;
+      streakBonus: 0;
     };
 
 type LiveRunState = {
@@ -63,27 +69,10 @@ export function App() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const recordAnswer = useCallback(
-    (selectedIndex: number | null, remainingSeconds: number) => {
-      if (!liveState || answerState.status !== "idle") {
-        return;
-      }
-
-      const isCorrect = selectedIndex === liveState.question.answerIndex;
-      const scoreResult = calculateScore({
-        isCorrect,
-        timeRemaining: remainingSeconds,
-        questionTime: liveState.totalSeconds,
-        streak: run.streak,
-      });
-      const nextAnswerState: AnswerState = {
-        status: "answered",
-        selectedIndex,
-        isCorrect,
-        points: scoreResult.points,
-        timeBonus: scoreResult.timeBonus,
-        streakBonus: scoreResult.streakBonus,
-      };
+  const completeQuestion = useCallback(
+    (nextAnswerState: Exclude<AnswerState, { status: "idle" }>, isCorrect: boolean) => {
+      const points = nextAnswerState.points;
+      const nextStreak = nextAnswerState.status === "answered" && isCorrect ? run.streak + 1 : 0;
 
       setAnsweredQuestions((current) => {
         const entries = Object.entries({ ...current, [answerKey]: nextAnswerState });
@@ -91,10 +80,9 @@ export function App() {
       });
 
       setRun((current) => {
-        const nextStreak = scoreResult.nextStreak;
         const nextRun = {
           ...current,
-          score: current.score + scoreResult.points,
+          score: current.score + points,
           streak: nextStreak,
           longestStreak: Math.max(current.longestStreak, nextStreak),
           answered: current.answered + 1,
@@ -116,8 +104,53 @@ export function App() {
         return nextRun;
       });
     },
-    [answerKey, answerState.status, liveState, run.streak, stats],
+    [answerKey, run.streak, stats],
   );
+
+  const recordAnswer = useCallback(
+    (selectedIndex: number, remainingSeconds: number) => {
+      if (!liveState || answerState.status !== "idle") {
+        return;
+      }
+
+      const isCorrect = selectedIndex === liveState.question.answerIndex;
+      const scoreResult = calculateScore({
+        isCorrect,
+        timeRemaining: remainingSeconds,
+        questionTime: liveState.totalSeconds,
+        streak: run.streak,
+      });
+
+      completeQuestion(
+        {
+          status: "answered",
+          selectedIndex,
+          isCorrect,
+          points: scoreResult.points,
+          timeBonus: scoreResult.timeBonus,
+          streakBonus: scoreResult.streakBonus,
+        },
+        isCorrect,
+      );
+    },
+    [answerState.status, completeQuestion, liveState, run.streak],
+  );
+
+  const recordTimeout = useCallback(() => {
+    if (!liveState || answerState.status !== "idle") {
+      return;
+    }
+
+    completeQuestion(
+      {
+        status: "timed-out",
+        points: 0,
+        timeBonus: 0,
+        streakBonus: 0,
+      },
+      false,
+    );
+  }, [answerState.status, completeQuestion, liveState]);
 
   useEffect(() => {
     if (!liveState || answerState.status !== "idle") {
@@ -125,12 +158,12 @@ export function App() {
     }
 
     const timeout = window.setTimeout(
-      () => recordAnswer(null, 0),
+      () => recordTimeout(),
       Math.max(liveState.remainingSeconds * 1000 - 100, 0),
     );
 
     return () => window.clearTimeout(timeout);
-  }, [answerState.status, liveState, recordAnswer]);
+  }, [answerState.status, liveState, recordTimeout]);
 
   if (!liveState) {
     return (
@@ -143,16 +176,19 @@ export function App() {
     );
   }
 
-  const resultLabel = answerState.status === "answered"
-    ? answerState.isCorrect
-      ? "CORRECT"
-      : "INCORRECT"
-    : null;
+  const isComplete = answerState.status !== "idle";
+  const resultLabel = answerState.status === "timed-out"
+    ? "NO ANSWER SUBMITTED"
+    : answerState.status === "answered"
+      ? answerState.isCorrect
+        ? "CORRECT"
+        : "INCORRECT"
+      : null;
   const visualTone = getVisualTone(liveState.question.id);
 
   return (
     <main className="app-shell">
-      <article className={"trivia-card " + (answerState.status === "answered" ? "is-answered" : "")} aria-label="Queue time trivia">
+      <article className={"trivia-card " + (isComplete ? "is-answered" : "")} aria-label="Queue time trivia">
         <header className="card-header">QUEUE TIME TRIVIA</header>
 
         <section className="question-stage">
@@ -171,7 +207,7 @@ export function App() {
             const isSelected =
               answerState.status === "answered" && answerState.selectedIndex === index;
             const isCorrectAnswer =
-              answerState.status === "answered" && liveState.question.answerIndex === index;
+              isComplete && liveState.question.answerIndex === index;
             const stateClass = isCorrectAnswer
               ? "answer-correct"
               : isSelected
@@ -182,7 +218,7 @@ export function App() {
               <button
                 aria-label={"Answer " + letter + ": " + choice}
                 className={"answer-button " + stateClass}
-                disabled={answerState.status === "answered"}
+                disabled={isComplete}
                 key={choice}
                 onClick={() => recordAnswer(index, liveState.remainingSeconds)}
                 type="button"
@@ -195,8 +231,8 @@ export function App() {
         </section>
 
         <section className="result-stage" aria-live="polite">
-          {answerState.status === "answered" ? (
-            <div className={answerState.isCorrect ? "result result-correct" : "result result-wrong"} role="status">
+          {isComplete ? (
+            <div className={answerState.status === "answered" && answerState.isCorrect ? "result result-correct" : "result result-wrong"} role="status">
               <strong>{resultLabel}</strong>
               <span>+{answerState.points} TRIVIA POINTS</span>
             </div>
@@ -209,7 +245,11 @@ export function App() {
         </section>
 
         <footer className="card-footer">
-          <span>NEXT QUESTION IN 0:{liveState.remainingSeconds.toString().padStart(2, "0")}</span>
+          {isComplete ? (
+            <span>NEXT QUESTION IN 0:{liveState.remainingSeconds.toString().padStart(2, "0")}</span>
+          ) : (
+            <span />
+          )}
           <span>{formatQuestionNumber(liveState.questionNumber)}</span>
         </footer>
       </article>
