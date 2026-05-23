@@ -352,39 +352,6 @@ button {
   min-height: 260px;
 }
 
-.is-answered {
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
-}
-
-.is-answered .question-stage {
-  gap: 8px;
-  padding-top: 14px;
-  padding-bottom: 10px;
-}
-
-.is-answered .question-stage h1 {
-  min-height: 0;
-}
-
-.is-answered .question-visual {
-  width: 132px;
-  height: 50px;
-}
-
-.is-answered .answers {
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  height: clamp(108px, 20dvh, 126px);
-  gap: 7px;
-}
-
-.is-answered .answer-button {
-  min-height: 0;
-  padding: 7px 10px;
-}
-
-.is-answered .answer-correct .answer-letter::after {
-  top: 20px;
-}
 
 @media (max-width: 680px) {
   .app-shell {
@@ -423,13 +390,6 @@ button {
     gap: 8px;
   }
 
-  .is-answered .answers {
-    height: clamp(102px, 19dvh, 118px);
-  }
-
-  .is-answered .answer-button {
-    min-height: 0;
-  }
 
   .answer-copy {
     font-size: 0.92rem;
@@ -482,15 +442,4 @@ button {
     line-height: 1.16;
   }
 
-  .is-answered .question-stage {
-    padding-top: 10px;
-  }
-
-  .is-answered .question-visual {
-    display: none;
-  }
-
-  .is-answered .answers {
-    height: clamp(104px, 20dvh, 118px);
-  }
 }
