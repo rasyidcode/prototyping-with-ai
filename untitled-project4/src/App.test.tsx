@@ -1,5 +1,4 @@
 import { act, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
 import { LIVE_TRIVIA_EPOCH_MS } from "./lib/liveTrivia";
@@ -23,27 +22,38 @@ describe("App", () => {
     expect(screen.queryByText("Streak")).not.toBeInTheDocument();
   });
 
-  it("shows answer feedback, footer countdown, and prevents duplicate answers", async () => {
-    const user = userEvent.setup();
+  it("locks an answer without revealing the result until countdown ends", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(LIVE_TRIVIA_EPOCH_MS + 10_000);
     render(<App />);
 
-    await user.click(screen.getAllByRole("button", { name: /^answer [a-d]:/i })[0]);
+    act(() => {
+      screen.getAllByRole("button", { name: /^answer [a-d]:/i })[0].click();
+    });
+
+    expect(screen.getByText("ANSWER LOCKED")).toBeInTheDocument();
+    expect(screen.queryByText(/CORRECT|INCORRECT/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/NEXT QUESTION IN/i)).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /^answer [a-d]:/i })[0]).toBeDisabled();
+
+    await act(async () => {
+      vi.advanceTimersByTime(5_000);
+    });
 
     expect(screen.getByRole("status")).toBeInTheDocument();
     expect(screen.getByText(/CORRECT|INCORRECT/)).toBeInTheDocument();
     expect(screen.getByText(/TRIVIA POINTS/)).toBeInTheDocument();
     expect(screen.getByText(/NEXT QUESTION IN/i)).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: /^answer [a-d]:/i })[0]).toBeDisabled();
   });
 
   it("shows a no-answer result when the countdown expires", async () => {
     vi.useFakeTimers();
-    vi.setSystemTime(LIVE_TRIVIA_EPOCH_MS + 19_200);
+    vi.setSystemTime(LIVE_TRIVIA_EPOCH_MS + 14_200);
 
     render(<App />);
 
     await act(async () => {
-      vi.advanceTimersByTime(950);
+      vi.advanceTimersByTime(1_100);
     });
 
     expect(screen.getByRole("status")).toBeInTheDocument();

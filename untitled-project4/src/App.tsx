@@ -5,10 +5,15 @@ import { calculateScore } from "./lib/scoring";
 import { loadStats, saveStats } from "./lib/storage";
 import type { TriviaStats } from "./types";
 
+const ANSWER_SECONDS = 15;
+const REVEAL_SECONDS = 5;
+const QUESTION_CYCLE_SECONDS = ANSWER_SECONDS + REVEAL_SECONDS;
+
 type AnswerState =
   | { status: "idle" }
+  | { status: "locked"; selectedIndex: number; remainingSecondsAtLock: number }
   | {
-      status: "answered";
+      status: "revealed";
       selectedIndex: number;
       isCorrect: boolean;
       points: number;
@@ -57,27 +62,43 @@ export function App() {
   const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, AnswerState>>({});
 
   const liveState = useMemo(
-    () => (questions.length > 0 ? getLiveTriviaState({ nowMs, pool: questions }) : null),
+    () =>
+      questions.length > 0
+        ? getLiveTriviaState({ nowMs, pool: questions, questionSeconds: QUESTION_CYCLE_SECONDS })
+        : null,
     [nowMs],
   );
 
+  const answerRemainingSeconds = liveState
+    ? Math.max(liveState.remainingSeconds - REVEAL_SECONDS, 0)
+    : 0;
   const answerKey = liveState ? makeAnswerKey(liveState.questionNumber) : "no-question";
-  const answerState = answeredQuestions[answerKey] ?? { status: "idle" };
+  const answerState = useMemo<AnswerState>(
+    () => answeredQuestions[answerKey] ?? { status: "idle" },
+    [answeredQuestions, answerKey],
+  );
 
   useEffect(() => {
     const timer = window.setInterval(() => setNowMs(Date.now()), 250);
     return () => window.clearInterval(timer);
   }, []);
 
-  const completeQuestion = useCallback(
-    (nextAnswerState: Exclude<AnswerState, { status: "idle" }>, isCorrect: boolean) => {
-      const points = nextAnswerState.points;
-      const nextStreak = nextAnswerState.status === "answered" && isCorrect ? run.streak + 1 : 0;
-
+  const storeAnswerState = useCallback(
+    (nextAnswerState: AnswerState) => {
       setAnsweredQuestions((current) => {
         const entries = Object.entries({ ...current, [answerKey]: nextAnswerState });
         return Object.fromEntries(entries.slice(-60));
       });
+    },
+    [answerKey],
+  );
+
+  const completeQuestion = useCallback(
+    (nextAnswerState: Exclude<AnswerState, { status: "idle" } | { status: "locked" }>, isCorrect: boolean) => {
+      const points = nextAnswerState.points;
+      const nextStreak = nextAnswerState.status === "revealed" && isCorrect ? run.streak + 1 : 0;
+
+      storeAnswerState(nextAnswerState);
 
       setRun((current) => {
         const nextRun = {
@@ -104,37 +125,49 @@ export function App() {
         return nextRun;
       });
     },
-    [answerKey, run.streak, stats],
+    [run.streak, stats, storeAnswerState],
   );
 
-  const recordAnswer = useCallback(
+  const lockAnswer = useCallback(
     (selectedIndex: number, remainingSeconds: number) => {
       if (!liveState || answerState.status !== "idle") {
         return;
       }
 
-      const isCorrect = selectedIndex === liveState.question.answerIndex;
-      const scoreResult = calculateScore({
-        isCorrect,
-        timeRemaining: remainingSeconds,
-        questionTime: liveState.totalSeconds,
-        streak: run.streak,
+      storeAnswerState({
+        status: "locked",
+        selectedIndex,
+        remainingSecondsAtLock: remainingSeconds,
       });
-
-      completeQuestion(
-        {
-          status: "answered",
-          selectedIndex,
-          isCorrect,
-          points: scoreResult.points,
-          timeBonus: scoreResult.timeBonus,
-          streakBonus: scoreResult.streakBonus,
-        },
-        isCorrect,
-      );
     },
-    [answerState.status, completeQuestion, liveState, run.streak],
+    [answerState.status, liveState, storeAnswerState],
   );
+
+  const revealLockedAnswer = useCallback(() => {
+    if (!liveState || answerState.status !== "locked") {
+      return;
+    }
+
+    const isCorrect = answerState.selectedIndex === liveState.question.answerIndex;
+    const scoreResult = calculateScore({
+      isCorrect,
+      timeRemaining: answerState.remainingSecondsAtLock,
+      questionTime: ANSWER_SECONDS,
+      streak: run.streak,
+    });
+
+    completeQuestion(
+      {
+        status: "revealed",
+        selectedIndex: answerState.selectedIndex,
+        isCorrect,
+        points: scoreResult.points,
+        timeBonus: scoreResult.timeBonus,
+        streakBonus: scoreResult.streakBonus,
+      },
+      isCorrect,
+    );
+  }, [answerState, completeQuestion, liveState, run.streak]);
 
   const recordTimeout = useCallback(() => {
     if (!liveState || answerState.status !== "idle") {
@@ -153,17 +186,24 @@ export function App() {
   }, [answerState.status, completeQuestion, liveState]);
 
   useEffect(() => {
-    if (!liveState || answerState.status !== "idle") {
+    if (!liveState || answerState.status === "revealed" || answerState.status === "timed-out") {
       return undefined;
     }
 
     const timeout = window.setTimeout(
-      () => recordTimeout(),
-      Math.max(liveState.remainingSeconds * 1000 - 100, 0),
+      () => {
+        if (answerState.status === "locked") {
+          revealLockedAnswer();
+          return;
+        }
+
+        recordTimeout();
+      },
+      Math.max(answerRemainingSeconds * 1000, 0),
     );
 
     return () => window.clearTimeout(timeout);
-  }, [answerState.status, liveState, recordTimeout]);
+  }, [answerRemainingSeconds, answerState.status, liveState, recordTimeout, revealLockedAnswer]);
 
   if (!liveState) {
     return (
@@ -176,10 +216,12 @@ export function App() {
     );
   }
 
-  const isComplete = answerState.status !== "idle";
+  const isLocked = answerState.status === "locked";
+  const isRevealed = answerState.status === "revealed" || answerState.status === "timed-out";
+  const isDisabled = isLocked || isRevealed;
   const resultLabel = answerState.status === "timed-out"
     ? "NO ANSWER SUBMITTED"
-    : answerState.status === "answered"
+    : answerState.status === "revealed"
       ? answerState.isCorrect
         ? "CORRECT"
         : "INCORRECT"
@@ -188,7 +230,7 @@ export function App() {
 
   return (
     <main className="app-shell">
-      <article className={"trivia-card " + (isComplete ? "is-answered" : "")} aria-label="Queue time trivia">
+      <article className={"trivia-card " + (isRevealed ? "is-answered" : "")} aria-label="Queue time trivia">
         <header className="card-header">QUEUE TIME TRIVIA</header>
 
         <section className="question-stage">
@@ -205,22 +247,25 @@ export function App() {
           {liveState.question.choices.map((choice, index) => {
             const letter = String.fromCharCode(65 + index);
             const isSelected =
-              answerState.status === "answered" && answerState.selectedIndex === index;
+              (answerState.status === "locked" || answerState.status === "revealed") &&
+              answerState.selectedIndex === index;
             const isCorrectAnswer =
-              isComplete && liveState.question.answerIndex === index;
+              isRevealed && liveState.question.answerIndex === index;
             const stateClass = isCorrectAnswer
               ? "answer-correct"
-              : isSelected
+              : answerState.status === "revealed" && isSelected
                 ? "answer-wrong"
-                : "";
+                : isSelected
+                  ? "answer-locked"
+                  : "";
 
             return (
               <button
                 aria-label={"Answer " + letter + ": " + choice}
                 className={"answer-button " + stateClass}
-                disabled={isComplete}
+                disabled={isDisabled}
                 key={choice}
-                onClick={() => recordAnswer(index, liveState.remainingSeconds)}
+                onClick={() => lockAnswer(index, answerRemainingSeconds)}
                 type="button"
               >
                 <span className="answer-letter">{letter}</span>
@@ -231,21 +276,21 @@ export function App() {
         </section>
 
         <section className="result-stage" aria-live="polite">
-          {isComplete ? (
-            <div className={answerState.status === "answered" && answerState.isCorrect ? "result result-correct" : "result result-wrong"} role="status">
+          {isRevealed ? (
+            <div className={answerState.status === "revealed" && answerState.isCorrect ? "result result-correct" : "result result-wrong"} role="status">
               <strong>{resultLabel}</strong>
               <span>+{answerState.points} TRIVIA POINTS</span>
             </div>
           ) : (
             <div className="timer-readout">
-              <strong>0:{liveState.remainingSeconds.toString().padStart(2, "0")}</strong>
-              <span>TIME REMAINING</span>
+              <strong>0:{answerRemainingSeconds.toString().padStart(2, "0")}</strong>
+              <span>{isLocked ? "ANSWER LOCKED" : "TIME REMAINING"}</span>
             </div>
           )}
         </section>
 
         <footer className="card-footer">
-          {isComplete ? (
+          {isRevealed ? (
             <span>NEXT QUESTION IN 0:{liveState.remainingSeconds.toString().padStart(2, "0")}</span>
           ) : (
             <span />

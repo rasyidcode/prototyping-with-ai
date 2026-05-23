@@ -252,6 +252,23 @@ button {
   word-break: normal;
 }
 
+.answer-locked {
+  border-color: rgba(125, 241, 255, 0.72);
+  background: linear-gradient(180deg, rgba(30, 70, 84, 0.98), rgba(10, 38, 52, 0.98));
+  box-shadow: 0 0 0 1px rgba(125, 241, 255, 0.22) inset;
+}
+
+.answer-locked .answer-letter::after {
+  content: "•";
+  position: absolute;
+  left: 2px;
+  top: 24px;
+  display: block;
+  color: var(--cyan);
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .answer-correct {
   border-color: rgba(125, 241, 255, 0.96);
   background: linear-gradient(180deg, rgba(37, 93, 101, 0.98), rgba(14, 58, 66, 0.98));
