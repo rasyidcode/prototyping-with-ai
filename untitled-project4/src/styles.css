@@ -344,6 +344,21 @@ h2 {
   width: 100%;
 }
 
+.live-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(112px, 1fr)) auto;
+  gap: 10px;
+  max-width: 880px;
+  margin: 20px auto 0;
+  align-items: stretch;
+}
+
+.next-up {
+  color: var(--accent-strong);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
 .summary-actions {
   display: flex;
   flex-wrap: wrap;
@@ -363,6 +378,7 @@ h2 {
 
   .queue-metrics,
   .summary-grid,
+  .live-summary,
   .answers {
     grid-template-columns: 1fr 1fr;
   }
@@ -382,6 +398,7 @@ h2 {
 
   .queue-metrics,
   .summary-grid,
+  .live-summary,
   .answers {
     grid-template-columns: 1fr;
   }

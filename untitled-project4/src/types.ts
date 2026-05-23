@@ -22,6 +22,14 @@ export type TriviaStats = {
   bestScore: number;
   totalAnswered: number;
   totalCorrect: number;
+  longestStreak: number;
   lastCategory: TriviaCategory | "all";
   lastDifficulty: TriviaDifficulty | "all";
+};
+
+export type LiveTriviaState = {
+  questionNumber: number;
+  question: TriviaQuestion;
+  remainingSeconds: number;
+  totalSeconds: number;
 };

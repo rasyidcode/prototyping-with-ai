@@ -42,12 +42,13 @@ describe("storage", () => {
     expect(
       mergeSessionStats(
         { ...defaultStats, bestScore: 200, totalAnswered: 3, totalCorrect: 2 },
-        { score: 300, answered: 10, correct: 7 },
+        { score: 300, answered: 10, correct: 7, longestStreak: 4 },
       ),
     ).toMatchObject({
       bestScore: 300,
       totalAnswered: 13,
       totalCorrect: 9,
+      longestStreak: 4,
     });
   });
 });

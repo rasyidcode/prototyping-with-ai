@@ -4,19 +4,16 @@ import {
   CheckCircle2,
   Clock3,
   Flame,
-  Play,
-  RotateCcw,
+  Radio,
   Trophy,
   XCircle,
 } from "lucide-react";
 import { questions } from "./data/questions";
+import { getLiveTriviaState, formatQuestionNumber } from "./lib/liveTrivia";
 import { calculateScore } from "./lib/scoring";
-import { filterQuestions, pickNextQuestion } from "./lib/questionRotation";
-import { loadStats, mergeSessionStats, saveStats } from "./lib/storage";
-import type { TriviaCategory, TriviaDifficulty, TriviaQuestion, TriviaStats } from "./types";
-
-const QUESTION_TIME = 20;
-const SESSION_LENGTH = 10;
+import { filterQuestions } from "./lib/questionRotation";
+import { loadStats, saveStats } from "./lib/storage";
+import type { TriviaCategory, TriviaDifficulty, TriviaStats } from "./types";
 
 const categoryLabels: Record<TriviaCategory | "all", string> = {
   all: "All",
@@ -46,91 +43,101 @@ type AnswerState =
       streakBonus: number;
     };
 
-type SessionState = {
+type LiveRunState = {
   score: number;
   streak: number;
   longestStreak: number;
   answered: number;
   correct: number;
-  elapsed: number;
+  joinedAtMs: number;
 };
 
-const initialSession: SessionState = {
+const createInitialRun = (): LiveRunState => ({
   score: 0,
   streak: 0,
   longestStreak: 0,
   answered: 0,
   correct: 0,
-  elapsed: 0,
-};
+  joinedAtMs: Date.now(),
+});
 
 function formatTime(totalSeconds: number) {
   const minutes = Math.floor(totalSeconds / 60).toString().padStart(2, "0");
   const seconds = (totalSeconds % 60).toString().padStart(2, "0");
-  return `${minutes}:${seconds}`;
+  return minutes + ":" + seconds;
+}
+
+function makeAnswerKey(
+  questionNumber: number,
+  category: TriviaCategory | "all",
+  difficulty: TriviaDifficulty | "all",
+) {
+  return questionNumber + ":" + category + ":" + difficulty;
 }
 
 export function App() {
   const [stats, setStats] = useState<TriviaStats>(() => loadStats());
   const [category, setCategory] = useState<TriviaCategory | "all">(stats.lastCategory);
   const [difficulty, setDifficulty] = useState<TriviaDifficulty | "all">(stats.lastDifficulty);
-  const [session, setSession] = useState<SessionState>(initialSession);
-  const [question, setQuestion] = useState<TriviaQuestion | null>(null);
-  const [answeredIds, setAnsweredIds] = useState<string[]>([]);
-  const [answerState, setAnswerState] = useState<AnswerState>({ status: "idle" });
-  const [timeRemaining, setTimeRemaining] = useState(QUESTION_TIME);
-  const [isFinished, setIsFinished] = useState(false);
+  const [run, setRun] = useState<LiveRunState>(() => createInitialRun());
+  const [nowMs, setNowMs] = useState(() => Date.now());
+  const [answeredQuestions, setAnsweredQuestions] = useState<Record<string, AnswerState>>({});
 
   const activePool = useMemo(
     () => filterQuestions(questions, category, difficulty),
     [category, difficulty],
   );
 
+  const liveState = useMemo(
+    () => (activePool.length > 0 ? getLiveTriviaState({ nowMs, pool: activePool }) : null),
+    [activePool, nowMs],
+  );
+
+  const answerKey = liveState
+    ? makeAnswerKey(liveState.questionNumber, category, difficulty)
+    : "no-question";
+  const answerState = answeredQuestions[answerKey] ?? { status: "idle" };
+
   useEffect(() => {
-    saveStats({ ...stats, lastCategory: category, lastDifficulty: difficulty });
+    const timer = window.setInterval(() => setNowMs(Date.now()), 250);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const nextStats = { ...stats, lastCategory: category, lastDifficulty: difficulty };
+    saveStats(nextStats);
   }, [category, difficulty, stats]);
 
-
-  function startSession() {
-    if (activePool.length === 0) {
-      return;
-    }
-
-    const next = pickNextQuestion(activePool, []);
-    setSession(initialSession);
-    setQuestion(next.question);
-    setAnsweredIds(next.nextAnsweredIds);
-    setAnswerState({ status: "idle" });
-    setTimeRemaining(QUESTION_TIME);
-    setIsFinished(false);
-  }
-
-  const handleAnswer = useCallback(
-    (selectedIndex: number | null, remaining = timeRemaining) => {
-      if (!question || answerState.status !== "idle") {
+  const recordAnswer = useCallback(
+    (selectedIndex: number | null, remainingSeconds: number) => {
+      if (!liveState || answerState.status !== "idle") {
         return;
       }
 
-      const isCorrect = selectedIndex === question.answerIndex;
+      const isCorrect = selectedIndex === liveState.question.answerIndex;
       const scoreResult = calculateScore({
         isCorrect,
-        timeRemaining: remaining,
-        questionTime: QUESTION_TIME,
-        streak: session.streak,
+        timeRemaining: remainingSeconds,
+        questionTime: liveState.totalSeconds,
+        streak: run.streak,
       });
-
-      setAnswerState({
+      const nextAnswerState: AnswerState = {
         status: "answered",
         selectedIndex,
         isCorrect,
         points: scoreResult.points,
         timeBonus: scoreResult.timeBonus,
         streakBonus: scoreResult.streakBonus,
+      };
+
+      setAnsweredQuestions((current) => {
+        const entries = Object.entries({ ...current, [answerKey]: nextAnswerState });
+        return Object.fromEntries(entries.slice(-60));
       });
 
-      setSession((current) => {
+      setRun((current) => {
         const nextStreak = scoreResult.nextStreak;
-        return {
+        const nextRun = {
           ...current,
           score: current.score + scoreResult.points,
           streak: nextStreak,
@@ -138,63 +145,48 @@ export function App() {
           answered: current.answered + 1,
           correct: current.correct + (isCorrect ? 1 : 0),
         };
+
+        const nextStats = {
+          ...stats,
+          bestScore: Math.max(stats.bestScore, nextRun.score),
+          totalAnswered: stats.totalAnswered + 1,
+          totalCorrect: stats.totalCorrect + (isCorrect ? 1 : 0),
+          longestStreak: Math.max(stats.longestStreak, nextRun.longestStreak),
+          lastCategory: category,
+          lastDifficulty: difficulty,
+        };
+        setStats(nextStats);
+        saveStats(nextStats);
+
+        return nextRun;
       });
     },
-    [answerState.status, question, session.streak, timeRemaining],
+    [answerKey, answerState.status, category, difficulty, liveState, run.streak, stats],
   );
 
   useEffect(() => {
-    if (!question || isFinished) {
+    if (!liveState || answerState.status !== "idle") {
       return undefined;
     }
 
-    const timer = window.setInterval(() => {
-      setSession((current) => ({ ...current, elapsed: current.elapsed + 1 }));
-      if (answerState.status === "idle") {
-        setTimeRemaining((current) => {
-          if (current <= 1) {
-            handleAnswer(null, 0);
-            return 0;
-          }
+    const timeout = window.setTimeout(
+      () => recordAnswer(null, 0),
+      Math.max(liveState.remainingSeconds * 1000 - 100, 0),
+    );
 
-          return current - 1;
-        });
-      }
-    }, 1000);
+    return () => window.clearTimeout(timeout);
+  }, [answerState.status, liveState, recordAnswer]);
 
-    return () => window.clearInterval(timer);
-  }, [answerState.status, handleAnswer, isFinished, question]);
-
-  function nextQuestion() {
-    if (session.answered >= SESSION_LENGTH) {
-      finishSession();
-      return;
-    }
-
-    const next = pickNextQuestion(activePool, answeredIds);
-    setQuestion(next.question);
-    setAnsweredIds(next.nextAnsweredIds);
-    setAnswerState({ status: "idle" });
-    setTimeRemaining(QUESTION_TIME);
+  function resetRun() {
+    setRun(createInitialRun());
+    setAnsweredQuestions({});
   }
 
-  function finishSession() {
-    const nextStats = mergeSessionStats(stats, {
-      score: session.score,
-      answered: session.answered,
-      correct: session.correct,
-    });
-    nextStats.lastCategory = category;
-    nextStats.lastDifficulty = difficulty;
-    setStats(nextStats);
-    saveStats(nextStats);
-    setIsFinished(true);
-  }
-
-  const accuracy =
-    session.answered === 0 ? 0 : Math.round((session.correct / session.answered) * 100);
-  const timerPercentage = (timeRemaining / QUESTION_TIME) * 100;
-  const isActive = Boolean(question) && !isFinished;
+  const joinedSeconds = Math.max(0, Math.floor((nowMs - run.joinedAtMs) / 1000));
+  const accuracy = run.answered === 0 ? 0 : Math.round((run.correct / run.answered) * 100);
+  const timerPercentage = liveState
+    ? (liveState.remainingSeconds / liveState.totalSeconds) * 100
+    : 0;
 
   return (
     <main className="app-shell">
@@ -204,10 +196,10 @@ export function App() {
           <h1>Queue Trivia</h1>
         </div>
         <div className="queue-metrics">
-          <Metric icon={<Clock3 />} label="Queue" value={formatTime(session.elapsed)} />
-          <Metric icon={<Trophy />} label="Score" value={session.score.toString()} />
-          <Metric icon={<Flame />} label="Streak" value={`${session.streak}x`} />
-          <Metric icon={<Activity />} label="Best" value={stats.bestScore.toString()} />
+          <Metric icon={<Radio />} label="Live" value={liveState ? formatQuestionNumber(liveState.questionNumber) : "--"} />
+          <Metric icon={<Clock3 />} label="Joined" value={formatTime(joinedSeconds)} />
+          <Metric icon={<Trophy />} label="Score" value={run.score.toString()} />
+          <Metric icon={<Flame />} label="Streak" value={run.streak + "x"} />
         </div>
       </section>
 
@@ -216,42 +208,35 @@ export function App() {
           label="Category"
           value={category}
           options={Object.entries(categoryLabels)}
-          disabled={isActive}
           onChange={(value) => setCategory(value as TriviaCategory | "all")}
         />
         <SegmentedControl
           label="Difficulty"
           value={difficulty}
           options={Object.entries(difficultyLabels)}
-          disabled={isActive}
           onChange={(value) => setDifficulty(value as TriviaDifficulty | "all")}
         />
       </section>
 
       <section className="play-surface">
-        {!question && !isFinished ? (
-          <StartPanel poolSize={activePool.length} onStart={startSession} />
-        ) : null}
-
-        {question && !isFinished ? (
+        {liveState ? (
           <article className="question-panel">
             <div className="question-meta">
-              <span>{categoryLabels[question.category]}</span>
-              <span>{difficultyLabels[question.difficulty]}</span>
-              <span>
-                {session.answered + 1}/{SESSION_LENGTH}
-              </span>
+              <span>{formatQuestionNumber(liveState.questionNumber)}</span>
+              <span>{categoryLabels[liveState.question.category]}</span>
+              <span>{difficultyLabels[liveState.question.difficulty]}</span>
+              <span>{liveState.remainingSeconds}s</span>
             </div>
-            <div className="timer-track" aria-label={`${timeRemaining} seconds remaining`}>
-              <div className="timer-fill" style={{ width: `${timerPercentage}%` }} />
+            <div className="timer-track" aria-label={liveState.remainingSeconds + " seconds remaining"}>
+              <div className="timer-fill" style={{ width: timerPercentage + "%" }} />
             </div>
-            <h2>{question.prompt}</h2>
+            <h2>{liveState.question.prompt}</h2>
             <div className="answers">
-              {question.choices.map((choice, index) => {
+              {liveState.question.choices.map((choice, index) => {
                 const isSelected =
                   answerState.status === "answered" && answerState.selectedIndex === index;
                 const isCorrectAnswer =
-                  answerState.status === "answered" && question.answerIndex === index;
+                  answerState.status === "answered" && liveState.question.answerIndex === index;
                 const stateClass = isCorrectAnswer
                   ? "answer-correct"
                   : isSelected
@@ -260,11 +245,11 @@ export function App() {
 
                 return (
                   <button
-                    aria-label={`Answer ${String.fromCharCode(65 + index)}: ${choice}`}
-                    className={`answer-button ${stateClass}`}
+                    aria-label={"Answer " + String.fromCharCode(65 + index) + ": " + choice}
+                    className={"answer-button " + stateClass}
                     disabled={answerState.status === "answered"}
                     key={choice}
-                    onClick={() => handleAnswer(index)}
+                    onClick={() => recordAnswer(index, liveState.remainingSeconds)}
                     type="button"
                   >
                     <span>{String.fromCharCode(65 + index)}</span>
@@ -281,33 +266,33 @@ export function App() {
                   <strong>{answerState.isCorrect ? "Correct" : "Missed"}</strong>
                   <span>
                     +{answerState.points} pts
-                    {answerState.timeBonus > 0 ? `, +${answerState.timeBonus} speed` : ""}
-                    {answerState.streakBonus > 0 ? `, +${answerState.streakBonus} streak` : ""}
+                    {answerState.timeBonus > 0 ? ", +" + answerState.timeBonus + " speed" : ""}
+                    {answerState.streakBonus > 0 ? ", +" + answerState.streakBonus + " streak" : ""}
                   </span>
                 </div>
-                <p>{question.explanation}</p>
-                <button className="primary-button" onClick={nextQuestion} type="button">
-                  <Play size={18} />
-                  {session.answered >= SESSION_LENGTH ? "Finish" : "Next"}
-                </button>
+                <p>{liveState.question.explanation}</p>
+                <span className="next-up">
+                  Next global question in {liveState.remainingSeconds}s
+                </span>
               </div>
             ) : null}
           </article>
-        ) : null}
+        ) : (
+          <article className="start-panel">
+            <p className="eyebrow">No questions available</p>
+            <h2>Try another filter.</h2>
+          </article>
+        )}
 
-        {isFinished ? (
-          <SummaryPanel
-            accuracy={accuracy}
-            session={session}
-            onRestart={startSession}
-            onReset={() => {
-              setQuestion(null);
-              setIsFinished(false);
-              setSession(initialSession);
-              setAnswerState({ status: "idle" });
-            }}
-          />
-        ) : null}
+        <section className="live-summary" aria-label="Live run stats">
+          <Metric icon={<Activity />} label="Accuracy" value={accuracy + "%"} />
+          <Metric icon={<CheckCircle2 />} label="Correct" value={run.correct + "/" + run.answered} />
+          <Metric icon={<Trophy />} label="Best" value={stats.bestScore.toString()} />
+          <Metric icon={<Flame />} label="Longest" value={Math.max(stats.longestStreak, run.longestStreak) + "x"} />
+          <button className="ghost-button" onClick={resetRun} type="button">
+            Reset Run
+          </button>
+        </section>
       </section>
     </main>
   );
@@ -335,17 +320,15 @@ function SegmentedControl({
   label,
   value,
   options,
-  disabled,
   onChange,
 }: {
   label: string;
   value: string;
   options: [string, string][];
-  disabled: boolean;
   onChange: (value: string) => void;
 }) {
   return (
-    <fieldset className="segmented" disabled={disabled}>
+    <fieldset className="segmented">
       <legend>{label}</legend>
       <div>
         {options.map(([optionValue, optionLabel]) => (
@@ -360,58 +343,5 @@ function SegmentedControl({
         ))}
       </div>
     </fieldset>
-  );
-}
-
-function StartPanel({ poolSize, onStart }: { poolSize: number; onStart: () => void }) {
-  return (
-    <article className="start-panel">
-      <div>
-        <p className="eyebrow">Match search active</p>
-        <h2>Answer while the queue ticks.</h2>
-        <p>
-          A 10-question run with speed bonuses, streak points, and explanations after every pick.
-        </p>
-      </div>
-      <button className="primary-button" disabled={poolSize === 0} onClick={onStart} type="button">
-        <Play size={18} />
-        Start Trivia
-      </button>
-      <span className="pool-count">{poolSize} questions in this pool</span>
-    </article>
-  );
-}
-
-function SummaryPanel({
-  session,
-  accuracy,
-  onRestart,
-  onReset,
-}: {
-  session: SessionState;
-  accuracy: number;
-  onRestart: () => void;
-  onReset: () => void;
-}) {
-  return (
-    <article className="summary-panel">
-      <p className="eyebrow">Queue popped</p>
-      <h2>Session summary</h2>
-      <div className="summary-grid">
-        <Metric icon={<Trophy />} label="Score" value={session.score.toString()} />
-        <Metric icon={<CheckCircle2 />} label="Correct" value={`${session.correct}/${session.answered}`} />
-        <Metric icon={<Activity />} label="Accuracy" value={`${accuracy}%`} />
-        <Metric icon={<Flame />} label="Best streak" value={`${session.longestStreak}x`} />
-      </div>
-      <div className="summary-actions">
-        <button className="primary-button" onClick={onRestart} type="button">
-          <RotateCcw size={18} />
-          Run Again
-        </button>
-        <button className="ghost-button" onClick={onReset} type="button">
-          Change Filters
-        </button>
-      </div>
-    </article>
   );
 }

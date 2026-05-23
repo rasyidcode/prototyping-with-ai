@@ -6,6 +6,7 @@ export const defaultStats: TriviaStats = {
   bestScore: 0,
   totalAnswered: 0,
   totalCorrect: 0,
+  longestStreak: 0,
   lastCategory: "all",
   lastDifficulty: "all",
 };
@@ -36,12 +37,13 @@ export function saveStats(
 
 export function mergeSessionStats(
   stats: TriviaStats,
-  session: { score: number; answered: number; correct: number },
+  session: { score: number; answered: number; correct: number; longestStreak?: number },
 ): TriviaStats {
   return {
     ...stats,
     bestScore: Math.max(stats.bestScore, session.score),
     totalAnswered: stats.totalAnswered + session.answered,
     totalCorrect: stats.totalCorrect + session.correct,
+    longestStreak: Math.max(stats.longestStreak, session.longestStreak ?? 0),
   };
 }
