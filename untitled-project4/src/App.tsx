@@ -153,7 +153,7 @@ export function App() {
 
   return (
     <main className="app-shell">
-      <article className="trivia-card" aria-label="Queue time trivia">
+      <article className={"trivia-card " + (answerState.status === "answered" ? "is-answered" : "")} aria-label="Queue time trivia">
         <header className="card-header">QUEUE TIME TRIVIA</header>
 
         <section className="question-stage">

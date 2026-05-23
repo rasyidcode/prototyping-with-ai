@@ -43,13 +43,12 @@ button {
   display: grid;
   place-items: center;
   padding: 34px 16px;
-  perspective: 1100px;
 }
 
 .trivia-card {
   position: relative;
-  width: min(430px, calc(100vw - 28px));
-  min-height: 690px;
+  width: min(430px, calc(100vw - 24px));
+  min-height: min(690px, calc(100vh - 32px));
   display: grid;
   grid-template-rows: auto auto auto 1fr auto;
   border: 1px solid rgba(99, 198, 220, 0.28);
@@ -60,8 +59,6 @@ button {
     0 0 0 1px rgba(255, 255, 255, 0.04) inset,
     0 28px 80px rgba(0, 0, 0, 0.72),
     0 0 62px rgba(92, 220, 244, 0.22);
-  transform: rotateX(4deg) rotateZ(-4deg);
-  transform-origin: center;
 }
 
 .trivia-card::before {
@@ -81,9 +78,10 @@ button {
   border-bottom: 1px solid rgba(99, 198, 220, 0.25);
   background: linear-gradient(180deg, #173647, #0b1c27);
   color: #f3fdff;
-  font-size: 0.92rem;
+  font-size: clamp(0.78rem, 3vw, 0.92rem);
   font-weight: 900;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
@@ -194,7 +192,7 @@ button {
 
 .answers {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   padding: 0 18px;
 }
@@ -202,8 +200,10 @@ button {
 .answer-button {
   min-height: 72px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(18px, auto) minmax(0, 1fr);
   align-items: center;
+  min-width: 0;
+  width: 100%;
   gap: 10px;
   padding: 10px 12px;
   border: 1px solid rgba(65, 143, 170, 0.64);
@@ -234,10 +234,11 @@ button {
 .answer-copy {
   min-width: 0;
   color: #eefcff;
-  font-size: 1rem;
+  font-size: clamp(0.82rem, 2.6vw, 1rem);
   font-weight: 700;
   line-height: 1.22;
   overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .answer-correct {
@@ -272,9 +273,9 @@ button {
 .timer-readout strong,
 .result strong {
   display: block;
-  font-size: clamp(3.2rem, 12vw, 5.15rem);
+  font-size: clamp(2.65rem, 12vw, 5.15rem);
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   line-height: 0.95;
 }
 
@@ -309,7 +310,7 @@ button {
 
 .result span {
   color: var(--cyan);
-  font-size: 0.95rem;
+  font-size: clamp(0.76rem, 3vw, 0.95rem);
 }
 
 .result-wrong span {
@@ -346,14 +347,44 @@ button {
   min-height: 260px;
 }
 
+.is-answered {
+  grid-template-rows: auto auto auto minmax(130px, 1fr) auto;
+}
+
+.is-answered .question-stage {
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.is-answered .question-stage h1 {
+  min-height: 0;
+}
+
+.is-answered .question-visual {
+  width: 144px;
+  height: 62px;
+}
+
+.is-answered .answers {
+  gap: 7px;
+}
+
+.is-answered .answer-button {
+  min-height: 58px;
+  padding: 8px 10px;
+}
+
+.is-answered .answer-correct .answer-letter::after {
+  margin-top: 4px;
+}
+
 @media (max-width: 680px) {
   .app-shell {
     padding: 16px 10px;
   }
 
   .trivia-card {
-    min-height: min(680px, calc(100vh - 32px));
-    transform: none;
+    min-height: min(680px, calc(100vh - 24px));
   }
 
   .question-stage {
@@ -376,8 +407,13 @@ button {
   }
 
   .answer-button {
-    min-height: 66px;
-    padding: 9px;
+    min-height: 64px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .is-answered .answer-button {
+    min-height: 54px;
   }
 
   .answer-copy {
@@ -400,6 +436,15 @@ button {
 
   .timer-readout strong,
   .result strong {
-    font-size: 3rem;
+    font-size: 2.45rem;
+    letter-spacing: 0.02em;
+  }
+
+  .card-header {
+    padding-inline: 12px;
+  }
+
+  .is-answered .question-visual {
+    display: none;
   }
 }
