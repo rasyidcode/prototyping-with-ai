@@ -143,7 +143,6 @@ export function App() {
     );
   }
 
-  const timerPercentage = (liveState.remainingSeconds / liveState.totalSeconds) * 100;
   const resultLabel = answerState.status === "answered"
     ? answerState.isCorrect
       ? "CORRECT"
@@ -207,9 +206,6 @@ export function App() {
               <span>TIME REMAINING</span>
             </div>
           )}
-          <div className="timer-track" aria-label={liveState.remainingSeconds + " seconds remaining"}>
-            <div className="timer-fill" style={{ width: timerPercentage + "%" }} />
-          </div>
         </section>
 
         <footer className="card-footer">
