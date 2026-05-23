@@ -11,6 +11,7 @@ describe("App", () => {
     expect(screen.getAllByText(/^#\d/).length).toBeGreaterThan(0);
     expect(screen.getByRole("heading", { level: 1 })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /^answer [a-d]:/i })).toHaveLength(4);
+    expect(screen.getByText(/NEXT QUESTION IN/i)).toBeInTheDocument();
     expect(screen.queryByText("Category")).not.toBeInTheDocument();
     expect(screen.queryByText("Difficulty")).not.toBeInTheDocument();
     expect(screen.queryByText("Score")).not.toBeInTheDocument();

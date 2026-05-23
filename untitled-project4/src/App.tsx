@@ -209,6 +209,7 @@ export function App() {
         </section>
 
         <footer className="card-footer">
+          <span>NEXT QUESTION IN 0:{liveState.remainingSeconds.toString().padStart(2, "0")}</span>
           <span>{formatQuestionNumber(liveState.questionNumber)}</span>
         </footer>
       </article>
