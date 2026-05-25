@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Zombie Line-Runner: Auto-Shooter</title>
+    <!-- Google Fonts: Outfit for premium modern/gaming typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Premium background glowing blur blobs for atmosphere -->
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Main Arcade Frame Wrapper -->
+    <div class="game-wrapper">
+        <!-- Main Game Container (Constrained aspect ratio for consistent gameplay) -->
+        <div id="game-container" class="game-container">
+            
+            <!-- Dynamic 2D Canvas for 60fps Gameplay -->
+            <canvas id="game-canvas"></canvas>
+
+            <!-- ================= HUD (HEADS-UP DISPLAY) ================= -->
+            <div id="game-hud" class="hud-layer hidden">
+                <div class="hud-top">
+                    <!-- Shield/HP Bars -->
+                    <div class="status-container">
+                        <div class="status-bar-wrapper">
+                            <span class="status-label">SHIELD</span>
+                            <div class="status-bar shield-bar">
+                                <div id="hud-shield-fill" class="status-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="status-bar-wrapper">
+                            <span class="status-label">HEALTH</span>
+                            <div class="status-bar health-bar">
+                                <div id="hud-health-fill" class="status-fill" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Run Stats (Distance Progress) -->
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <span id="hud-level-name">LEVEL 1</span>
+                            <span id="hud-distance-text">0m / 1000m</span>
+                        </div>
+                        <div class="progress-track">
+                            <div id="hud-distance-fill" class="progress-fill" style="width: 0%;"></div>
+                            <div id="hud-progress-runner" class="progress-icon runner-icon">🏃</div>
+                            <div class="progress-icon boss-icon">☠️</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hud-bottom">
+                    <!-- Current Run Stats -->
+                    <div class="hud-stats-group">
+                        <div class="hud-stat-item">
+                            <span class="stat-icon">🔥</span>
+                            <div class="stat-texts">
+                                <span class="stat-title">FIRE RATE</span>
+                                <span id="hud-stat-firerate" class="stat-value">1.0/s</span>
+                            </div>
+                        </div>
+                        <div class="hud-stat-item">
+                            <span class="stat-icon">💥</span>
+                            <div class="stat-texts">
+                                <span class="stat-title">DAMAGE</span>
+                                <span id="hud-stat-damage" class="stat-value">10</span>
+                            </div>
+                        </div>
+                        <div class="hud-stat-item">
+                            <span class="stat-icon">📏</span>
+                            <div class="stat-texts">
+                                <span class="stat-title">RANGE</span>
+                                <span id="hud-stat-range" class="stat-value">400</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coin Count -->
+                    <div class="hud-coin-container">
+                        <span class="coin-icon animated">🪙</span>
+                        <span id="hud-coins" class="hud-coins-value">0</span>
+                    </div>
+                </div>
+
+                <!-- Touch Control Overlay Indicator -->
+                <div class="mobile-tip">← DRAG TO MOVE OR SWIPE →</div>
+            </div>
+
+            <!-- ================= MAIN MENU SCREEN ================= -->
+            <div id="screen-menu" class="screen-layer">
+                <div class="menu-header">
+                    <h1 class="game-title"><span class="title-red">ZOMBIE</span><br><span class="title-glow">GATE RUNNER</span></h1>
+                    <p class="game-subtitle">SHOOT THE GATES • GROW YOUR POWER • CRUSH THE BOSS</p>
+                </div>
+
+                <!-- Coin Header -->
+                <div class="menu-coin-display">
+                    <span class="coin-icon">🪙</span>
+                    <span id="menu-total-coins" class="coin-value">0</span>
+                </div>
+
+                <!-- Action Blocks -->
+                <div class="menu-actions">
+                    <button id="btn-play" class="btn-primary btn-neon-green">
+                        <span class="btn-text">START RUN</span>
+                        <span class="btn-subtext">Tap to launch</span>
+                    </button>
+                    
+                    <button id="btn-shop-toggle" class="btn-secondary">
+                        🧬 Permanent Upgrades
+                    </button>
+                </div>
+
+                <!-- Level Selector Grid -->
+                <div class="level-select-container">
+                    <h3 class="section-title">Select Level</h3>
+                    <div id="level-grid" class="level-grid">
+                        <!-- Levels will be injected here dynamically -->
+                    </div>
+                </div>
+
+                <div class="controls-guide">
+                    <h3>Controls Guide</h3>
+                    <div class="guide-icons">
+                        <div class="guide-item">
+                            <span class="guide-key">←</span>
+                            <span class="guide-key">→</span>
+                            <span>Arrow Keys / A-D</span>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-touch">📱</span>
+                            <span>Drag / Hold Screen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= UPGRADES SHOP SCREEN ================= -->
+            <div id="screen-shop" class="screen-layer hidden">
+                <div class="screen-header">
+                    <button id="btn-shop-back" class="btn-back">← Back</button>
+                    <h2>🧬 LAB UPGRADES</h2>
+                    <div class="menu-coin-display">
+                        <span class="coin-icon">🪙</span>
+                        <span id="shop-total-coins" class="coin-value">0</span>
+                    </div>
+                </div>
+
+                <p class="shop-description">Buy permanent biological and weapon adjustments using collected coins to start every run stronger!</p>
+
+                <!-- Cards Grid -->
+                <div class="shop-grid">
+                    <!-- Start Fire Rate Upgrade -->
+                    <div class="shop-card" data-upgrade="fireRate">
+                        <div class="card-icon">⚡</div>
+                        <h3>Fire Rate</h3>
+                        <p class="upgrade-desc">Start with higher automatic shooting speed.</p>
+                        <div class="upgrade-stats">
+                            <span class="stat-current" id="up-firerate-current">1.0/s</span>
+                            <span class="stat-arrow">→</span>
+                            <span class="stat-next" id="up-firerate-next">1.2/s</span>
+                        </div>
+                        <button class="btn-upgrade btn-buy" id="btn-up-firerate">
+                            <span class="buy-coin">🪙</span>
+                            <span class="buy-price" id="up-firerate-cost">100</span>
+                        </button>
+                    </div>
+
+                    <!-- Start Damage Upgrade -->
+                    <div class="shop-card" data-upgrade="damage">
+                        <div class="card-icon">💥</div>
+                        <h3>Bullet Damage</h3>
+                        <p class="upgrade-desc">Deal higher primary kinetic damage to zombies.</p>
+                        <div class="upgrade-stats">
+                            <span class="stat-current" id="up-damage-current">10</span>
+                            <span class="stat-arrow">→</span>
+                            <span class="stat-next" id="up-damage-next">15</span>
+                        </div>
+                        <button class="btn-upgrade btn-buy" id="btn-up-damage">
+                            <span class="buy-coin">🪙</span>
+                            <span class="buy-price" id="up-damage-cost">150</span>
+                        </button>
+                    </div>
+
+                    <!-- Start Shield Upgrade -->
+                    <div class="shop-card" data-upgrade="shield">
+                        <div class="card-icon">🛡️</div>
+                        <h3>Energy Shield</h3>
+                        <p class="upgrade-desc">Start with a protective shield absorbing initial damage.</p>
+                        <div class="upgrade-stats">
+                            <span class="stat-current" id="up-shield-current">0</span>
+                            <span class="stat-arrow">→</span>
+                            <span class="stat-next" id="up-shield-next">50</span>
+                        </div>
+                        <button class="btn-upgrade btn-buy" id="btn-up-shield">
+                            <span class="buy-coin">🪙</span>
+                            <span class="buy-price" id="up-shield-cost">200</span>
+                        </button>
+                    </div>
+
+                    <!-- Coin Value Multiplier Upgrade -->
+                    <div class="shop-card" data-upgrade="coinMult">
+                        <div class="card-icon">💰</div>
+                        <h3>Coin Multiplier</h3>
+                        <p class="upgrade-desc">Multiply all coins collected during gameplay.</p>
+                        <div class="upgrade-stats">
+                            <span class="stat-current" id="up-coinmult-current">1.0x</span>
+                            <span class="stat-arrow">→</span>
+                            <span class="stat-next" id="up-coinmult-next">1.2x</span>
+                        </div>
+                        <button class="btn-upgrade btn-buy" id="btn-up-coinmult">
+                            <span class="buy-coin">🪙</span>
+                            <span class="buy-price" id="up-coinmult-cost">250</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= PAUSE OVERLAY ================= -->
+            <button id="btn-pause-hud" class="btn-pause hidden">⏸️</button>
+            <div id="screen-pause" class="screen-layer overlay-layer hidden">
+                <div class="glass-panel text-center">
+                    <h2 class="neon-text-blue">RUN PAUSED</h2>
+                    <p>Take a breath. The undead are waiting.</p>
+                    <div class="pause-actions">
+                        <button id="btn-resume" class="btn-primary btn-neon-blue">RESUME</button>
+                        <button id="btn-quit" class="btn-secondary">QUIT TO MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= GAME OVER SCREEN ================= -->
+            <div id="screen-gameover" class="screen-layer overlay-layer hidden">
+                <div class="glass-panel text-center animate-fade-in">
+                    <h2 class="neon-text-red glow-pulse">RUN FAILED</h2>
+                    <p class="panel-subtitle">You were overrun by the horde!</p>
+                    
+                    <div class="run-summary-card">
+                        <div class="summary-row">
+                            <span>Distance Reached:</span>
+                            <span id="go-distance" class="summary-val">340m</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Zombies Squashed:</span>
+                            <span id="go-kills" class="summary-val">42</span>
+                        </div>
+                        <div class="summary-row highlight">
+                            <span>Coins Collected:</span>
+                            <span class="summary-val coin-highlight">🪙 <span id="go-coins">120</span></span>
+                        </div>
+                    </div>
+
+                    <div class="quick-shop-container">
+                        <h3>Quick Upgrade</h3>
+                        <div class="quick-upgrade-row" id="quick-upgrade-item">
+                            <!-- Injected quick upgrade option based on money -->
+                        </div>
+                    </div>
+
+                    <div class="panel-actions">
+                        <button id="btn-go-retry" class="btn-primary btn-neon-green">TRY AGAIN</button>
+                        <button id="btn-go-menu" class="btn-secondary">MAIN MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= VICTORY SCREEN ================= -->
+            <div id="screen-victory" class="screen-layer overlay-layer hidden">
+                <div class="glass-panel text-center animate-fade-in">
+                    <div class="victory-header">
+                        <div class="crown-icon">👑</div>
+                        <h2 class="neon-text-green glow-pulse">LEVEL CLEARED!</h2>
+                        <p class="panel-subtitle">The Boss has been eliminated!</p>
+                    </div>
+                    
+                    <!-- Stars Rating -->
+                    <div class="stars-container" id="victory-stars">
+                        <span class="star animated">⭐</span>
+                        <span class="star animated">⭐</span>
+                        <span class="star animated">⭐</span>
+                    </div>
+
+                    <div class="run-summary-card">
+                        <div class="summary-row">
+                            <span>Level Completed:</span>
+                            <span id="vic-level" class="summary-val">Level 1</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Zombies Terminated:</span>
+                            <span id="vic-kills" class="summary-val">87</span>
+                        </div>
+                        <div class="summary-row highlight">
+                            <span>Coins Earned:</span>
+                            <span class="summary-val coin-highlight">🪙 <span id="vic-coins">350</span></span>
+                        </div>
+                    </div>
+
+                    <div class="panel-actions">
+                        <button id="btn-vic-next" class="btn-primary btn-neon-green">NEXT LEVEL</button>
+                        <button id="btn-vic-menu" class="btn-secondary">MAIN MENU</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mute Audio / Toggle sound floating button -->
+            <button id="btn-audio-toggle" class="btn-audio" title="Toggle Sound">🔊</button>
+        </div>
+    </div>
+
+    <!-- Core Game Scripts -->
+    <script src="game.js"></script>
+</body>
+</html>
