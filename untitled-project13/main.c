@@ -16,7 +16,7 @@
 #define PLAY_HEIGHT 700.0f
 #define DANGER_Y (PLAY_Y + 95.0f)
 #define DROP_Y (PLAY_Y + 40.0f)
-#define MAX_FRUITS 48
+#define MAX_FRUITS 40
 #define FRUIT_LEVELS 10
 
 typedef struct FruitSpec {
@@ -195,7 +195,7 @@ static void MergeFruitPair(int a, int b)
     }
 }
 
-static void ResolveMerges(void)
+static bool ResolveOneMerge(void)
 {
     for (int i = 0; i < MAX_FRUITS; i++) {
         if (!fruits[i].active) continue;
@@ -214,9 +214,17 @@ static void ResolveMerges(void)
 
             if (distanceSq <= mergeDistance * mergeDistance) {
                 MergeFruitPair(i, j);
-                return;
+                return true;
             }
         }
+    }
+    return false;
+}
+
+static void ResolveMerges(void)
+{
+    for (int i = 0; i < 4; i++) {
+        if (!ResolveOneMerge()) break;
     }
 }
 

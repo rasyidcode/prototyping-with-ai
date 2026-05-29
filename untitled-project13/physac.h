@@ -105,7 +105,7 @@
 #define PHYSAC_MAX_VERTICES             24          // Maximum number of vertex for polygons shapes
 #define PHYSAC_DEFAULT_CIRCLE_VERTICES  24          // Default number of vertices for circle shapes
 
-#define PHYSAC_COLLISION_ITERATIONS     100
+#define PHYSAC_COLLISION_ITERATIONS     24 
 #define PHYSAC_PENETRATION_ALLOWANCE    0.05f
 #define PHYSAC_PENETRATION_CORRECTION   0.4f
 
