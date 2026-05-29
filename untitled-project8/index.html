@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rupiah Defense: Pixel Panic</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage" aria-label="Rupiah Defense game">
+        <div class="topbar">
+          <div>
+            <p class="kicker">Meja Stabilitas Rupiah</p>
+            <h1>Rupiah Defense</h1>
+          </div>
+          <button id="startBtn" class="primary-btn" type="button">Mulai</button>
+        </div>
+
+        <div class="meters" aria-label="Status permainan">
+          <div class="meter">
+            <span>Waktu</span>
+            <strong id="timeValue">90</strong>
+          </div>
+          <div class="meter">
+            <span>Skor</span>
+            <strong id="scoreValue">0</strong>
+          </div>
+          <div class="meter">
+            <span>Kombo</span>
+            <strong id="comboValue">x1</strong>
+          </div>
+          <div class="meter wide">
+            <span>Panik Pasar</span>
+            <div class="bar" aria-hidden="true"><i id="panicBar"></i></div>
+          </div>
+          <div class="meter wide">
+            <span>Kurs Fiktif</span>
+            <strong id="rateValue">Rp17.850</strong>
+          </div>
+        </div>
+
+        <canvas id="gameCanvas" width="1120" height="720"></canvas>
+
+        <div class="lanes" aria-label="Area sortir">
+          <button class="lane intervention" data-lane="intervensi" type="button">
+            Intervensi
+          </button>
+          <button class="lane comms" data-lane="komunikasi" type="button">
+            Komunikasi
+          </button>
+          <button class="lane export" data-lane="ekspor" type="button">
+            Ekspor
+          </button>
+          <button class="lane ignore" data-lane="abaikan" type="button">
+            Abaikan
+          </button>
+        </div>
+      </section>
+
+      <aside class="side-panel">
+        <section>
+          <p class="kicker">Cara main</p>
+          <h2>Sortir kartu sebelum sentimen jatuh.</h2>
+          <p>
+            Klik kartu, lalu pilih respons yang benar. Saat gelombang ekspor
+            muncul, ketuk peti yang cocok untuk menambah devisa.
+          </p>
+        </section>
+
+        <section class="legend" aria-label="Panduan kartu">
+          <article>
+            <b>Intervensi</b>
+            <span>cadangan, pasar spot, tekanan dolar</span>
+          </article>
+          <article>
+            <b>Komunikasi</b>
+            <span>rumor, konferensi pers, klarifikasi</span>
+          </article>
+          <article>
+            <b>Ekspor</b>
+            <span>komoditas, remitansi, devisa masuk</span>
+          </article>
+          <article>
+            <b>Abaikan</b>
+            <span>meme, candaan, noise linimasa</span>
+          </article>
+        </section>
+
+        <section class="note">
+          <p>
+            Semua institusi, headline, dan kebijakan di game ini fiktif. Ini
+            satire ringan, bukan simulasi ekonomi atau nasihat finansial.
+          </p>
+        </section>
+      </aside>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
