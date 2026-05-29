@@ -1,0 +1,17 @@
+{
+  "name": "boba-drop",
+  "version": "1.0.0",
+  "description": "Boba Drop - A Suika/Watermelon Game clone with boba drinks",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "matter-js": "^0.19.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0"
+  }
+}
