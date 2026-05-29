@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Suika Game - Interactive Three.js Watermelon Game</title>
+    <meta name="description" content="Play a beautiful 3D clone of the popular Suika (Watermelon) Game in your browser. Stack, bounce, and merge 3D fruits with satisfying physics, glowing neon aesthetics, and real-time synthesized music." />
+    <!-- Google Fonts for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="game-app">
+      <!-- 3D Canvas rendering target -->
+      <div id="canvas-container"></div>
+
+      <!-- Left Panel: Score and Info -->
+      <div id="hud-panel" class="glass-panel">
+        <header>
+          <h1 id="game-title">Suika 3D</h1>
+        </header>
+        
+        <div class="stat-box">
+          <span class="stat-label">SCORE</span>
+          <span id="score-value" class="stat-num">0</span>
+        </div>
+
+        <div class="stat-box">
+          <span class="stat-label">BEST SCORE</span>
+          <span id="best-value" class="stat-num">0</span>
+        </div>
+
+        <div id="next-preview-box">
+          <span class="stat-label">NEXT FRUIT</span>
+          <div id="next-fruit-visual">
+            <div id="next-fruit-indicator"></div>
+            <span id="next-fruit-name">Cherry</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Fruit Evolution Flow -->
+      <div id="evolution-panel" class="glass-panel">
+        <h2 class="panel-subtitle">Evolution Guide</h2>
+        <div id="evolution-list">
+          <div class="evolution-item" data-level="0"><span class="evo-dot" style="background:#ff1e3c"></span>Cherry</div>
+          <div class="evolution-item" data-level="1"><span class="evo-dot" style="background:#ff3b69"></span>Strawberry</div>
+          <div class="evolution-item" data-level="2"><span class="evo-dot" style="background:#8d3bff"></span>Grape</div>
+          <div class="evolution-item" data-level="3"><span class="evo-dot" style="background:#ff922b"></span>Dekopon</div>
+          <div class="evolution-item" data-level="4"><span class="evo-dot" style="background:#f76707"></span>Persimmon</div>
+          <div class="evolution-item" data-level="5"><span class="evo-dot" style="background:#e03131"></span>Apple</div>
+          <div class="evolution-item" data-level="6"><span class="evo-dot" style="background:#d3f9d8; border:1px solid #777"></span>Pear</div>
+          <div class="evolution-item" data-level="7"><span class="evo-dot" style="background:#ffa8a8"></span>Peach</div>
+          <div class="evolution-item" data-level="8"><span class="evo-dot" style="background:#fab005"></span>Pineapple</div>
+          <div class="evolution-item" data-level="9"><span class="evo-dot" style="background:#8ce99a"></span>Melon</div>
+          <div class="evolution-item" data-level="10"><span class="evo-dot" style="background:#2b8a3e"></span>Watermelon</div>
+        </div>
+      </div>
+
+      <!-- Bottom Control Bar -->
+      <div id="controls-bar" class="glass-panel">
+        <button id="mute-button" class="ctrl-btn" aria-label="Mute sound effects">🔊 SFX</button>
+        <button id="music-button" class="ctrl-btn" aria-label="Toggle ambient background music">🎵 Music</button>
+        <button id="graphics-button" class="ctrl-btn" aria-label="Toggle shadows and lighting quality">⚡ High GFX</button>
+        <div class="controls-desc">
+          <span class="ctrl-key">Mouse Wheel / Touch drag</span> Orbit view • 
+          <span class="ctrl-key">Move Pointer</span> Aim drop • 
+          <span class="ctrl-key">Click</span> Drop fruit
+        </div>
+      </div>
+
+      <!-- Welcome Overlay Screen -->
+      <div id="welcome-overlay" class="state-overlay">
+        <div class="overlay-card glass-panel">
+          <h2 class="overlay-title">Suika Game 3D</h2>
+          <p class="overlay-intro">
+            Merge matching fruits in a fully interactive 3D container. Spin the container to find hidden gaps and create the legendary giant Watermelon!
+          </p>
+          <button id="start-button" class="primary-action-btn">PLAY GAME</button>
+          <p class="opt-in-hint">Requires audio permission for procedural music synth.</p>
+        </div>
+      </div>
+
+      <!-- Game Over Overlay Screen -->
+      <div id="game-over-overlay" class="state-overlay hidden">
+        <div class="overlay-card glass-panel">
+          <h2 class="overlay-title warning-color">GAME OVER</h2>
+          <p class="overlay-intro">The container overflowed!</p>
+          <div class="score-summary">
+            <div>Final Score: <span id="final-score" class="highlight-num">0</span></div>
+            <div>New Best Score: <span id="final-best" class="highlight-num">0</span></div>
+          </div>
+          <button id="restart-button" class="primary-action-btn">PLAY AGAIN</button>
+        </div>
+      </div>
+
+      <!-- DOM Container for rising Score Text effects -->
+      <div id="floating-scores-container"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
