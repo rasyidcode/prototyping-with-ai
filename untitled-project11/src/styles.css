@@ -26,6 +26,12 @@ button {
   height: 100%;
   touch-action: none;
   user-select: none;
+  cursor: crosshair;
+}
+
+.game-shell.pointer-locked,
+.game-shell.pointer-locked .game-canvas {
+  cursor: none;
 }
 
 .game-canvas {

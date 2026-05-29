@@ -63,7 +63,7 @@ app.innerHTML = `
         <div class="charge-track"><div id="charge-fill" class="charge-fill"></div></div>
         <div class="charge-label" id="charge-label">Hold to charge, release to throw</div>
       </div>
-      <div class="help-line">Aim with the pointer. Match equal bodies to fuse them into larger space objects.</div>
+      <div class="help-line">Click to lock aim. Hold to charge, release to throw.</div>
       <div class="game-over" id="game-over" role="dialog" aria-modal="true" aria-labelledby="game-over-title">
         <h1 id="game-over-title">Game Over</h1>
         <p id="final-score">Score 0</p>
@@ -74,6 +74,7 @@ app.innerHTML = `
 `;
 
 const canvas = document.querySelector<HTMLCanvasElement>(".game-canvas")!;
+const shell = document.querySelector<HTMLElement>(".game-shell")!;
 const scoreEl = document.querySelector<HTMLElement>("#score")!;
 const bestEl = document.querySelector<HTMLElement>("#best")!;
 const nextOrbEl = document.querySelector<HTMLElement>("#next-orb")!;
@@ -99,9 +100,9 @@ camera.position.set(0, 4.25, 9.4);
 camera.lookAt(0, 2.5, 0);
 
 const clock = new THREE.Clock();
-const raycaster = new THREE.Raycaster();
 const pointerNdc = new THREE.Vector2(0, 0);
 const aimDirection = new THREE.Vector3(0, -0.12, -1).normalize();
+const cameraTarget = new THREE.Vector3(0, 2.6, -0.6);
 const spawnOffset = new THREE.Vector3();
 const tempVector = new THREE.Vector3();
 const bodyMeshMap = new Map<number, Orb>();
@@ -128,7 +129,8 @@ const state = {
   overflowTime: 0,
   lastShotAt: 0,
   idCounter: 1,
-  shake: 0
+  shake: 0,
+  pointerLocked: false
 };
 
 let world: RAPIER.World;
@@ -156,6 +158,7 @@ async function start() {
   canvas.addEventListener("pointerdown", onPointerDown);
   window.addEventListener("pointerup", onPointerUp);
   window.addEventListener("pointercancel", cancelCharge);
+  document.addEventListener("pointerlockchange", onPointerLockChange);
   restartButton.addEventListener("click", resetGame);
 }
 
@@ -342,18 +345,32 @@ function randomSpawnTier() {
 }
 
 function onPointerMove(event: PointerEvent) {
+  if (state.pointerLocked && event.pointerType === "mouse") {
+    pointerNdc.x += event.movementX * 0.0026;
+    pointerNdc.y -= event.movementY * 0.0026;
+    pointerNdc.x = THREE.MathUtils.clamp(pointerNdc.x, -1, 1);
+    pointerNdc.y = THREE.MathUtils.clamp(pointerNdc.y, -0.9, 0.75);
+    return;
+  }
+
   const rect = canvas.getBoundingClientRect();
   pointerNdc.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
   pointerNdc.y = -(((event.clientY - rect.top) / rect.height) * 2 - 1);
-  pointerNdc.x = THREE.MathUtils.clamp(pointerNdc.x, -0.72, 0.72);
-  pointerNdc.y = THREE.MathUtils.clamp(pointerNdc.y, -0.58, 0.44);
-  updateAimDirection();
+  pointerNdc.x = THREE.MathUtils.clamp(pointerNdc.x, -1, 1);
+  pointerNdc.y = THREE.MathUtils.clamp(pointerNdc.y, -0.9, 0.75);
 }
 
 function onPointerDown(event: PointerEvent) {
   if (state.gameOver) return;
-  canvas.setPointerCapture(event.pointerId);
-  onPointerMove(event);
+
+  if (event.pointerType === "mouse" && document.pointerLockElement !== canvas) {
+    canvas.requestPointerLock();
+  }
+
+  if (event.pointerType !== "mouse") {
+    canvas.setPointerCapture(event.pointerId);
+    onPointerMove(event);
+  }
   state.isCharging = true;
   state.charge = 0.08;
   state.chargeDirection = 1;
@@ -375,9 +392,13 @@ function cancelCharge() {
   updateChargeHud();
 }
 
-function updateAimDirection() {
-  raycaster.setFromCamera(pointerNdc, camera);
-  aimDirection.copy(raycaster.ray.direction).normalize();
+function onPointerLockChange() {
+  state.pointerLocked = document.pointerLockElement === canvas;
+  shell.classList.toggle("pointer-locked", state.pointerLocked);
+
+  if (!state.pointerLocked) {
+    cancelCharge();
+  }
 }
 
 function throwCurrentOrb() {
@@ -674,6 +695,9 @@ function endGame() {
   state.gameOver = true;
   state.isCharging = false;
   state.charge = 0;
+  if (document.pointerLockElement === canvas) {
+    document.exitPointerLock();
+  }
   if (state.score > state.best) {
     state.best = state.score;
     localStorage.setItem("orbit-merge-best", String(state.best));
@@ -684,13 +708,19 @@ function endGame() {
 }
 
 function updateCamera(delta: number) {
-  const baseX = pointerNdc.x * 0.32;
-  const baseY = 4.25 + pointerNdc.y * 0.18;
+  const baseX = pointerNdc.x * 0.95;
+  const baseY = 4.25 + pointerNdc.y * 0.42;
+  const targetX = pointerNdc.x * 2.7;
+  const targetY = 2.65 + pointerNdc.y * 1.28;
   state.shake = Math.max(0, state.shake - delta * 0.45);
 
-  camera.position.x = THREE.MathUtils.lerp(camera.position.x, baseX + (Math.random() - 0.5) * state.shake, delta * 4);
-  camera.position.y = THREE.MathUtils.lerp(camera.position.y, baseY + (Math.random() - 0.5) * state.shake, delta * 4);
-  camera.lookAt(pointerNdc.x * 1.25, 2.65 + pointerNdc.y * 0.62, -0.55);
+  camera.position.x = THREE.MathUtils.lerp(camera.position.x, baseX + (Math.random() - 0.5) * state.shake, delta * 8);
+  camera.position.y = THREE.MathUtils.lerp(camera.position.y, baseY + (Math.random() - 0.5) * state.shake, delta * 8);
+  cameraTarget.x = THREE.MathUtils.lerp(cameraTarget.x, targetX, delta * 10);
+  cameraTarget.y = THREE.MathUtils.lerp(cameraTarget.y, targetY, delta * 10);
+  cameraTarget.z = -0.75;
+  camera.lookAt(cameraTarget);
+  camera.getWorldDirection(aimDirection);
 }
 
 function updateHud() {
