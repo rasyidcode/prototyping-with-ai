@@ -148,8 +148,8 @@ export class GameScene extends Phaser.Scene {
     this.add.rectangle(FIELD.x + FIELD.w / 2, FIELD.y + FIELD.h / 2, FIELD.w, FIELD.h, 0x4fae4d, 0.88);
     this.add.rectangle(553, ROAD.y, 240, 58, 0x8d6a42).setStrokeStyle(5, 0x674a2e);
     this.add.rectangle(552, ROAD.y, 240, 8, 0xf4dd98, 0.5);
-    this.add.image(FACTORY.x, FACTORY.y, "factory").setScale(1.15);
-    this.add.image(DOCK.x, DOCK.y, "dock").setScale(1.16);
+    this.add.image(FACTORY.x, FACTORY.y, "factory").setScale(0.46);
+    this.add.image(DOCK.x, DOCK.y, "dock").setScale(0.72);
     this.add.text(42, 82, MODE_LABELS[this.mode], { fontSize: "20px", color: "#fff7c7", fontStyle: "bold" });
     this.add.text(646, 124, "Factory", { fontSize: "18px", color: "#fff7c7", fontStyle: "bold" });
     this.add.text(770, 454, "Export", { fontSize: "18px", color: "#fff7c7", fontStyle: "bold" });
@@ -163,6 +163,7 @@ export class GameScene extends Phaser.Scene {
       const tree: TreeState = { sprite, bar, ready: true, progress: 1 };
       this.trees.push(tree);
       sprite.on("pointerdown", () => this.harvestTree(index));
+      sprite.setScale(0.46);
       barBg.setDepth(3);
       bar.setDepth(4);
     });
@@ -170,7 +171,7 @@ export class GameScene extends Phaser.Scene {
 
   private createTrucks(): void {
     for (let i = 0; i < 2; i += 1) {
-      const sprite = this.add.image(ROAD.startX, ROAD.y + (i - 0.5) * 28, "truck").setScale(0.86);
+      const sprite = this.add.image(ROAD.startX, ROAD.y + (i - 0.5) * 28, "truck").setScale(0.26);
       this.trucks.push({ sprite, state: "idle", cargo: [], progress: 0, disabledTimer: 0 });
     }
   }
@@ -239,7 +240,7 @@ export class GameScene extends Phaser.Scene {
     const tree = this.trees[index];
     if (!tree.ready || tree.worker) return;
 
-    const worker = this.add.image(tree.sprite.x - 28, tree.sprite.y + 12, "worker").setScale(0.78);
+    const worker = this.add.image(tree.sprite.x - 28, tree.sprite.y + 12, "worker").setScale(0.38);
     tree.worker = worker;
     tree.ready = false;
     tree.progress = 0;
@@ -572,7 +573,7 @@ export class GameScene extends Phaser.Scene {
       speed: { min: 50, max: 150 },
       lifespan: 520,
       quantity,
-      scale: { start: 1, end: 0 },
+      scale: { start: 0.18, end: 0 },
       emitting: false
     });
     emitter.explode(quantity);

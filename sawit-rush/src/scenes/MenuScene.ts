@@ -11,14 +11,14 @@ export class MenuScene extends Phaser.Scene {
     const { width, height } = this.scale;
     const save = loadSave();
 
-    this.add.rectangle(width / 2, height / 2, width, height, 0x1f6f3d);
-    this.add.rectangle(width / 2, height - 58, width, 116, 0x2c8f45);
-    this.add.circle(780, 96, 72, 0xffd76f, 0.92);
+    this.add.image(width / 2, height / 2, "assetSheet").setDisplaySize(width, height);
+    this.add.rectangle(width / 2, height / 2, width, height, 0x10281d, 0.22);
+    this.add.rectangle(width / 2, 160, 560, 188, 0x153320, 0.62);
 
     for (let i = 0; i < 13; i += 1) {
       const x = 45 + i * 76;
       const y = 360 + Math.sin(i) * 22;
-      this.add.image(x, y, "palm").setScale(1.05 + (i % 3) * 0.08);
+      this.add.image(x, y, "palm").setScale(0.42 + (i % 3) * 0.035);
     }
 
     this.add
