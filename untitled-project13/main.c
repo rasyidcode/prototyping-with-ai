@@ -210,12 +210,38 @@ static void ResolveMerges(void)
             float dx = a.x - b.x;
             float dy = a.y - b.y;
             float distanceSq = dx * dx + dy * dy;
-            float mergeDistance = radius * 1.85f;
+            float mergeDistance = radius * 2.08f;
 
             if (distanceSq <= mergeDistance * mergeDistance) {
                 MergeFruitPair(i, j);
                 return;
             }
+        }
+    }
+}
+
+static void KeepFruitsInBounds(void)
+{
+    for (int i = 0; i < MAX_FRUITS; i++) {
+        if (!fruits[i].active) continue;
+
+        PhysicsBody body = fruits[i].body;
+        float radius = FRUITS[fruits[i].level].radius;
+        float minX = PLAY_X + radius;
+        float maxX = PLAY_X + PLAY_WIDTH - radius;
+        float maxY = PLAY_Y + PLAY_HEIGHT - radius;
+
+        if (body->position.x < minX) {
+            body->position.x = minX;
+            if (body->velocity.x < 0.0f) body->velocity.x *= -0.2f;
+        }
+        if (body->position.x > maxX) {
+            body->position.x = maxX;
+            if (body->velocity.x > 0.0f) body->velocity.x *= -0.2f;
+        }
+        if (body->position.y > maxY) {
+            body->position.y = maxY;
+            if (body->velocity.y > 0.0f) body->velocity.y *= -0.15f;
         }
     }
 }
@@ -295,6 +321,7 @@ int main(void)
 
         if (!gameOver) {
             UpdatePhysics();
+            KeepFruitsInBounds();
             ResolveMerges();
             UpdateGameOver();
         }
