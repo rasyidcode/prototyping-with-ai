@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚚</text></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Munchies 3D — Retro-Sunset Food Truck Game</title>
+    <meta name="description" content="Deliver free delicious meals to hungry college students across a beautiful low-poly 3D campus in this arcade-style driving game. Upgrade your food truck, avoid obstacles, and set high scores!" />
+    
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- 3D Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Start / Title Screen -->
+    <div id="start-screen" class="overlay active">
+      <div class="glass-panel main-menu animate-fade-in">
+        <div class="logo-container">
+          <div class="neon-title-glow"></div>
+          <h1 class="game-logo"><span class="neon-pink">CAMPUS</span> <span class="neon-yellow">MUNCHIES</span> <span class="game-tag">3D</span></h1>
+        </div>
+        <p class="game-subtitle">The ultimate food truck delivery adventure! Fill hungry bellies, collect generous tips, and trick out your truck in dynamic sunset retro vibes. 🌅🚚✨</p>
+        
+        <div class="controls-guide">
+          <h3>🎮 CONTROLS</h3>
+          <div class="keys-grid">
+            <div class="key-item"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span> <span class="key-desc">Drive Truck (or Arrow Keys)</span></div>
+            <div class="key-item"><span class="key">SPACEBAR</span> <span class="key-desc">Launch Food (or Click)</span></div>
+            <div class="key-item"><span class="key">1</span><span class="key">2</span><span class="key">3</span> <span class="key-desc">Switch Food (🍕, 🍔, 🌮)</span></div>
+          </div>
+        </div>
+
+        <button id="btn-start-game" class="btn btn-primary btn-pulse">
+          <span>START SHIFT 🚚💨</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- HUD Overlay -->
+    <div id="game-hud" class="hud-container hidden">
+      <!-- Top Bar -->
+      <div class="hud-top-bar">
+        <div class="hud-group glass-panel">
+          <div class="hud-label">TIPS EARNED</div>
+          <div class="hud-value" id="hud-score">$0.00</div>
+        </div>
+
+        <div class="hud-timer-container">
+          <svg class="timer-ring" width="80" height="80">
+            <circle class="timer-ring-circle-bg" cx="40" cy="40" r="32" stroke-width="6" fill="transparent"/>
+            <circle id="timer-progress-ring" class="timer-ring-circle" cx="40" cy="40" r="32" stroke-width="6" fill="transparent"/>
+          </svg>
+          <div class="timer-text" id="hud-timer">60</div>
+        </div>
+
+        <div class="hud-group glass-panel">
+          <div class="hud-label">SATISFIED STUDENTS</div>
+          <div class="hud-value" id="hud-delivered">0<span class="hud-total-students">/10</span></div>
+        </div>
+      </div>
+
+      <!-- Mid-Left Active Food Indicator -->
+      <div class="hud-food-selector glass-panel animate-slide-in-left">
+        <div class="food-option active" id="food-opt-1" data-index="0">
+          <span class="food-emoji">🍕</span>
+          <span class="food-key">Key 1</span>
+          <div class="stock-bar-outer"><div id="stock-bar-pizza" class="stock-bar-inner pizza-bar" style="width: 100%"></div></div>
+          <span class="stock-num" id="stock-num-pizza">10</span>
+        </div>
+        <div class="food-option" id="food-opt-2" data-index="1">
+          <span class="food-emoji">🍔</span>
+          <span class="food-key">Key 2</span>
+          <div class="stock-bar-outer"><div id="stock-bar-burger" class="stock-bar-inner burger-bar" style="width: 100%"></div></div>
+          <span class="stock-num" id="stock-num-burger">10</span>
+        </div>
+        <div class="food-option" id="food-opt-3" data-index="2">
+          <span class="food-emoji">🌮</span>
+          <span class="food-key">Key 3</span>
+          <div class="stock-bar-outer"><div id="stock-bar-taco" class="stock-bar-inner taco-bar" style="width: 100%"></div></div>
+          <span class="stock-num" id="stock-num-taco">10</span>
+        </div>
+      </div>
+
+      <!-- Bottom HUD: Instruction & Speedometer -->
+      <div class="hud-bottom-bar">
+        <div class="hud-instruction glass-panel">
+          <div class="instruction-icon">ℹ️</div>
+          <div class="instruction-text" id="hud-instruction-text">Locate hungry students around campus! Double-check their order before firing.</div>
+        </div>
+
+        <div class="speedometer-container glass-panel">
+          <div class="speed-value" id="hud-speed">0</div>
+          <div class="speed-unit">MPH</div>
+        </div>
+      </div>
+
+      <!-- Mobile Controls (Hidden on desktop) -->
+      <div id="mobile-controls" class="hidden">
+        <div class="joystick-area" id="touch-joystick-area">
+          <div class="joystick-knob" id="touch-joystick-knob"></div>
+        </div>
+        <div class="mobile-action-buttons">
+          <button id="btn-mobile-fire" class="btn-circle btn-fire">🍕</button>
+          <div class="mobile-food-switchers">
+            <button id="btn-switch-1" class="btn-circle-sm active">🍕</button>
+            <button id="btn-switch-2" class="btn-circle-sm">🍔</button>
+            <button id="btn-switch-3" class="btn-circle-sm">🌮</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop / Upgrades Screen -->
+    <div id="shop-screen" class="overlay hidden">
+      <div class="glass-panel shop-container">
+        <h2 class="shop-title">📦 LEVEL UPGRADES SHOP</h2>
+        <p class="shop-intro">Use your earned tips to supercharge your campus delivery rig before the next shift!</p>
+        
+        <div class="shop-balance-container">
+          <span class="shop-balance-label">Total Tips Available:</span>
+          <span class="shop-balance" id="shop-balance">$0.00</span>
+        </div>
+
+        <div class="shop-items-grid">
+          <!-- Item 1: Engine -->
+          <div class="shop-card" id="shop-card-engine">
+            <div class="shop-card-header">
+              <span class="card-icon">🚀</span>
+              <h3 class="card-name">Engine Tuning</h3>
+            </div>
+            <p class="card-desc">Increases acceleration and max top speed. Perfect for quick deliveries.</p>
+            <div class="level-indicator-dots" id="dots-engine">
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <button id="btn-upgrade-engine" class="btn btn-secondary btn-upgrade" data-upgrade="engine">
+              Upgrade: <span class="upgrade-cost" id="cost-engine">$150</span>
+            </button>
+          </div>
+
+          <!-- Item 2: Cargo Fridge -->
+          <div class="shop-card" id="shop-card-fridge">
+            <div class="shop-card-header">
+              <span class="card-icon">📦</span>
+              <h3 class="card-name">Mega Fridge</h3>
+            </div>
+            <p class="card-desc">Increases total stock capacity for pizza, burgers, and tacos (10 ➡️ 15 ➡️ 25).</p>
+            <div class="level-indicator-dots" id="dots-fridge">
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <button id="btn-upgrade-fridge" class="btn btn-secondary btn-upgrade" data-upgrade="fridge">
+              Upgrade: <span class="upgrade-cost" id="cost-fridge">$100</span>
+            </button>
+          </div>
+
+          <!-- Item 3: Launcher -->
+          <div class="shop-card" id="shop-card-launcher">
+            <div class="shop-card-header">
+              <span class="card-icon">🎯</span>
+              <h3 class="card-name">Gourmet Launcher</h3>
+            </div>
+            <p class="card-desc">Increases throwing range and adds automated launcher targeting assist.</p>
+            <div class="level-indicator-dots" id="dots-launcher">
+              <span class="dot filled"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <button id="btn-upgrade-launcher" class="btn btn-secondary btn-upgrade" data-upgrade="launcher">
+              Upgrade: <span class="upgrade-cost" id="cost-launcher">$200</span>
+            </button>
+          </div>
+
+          <!-- Item 4: Neon Underglow -->
+          <div class="shop-card" id="shop-card-glow">
+            <div class="shop-card-header">
+              <span class="card-icon">💫</span>
+              <h3 class="card-name">Neon Underglow</h3>
+            </div>
+            <p class="card-desc">Equip a styling pink neon glow below the truck. Multiplies tip score by 2x!</p>
+            <div class="level-indicator-dots" id="dots-glow">
+              <span class="dot"></span>
+            </div>
+            <button id="btn-upgrade-glow" class="btn btn-secondary btn-upgrade" data-upgrade="glow">
+              Install: <span class="upgrade-cost" id="cost-glow">$300</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="btn-next-shift" class="btn btn-primary">
+          <span>START NEXT SHIFT 💨</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Game Over Screen -->
+    <div id="game-over-screen" class="overlay hidden">
+      <div class="glass-panel main-menu animate-fade-in">
+        <h1 class="game-logo"><span class="neon-pink">SHIFT</span> <span class="neon-yellow">COMPLETED</span></h1>
+        <p class="game-subtitle" id="game-over-summary">You served 24 hungry students and collected $240.00 in tips! Excellent work out there today.</p>
+        
+        <div class="stats-panel-glow">
+          <div class="stats-row"><span>Total Served</span><strong id="final-served">24</strong></div>
+          <div class="stats-row"><span>Total Tips Earned</span><strong id="final-tips">$240.00</strong></div>
+          <div class="stats-row"><span>Remaining Cargo</span><strong id="final-cargo">12 items</strong></div>
+        </div>
+
+        <div style="display: flex; gap: 15px; width: 100%; margin-top: 15px;">
+          <button id="btn-restart-game" class="btn btn-primary" style="flex: 1;">
+            <span>PLAY AGAIN 🔄</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
