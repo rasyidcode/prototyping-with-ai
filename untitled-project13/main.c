@@ -92,7 +92,7 @@ static PhysicsBody MakeCircleBody(Vector2 position, int level)
         body->restitution = 0.05f;
         body->staticFriction = 0.55f;
         body->dynamicFriction = 0.35f;
-        body->freezeOrient = false;
+        body->freezeOrient = true;
     }
     return body;
 }
@@ -254,6 +254,28 @@ static void KeepFruitsInBounds(void)
     }
 }
 
+static void SettleRestingFruits(void)
+{
+    for (int i = 0; i < MAX_FRUITS; i++) {
+        if (!fruits[i].active) continue;
+
+        PhysicsBody body = fruits[i].body;
+        bool slowLinear = fabsf(body->velocity.x) < 1.8f && fabsf(body->velocity.y) < 1.8f;
+        bool slowAngular = fabsf(body->angularVelocity) < 0.02f;
+
+        if (slowLinear && slowAngular && body->isGrounded) {
+            body->velocity = (Vector2){ 0.0f, 0.0f };
+            body->angularVelocity = 0.0f;
+            body->force = (Vector2){ 0.0f, 0.0f };
+            body->torque = 0.0f;
+        } else {
+            body->velocity.x *= 0.997f;
+            body->velocity.y *= 0.997f;
+            body->angularVelocity *= 0.92f;
+        }
+    }
+}
+
 static void UpdateGameOver(void)
 {
     if (gameOver) return;
@@ -330,6 +352,7 @@ int main(void)
         if (!gameOver) {
             UpdatePhysics();
             KeepFruitsInBounds();
+            SettleRestingFruits();
             ResolveMerges();
             UpdateGameOver();
         }
