@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { FRUIT_TYPES, createFruitMesh } from './FruitDefinitions';
 import { PhysicsSystem } from './PhysicsSystem';
+
 import { ParticleSystem } from './ParticleSystem';
 import { SoundEffects } from './SoundEffects';
 
@@ -546,7 +547,7 @@ class GameController {
     const body = this.physics.createBody(dropLvl, dropInfo.radius, dropPos, physicalMesh);
     
     // Give a tiny initial downward impulse to drop quickly
-    body.velocity.set(0, -1.0, 0);
+    body.body.velocity.set(0, -1.0, 0);
 
     // Quick cooldown before loading next preview fruit (0.55s)
     setTimeout(() => {
@@ -594,8 +595,8 @@ class GameController {
     this.activeMerges.push({
       meshA: b1.mesh,
       meshB: b2.mesh,
-      posA: b1.position.clone(),
-      posB: b2.position.clone(),
+      posA: b1.mesh.position.clone(),
+      posB: b2.mesh.position.clone(),
       midpoint: midpoint,
       targetLevel: targetLvl,
       elapsed: 0,
@@ -745,12 +746,14 @@ class GameController {
 
     // Check if any settled dynamic body overflows the top warning line (Y = 9.5)
     for (const body of this.physics.bodies) {
-      if (body.isStatic || body.isMerging) continue;
+      if (body.isMerging) continue;
 
       // Rest check: must be moving very slowly, and center or boundary crosses Y=9.5
       // This prevents the warning sensor from firing on drops before the fruit settles
-      if (body.velocity.y < 0.1 && body.velocity.lengthSq() < 0.2) {
-        const topEdge = body.position.y + body.radius * 0.5; // Tolerant boundary: center or substantial part must cross Y=9.5
+      const vel = body.body.velocity;
+      const speedSq = vel.x * vel.x + vel.y * vel.y + vel.z * vel.z;
+      if (vel.y < 0.1 && speedSq < 0.2) {
+        const topEdge = body.body.position.y + body.radius * 0.5; // Tolerant boundary: center or substantial part must cross Y=9.5
         if (topEdge > h) {
           isCurrentlyOverflowing = true;
           break;
