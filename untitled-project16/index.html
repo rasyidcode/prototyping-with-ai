@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stickman Clash & Conquer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="game-container">
+    <!-- Sound Toggle Button -->
+    <button id="sound-toggle" class="sound-toggle-btn" aria-label="Toggle Sound">
+      <!-- Speaker On Icon -->
+      <svg id="sound-on-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+      <!-- Speaker Off Icon (Hidden by default) -->
+      <svg id="sound-off-icon" class="hidden" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
+    </button>
+
+    <!-- Game HUD -->
+    <div id="hud">
+      <!-- Crowd Counter -->
+      <div class="hud-item hud-crowd">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span id="hud-crowd-count">1</span>
+      </div>
+
+      <!-- Level Tracker -->
+      <div class="hud-item">
+        <span id="hud-level-text" class="hud-level">LVL 1</span>
+        <div id="level-progress-container">
+          <div id="level-progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Coin Tracker -->
+      <div class="hud-item hud-coin">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffb703" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="16"></line>
+          <line x1="8" y1="12" x2="16" y2="12"></line>
+        </svg>
+        <span id="hud-coin-count">0</span>
+      </div>
+    </div>
+
+    <!-- Active Canvas -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Steering Helper Overlay -->
+    <div id="tutorial-overlay" class="hidden">
+      <div class="tutorial-drag-icon"></div>
+      <span>DRAG TO STEER ARMY</span>
+    </div>
+
+    <!-- Main Menu Overlay -->
+    <div id="menu-screen" class="overlay">
+      <div class="glass-panel">
+        <h1 class="game-title">
+          <span>STICKMAN ARMY</span>
+          CLASH & CONQUER
+        </h1>
+
+        <!-- Total Coin Stats -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; font-weight: 700; font-size: 18px; color: var(--warning);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          <span id="menu-coin-count">0</span> COINS
+        </div>
+
+        <button id="play-btn" class="btn">BATTLE RUN</button>
+
+        <!-- Upgrades Shop -->
+        <div class="upgrades-container">
+          <!-- Upgrade 1: Starting Army -->
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Starting Army</span>
+              <span class="upgrade-desc">Start with more stickmen</span>
+              <span class="upgrade-level" id="upg-army-lvl">Lvl 1</span>
+            </div>
+            <button id="upg-army-btn" class="upgrade-btn">
+              UPGRADE
+              <span class="coin-cost">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                <span id="upg-army-cost">50</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Upgrade 2: Clash Power -->
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Stickman Power</span>
+              <span class="upgrade-desc">Deals more damage to King</span>
+              <span class="upgrade-level" id="upg-power-lvl">Lvl 1</span>
+            </div>
+            <button id="upg-power-btn" class="upgrade-btn">
+              UPGRADE
+              <span class="coin-cost">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                <span id="upg-power-cost">75</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Upgrade 3: Coin Yield -->
+          <div class="upgrade-card">
+            <div class="upgrade-info">
+              <span class="upgrade-name">Coin Yield</span>
+              <span class="upgrade-desc">Get more coins from victories</span>
+              <span class="upgrade-level" id="upg-coins-lvl">Lvl 1</span>
+            </div>
+            <button id="upg-coins-btn" class="upgrade-btn">
+              UPGRADE
+              <span class="coin-cost">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                  <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                <span id="upg-coins-cost">100</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results/Game Over Screen -->
+    <div id="result-screen" class="overlay hidden">
+      <div class="glass-panel">
+        <h2 id="result-title" class="win-title">VICTORY!</h2>
+        <p id="result-subtitle" style="color: #a5b1c9; margin-bottom: 20px;">The Castle has fallen!</p>
+
+        <div class="results-panel">
+          <div class="results-stats">
+            <div class="stat-box">
+              <span class="stat-label">Final Army</span>
+              <div id="stat-army-size" class="stat-val">42</div>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">Earned</span>
+              <div id="stat-coins-earned" class="stat-val" style="color: var(--warning);">+150</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; width: 100%;">
+          <button id="restart-btn" class="btn btn-secondary">RETRY</button>
+          <button id="continue-btn" class="btn">CONTINUE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
