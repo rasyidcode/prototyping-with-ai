@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Zombie Slapper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Slackey&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-primary: 'Outfit', sans-serif;
+      --font-display: 'Slackey', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #080810;
+      color: #ffffff;
+      font-family: var(--font-primary);
+    }
+
+    #app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Initial simple loading style */
+    #loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #15102a 0%, #080810 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 0.5s ease;
+    }
+
+    #loading.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: #9eff4b;
+      text-shadow: 0 0 15px rgba(158, 255, 75, 0.4);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .loader-bar {
+      width: 200px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .loader-progress {
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, #9eff4b, #4be3ff);
+      border-radius: 3px;
+      animation: progress-anim 1.5s infinite ease-in-out;
+    }
+
+    @keyframes progress-anim {
+      0% { left: -40%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    /* HUD Styles */
+    .hud-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      transition: opacity 0.3s ease;
+    }
+
+    .hud-container.hidden {
+      opacity: 0;
+    }
+
+    .hud-top {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: flex-start;
+      margin-top: 10px;
+    }
+
+    .hud-top-left {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .hud-stat-box {
+      background: rgba(13, 10, 28, 0.65);
+      border: 1.5px solid rgba(158, 255, 75, 0.3);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37), 0 0 10px rgba(158, 255, 75, 0.05);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 10px 16px;
+      display: flex;
+      flex-direction: column;
+      min-width: 150px;
+    }
+
+    .hud-stat-box.secondary {
+      border: 1.5px solid rgba(75, 227, 255, 0.25);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), 0 0 10px rgba(75, 227, 255, 0.05);
+    }
+
+    .hud-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 2px;
+    }
+
+    .hud-value {
+      font-size: 1.8rem;
+      font-weight: 900;
+      font-family: var(--font-primary);
+      color: #9eff4b;
+      line-height: 1;
+      text-shadow: 0 0 10px rgba(158, 255, 75, 0.35);
+    }
+
+    .hud-stat-box.secondary .hud-value {
+      color: #4be3ff;
+      text-shadow: 0 0 10px rgba(75, 227, 255, 0.35);
+    }
+
+    .hud-top-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .hearts-row {
+      display: flex;
+      gap: 8px;
+      background: rgba(13, 10, 28, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1.5px solid rgba(255, 76, 76, 0.3);
+      border-radius: 24px;
+      padding: 8px 16px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    }
+
+    .heart-icon {
+      width: 28px;
+      height: 28px;
+      filter: drop-shadow(0 0 6px rgba(255, 76, 76, 0.5));
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+    }
+
+    .heart-icon.lost {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    .heart-icon.pulse {
+      animation: heart-pulse 0.4s ease;
+    }
+
+    @keyframes heart-pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    /* Damage Flash Fullscreen Border Overlay */
+    #damage-flash {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 0 0px rgba(255, 0, 0, 0);
+      pointer-events: none;
+      z-index: 9;
+      transition: box-shadow 0.25s ease-out;
+    }
+
+    #damage-flash.flash {
+      box-shadow: inset 0 0 50px rgba(255, 0, 0, 0.8);
+      transition: none; /* Instant strike red flash */
+    }
+
+    /* Combo style */
+    .combo-wrapper {
+      position: absolute;
+      top: 32%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+    }
+
+    .combo-wrapper.hidden {
+      transform: translate(-50%, -50%) scale(0.5);
+      opacity: 0;
+    }
+
+    .combo-text {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, #ffe600, #ff6c00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(255, 108, 0, 0.65));
+      animation: combo-bounce 0.7s infinite alternate ease-in-out;
+    }
+
+    @keyframes combo-bounce {
+      0% { transform: scale(0.95) rotate(-2deg); }
+      100% { transform: scale(1.05) rotate(2deg); }
+    }
+
+    /* Comic Words Popups */
+    .comic-particle {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: #ffe600;
+      -webkit-text-stroke: 1.5px #000000;
+      text-shadow: 3px 3px 0px #000000, 0 0 12px rgba(255, 230, 0, 0.5);
+      pointer-events: none;
+      z-index: 12;
+      animation: comic-pop 0.5s ease-out forwards;
+    }
+
+    @keyframes comic-pop {
+      0% {
+        transform: translate(-50%, -50%) scale(0.2) rotate(-25deg);
+        opacity: 0;
+      }
+      15% {
+        transform: translate(-50%, -50%) scale(1.45) rotate(-10deg);
+        opacity: 1;
+      }
+      35% {
+        transform: translate(-50%, -50%) scale(1.25) rotate(5deg);
+      }
+      80% {
+        transform: translate(-50%, -60%) scale(1.25) rotate(5deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -85%) scale(0.7) rotate(15deg);
+        opacity: 0;
+      }
+    }
+
+    /* Menu & Overlay Styles */
+    .menu-overlay, .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 20;
+      background: radial-gradient(circle at center, rgba(10, 8, 24, 0.4) 0%, rgba(5, 5, 10, 0.75) 100%);
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .menu-overlay.hidden, .modal-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .menu-card, .modal-card {
+      background: rgba(13, 10, 28, 0.85);
+      border: 2px solid #9eff4b;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(158, 255, 75, 0.2);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 24px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 440px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: scale(1);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .menu-overlay.hidden .menu-card, .modal-overlay.hidden .modal-card {
+      transform: scale(0.85);
+    }
+
+    .menu-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      line-height: 0.95;
+      margin: 0 0 10px 0;
+      letter-spacing: 2px;
+      color: #ffffff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-title .highlight {
+      background: linear-gradient(90deg, #9eff4b, #4be3ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(158, 255, 75, 0.4));
+    }
+
+    .menu-subtitle {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 35px 0;
+      letter-spacing: 1px;
+    }
+
+    .menu-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+    }
+
+    /* Slick Retro Cartoon Buttons */
+    .menu-btn {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      padding: 12px 30px;
+      border: 3px solid #000000;
+      border-radius: 16px;
+      cursor: pointer;
+      width: 100%;
+      letter-spacing: 1.5px;
+      box-shadow: 0 6px 0 #000000;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .menu-btn.primary-btn {
+      background: linear-gradient(180deg, #9eff4b 0%, #72c72b 100%);
+      color: #000000;
+      box-shadow: 0 6px 0 #000000, 0 8px 20px rgba(158, 255, 75, 0.2);
+    }
+
+    .menu-btn.secondary-btn {
+      background: linear-gradient(180deg, #4be3ff 0%, #20b0cd 100%);
+      color: #000000;
+      box-shadow: 0 6px 0 #000000, 0 8px 20px rgba(75, 227, 255, 0.25);
+    }
+
+    .menu-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #000000, 0 10px 22px rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #000000;
+    }
+
+    /* Modal Layout */
+    .modal-card {
+      border-color: #4be3ff;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(75, 227, 255, 0.2);
+      max-width: 480px;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      margin: 0 0 20px 0;
+      color: #4be3ff;
+      text-shadow: 0 0 10px rgba(75, 227, 255, 0.3);
+    }
+
+    .modal-body {
+      text-align: left;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .modal-body p {
+      margin: 12px 0;
+    }
+
+    /* Game Over layout */
+    .gameover-card {
+      border-color: #ff4c4c;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 76, 76, 0.25);
+    }
+
+    .gameover-title {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      background: linear-gradient(180deg, #ff4c4c 0%, #b21f1f 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(255, 76, 76, 0.45));
+    }
+
+    .gameover-stats {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0 30px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 8px;
+    }
+
+    .stat-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .stat-val {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #ffffff;
+      font-family: var(--font-primary);
+    }
+
+    #final-score {
+      color: #9eff4b;
+      text-shadow: 0 0 10px rgba(158, 255, 75, 0.3);
+    }
+
+    .menu-btn.pulse-btn {
+      animation: button-pulse 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes button-pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.03); }
+    }
+
+    /* Freeze Screen Overlay Cyan Vignette */
+    #freeze-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      box-shadow: inset 0 0 0px rgba(75, 227, 255, 0);
+      pointer-events: none;
+      z-index: 8;
+      transition: box-shadow 0.4s ease, background-color 0.4s ease;
+    }
+
+    #freeze-overlay.active {
+      box-shadow: inset 0 0 70px rgba(75, 227, 255, 0.7);
+      background-color: rgba(75, 227, 255, 0.04);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Fullscreen Damage Flash overlay -->
+    <div id="damage-flash"></div>
+
+    <!-- Time Freeze Overlay Vignette -->
+    <div id="freeze-overlay"></div>
+
+    <!-- HUD Overlay -->
+    <div id="hud" class="hud-container hidden">
+      <div class="hud-top">
+        <div class="hud-top-left">
+          <div class="hud-stat-box">
+            <span class="hud-label">SCORE</span>
+            <span id="score-val" class="hud-value">00000</span>
+          </div>
+          <div class="hud-stat-box secondary">
+            <span class="hud-label">SLAPPED</span>
+            <span id="slaps-val" class="hud-value">0</span>
+          </div>
+        </div>
+        
+        <div class="hud-top-right">
+          <div id="hearts-container" class="hearts-row">
+            <!-- Populated dynamically via UIManager -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bouncing Combo Notification -->
+      <div id="combo-container" class="combo-wrapper hidden">
+        <div id="combo-title" class="combo-text">COMBO X2</div>
+      </div>
+    </div>
+
+    <!-- Main Menu Overlay -->
+    <div id="main-menu" class="menu-overlay hidden">
+      <div class="menu-card">
+        <h1 class="menu-title">ZOMBIE<br><span class="highlight">SLAPPER</span></h1>
+        <p class="menu-subtitle">A Retro 3D Arcade Experience</p>
+        <div class="menu-actions">
+          <button id="play-btn" class="menu-btn primary-btn">PLAY GAME</button>
+          <button id="help-btn" class="menu-btn secondary-btn">HOW TO PLAY</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions Modal Overlay -->
+    <div id="instructions-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h2 class="modal-title">HOW TO PLAY</h2>
+        <div class="modal-body" style="font-size: 0.88rem; max-height: 250px; overflow-y: auto; padding-right: 5px;">
+          <p>🧟 <strong>THE INVASION</strong>: Slay sways of zombies marching down the street towards your screen!</p>
+          <p>🖐️ <strong>SWIPE TO SLAP</strong>: Click-and-drag (Desktop) or Swipe (Mobile) over a zombie to whip your hand and fling them away in your swipe direction with speed-based force!</p>
+          <p>⚡ <strong>MEGA SHOCKWAVE</strong>: Hold the click still for 0.5s to charge up, then release to execute a massive shockwave pushing back all close zombies!</p>
+          <p>🛡️ <strong>HELMET ZOMBIES</strong>: Armored units that require 2 hits. The first slap staggers them and pops their helmet off!</p>
+          <p>☣️ <strong>HAZMAT ZOMBIES</strong>: Wearing bright orange, slapping them triggers a fiery blast clearing nearby zombies!</p>
+          <p>❄️ <strong>FROZEN ZOMBIES</strong>: Glowing cyan units that freeze time, slowing down all zombies for 4 seconds!</p>
+          <p>🔥 <strong>COMBOS</strong>: Slap in quick succession to stack multipliers for astronomical scores!</p>
+        </div>
+        <button id="close-help-btn" class="menu-btn secondary-btn">BACK</button>
+      </div>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="game-over" class="menu-overlay hidden">
+      <div class="menu-card gameover-card">
+        <h1 class="menu-title gameover-title">GAME OVER</h1>
+        <div class="gameover-stats">
+          <div class="stat-row">
+            <span class="stat-label">FINAL SCORE</span>
+            <span id="final-score" class="stat-val">00000</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">ZOMBIES SLAPPED</span>
+            <span id="final-slaps" class="stat-val">0</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">SURVIVAL TIME</span>
+            <span id="final-time" class="stat-val">0s</span>
+          </div>
+        </div>
+        <button id="restart-btn" class="menu-btn primary-btn pulse-btn">PLAY AGAIN</button>
+      </div>
+    </div>
+
+    <div id="loading">
+      <div class="loader-title">ZOMBIE SLAPPER</div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

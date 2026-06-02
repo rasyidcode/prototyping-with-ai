@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zombie Slap</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="hud">
+        <div id="stats">
+          <span id="player-health">Player 100</span>
+          <span id="zombie-health">Zombie 100</span>
+        </div>
+        <div id="damage-flash"></div>
+        <div id="crosshair"></div>
+        <div id="slap-meter" aria-hidden="true">
+          <div id="slap-sweet-spot"></div>
+          <div id="slap-indicator"></div>
+        </div>
+        <div id="message">Click to start</div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
