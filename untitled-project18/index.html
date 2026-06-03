@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Horizon - Synthwave Car Game</title>
+    <!-- Import synthwave fonts from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="game-container">
+      <!-- Three.js Canvas -->
+      <canvas id="game-canvas"></canvas>
+
+      <!-- Glassmorphic HUD overlay -->
+      <div id="hud" class="hidden">
+        <div class="hud-top">
+          <div class="hud-group">
+            <span class="hud-label">SCORE</span>
+            <span id="score-val" class="hud-value neon-blue">00000</span>
+          </div>
+          <div class="hud-group">
+            <span class="hud-label">CRYSTALS</span>
+            <span id="crystals-val" class="hud-value neon-pink">0</span>
+          </div>
+        </div>
+
+        <div class="hud-bottom">
+          <div class="hud-group speed-group">
+            <span id="speed-val" class="hud-value font-large neon-orange">0</span>
+            <span class="hud-label">KM/H</span>
+          </div>
+          
+          <div class="boost-container">
+            <div class="boost-label-row">
+              <span class="hud-label">NITRO BOOST</span>
+              <span id="boost-status" class="boost-ready-text">READY (SPACE)</span>
+            </div>
+            <div class="boost-bar-bg">
+              <div id="boost-bar-fill" class="boost-fill-glow"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Start / Main Menu Screen -->
+      <div id="start-screen" class="ui-screen">
+        <div class="logo-container">
+          <h1 class="logo-title" data-text="NEON HORIZON">NEON HORIZON</h1>
+          <p class="logo-tagline">RETRO SYNTHWAVE DRIVER</p>
+        </div>
+        
+        <div class="glass-panel main-panel">
+          <div class="controls-guide">
+            <h3>HOW TO PLAY:</h3>
+            <div class="guide-row">
+              <span class="key">A</span> / <span class="key">D</span> or <span class="key">←</span> / <span class="key">→</span>
+              <span class="action-desc">Steer Left/Right</span>
+            </div>
+            <div class="guide-row">
+              <span class="key">W</span> / <span class="key">S</span> or <span class="key">↑</span> / <span class="key">↓</span>
+              <span class="action-desc">Accelerate / Brake</span>
+            </div>
+            <div class="guide-row">
+              <span class="key">SPACEBAR</span> or <span class="btn-micro">TAP NITRO</span>
+              <span class="action-desc">Trigger Nitro Boost</span>
+            </div>
+          </div>
+
+          <div class="difficulty-selector">
+            <span class="selector-label">SPEED CLASS:</span>
+            <div class="diff-options">
+              <button class="diff-btn active" data-speed="1.0">CRUISE</button>
+              <button class="diff-btn" data-speed="1.4">OUTRUN</button>
+              <button class="diff-btn" data-speed="1.8">OVERDRIVE</button>
+            </div>
+          </div>
+
+          <button id="start-btn" class="glow-button">LAUNCH GAME</button>
+        </div>
+      </div>
+
+      <!-- Game Over Screen -->
+      <div id="game-over-screen" class="ui-screen hidden">
+        <div class="glass-panel end-panel">
+          <h2 class="neon-pink title-large">CRASHED!</h2>
+          <p class="end-message">The grid system collapsed.</p>
+
+          <div class="stats-grid">
+            <div class="stat-box">
+              <span class="stat-label">FINAL SCORE</span>
+              <span id="final-score" class="stat-value neon-blue">0</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-label">CRYSTALS</span>
+              <span id="final-crystals" class="stat-value neon-pink">0</span>
+            </div>
+            <div class="stat-box full-width">
+              <span class="stat-label">HIGH SCORE</span>
+              <span id="high-score" class="stat-value neon-orange">0</span>
+            </div>
+          </div>
+
+          <button id="restart-btn" class="glow-button pink-glow">REBOOT DRIVE</button>
+        </div>
+      </div>
+
+      <!-- Mute / Audio Toggle Icon -->
+      <button id="audio-toggle" class="audio-btn" aria-label="Toggle Audio">
+        <span id="audio-icon">🔊</span>
+      </button>
+    </div>
+    
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
