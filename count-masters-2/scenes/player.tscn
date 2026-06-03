@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5g4378f8v2f"]
+
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_script"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1"]
+radius = 0.5
+
+[node name="Player" type="Node3D" groups=["player"]]
+script = ExtResource("1_script")
+
+[node name="Crowd" type="Node3D" parent="."]
+
+[node name="LeaderArea" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 28
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeaderArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("SphereShape3D_1")
+
+[node name="CountLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, 0)
+billboard = 1
+double_sided = false
+text = "1"
+font_size = 48
+outline_size = 12
+outline_color = Color(0, 0, 0, 1)
+vertical_alignment = 1
+

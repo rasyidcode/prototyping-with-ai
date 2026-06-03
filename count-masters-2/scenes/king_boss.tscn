@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://cb3p2w877h83"]
+
+[ext_resource type="Script" path="res://scenes/king_boss.gd" id="1_script"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
+radius = 0.2
+height = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1"]
+radius = 0.15
+height = 0.6
+radial_segments = 16
+rings = 4
+
+[sub_resource type="SphereMesh" id="SphereMesh_1"]
+radius = 0.15
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereMesh" id="SphereMesh_2"]
+radius = 0.03
+radial_segments = 8
+rings = 4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_2"]
+radius = 0.05
+height = 0.25
+radial_segments = 8
+rings = 2
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_CrownBase"]
+top_radius = 0.14
+bottom_radius = 0.12
+height = 0.05
+radial_segments = 12
+
+[sub_resource type="ConeMesh" id="ConeMesh_CrownSpike"]
+top_radius = 0.0
+bottom_radius = 0.03
+height = 0.1
+radial_segments = 6
+
+[node name="KingBoss" type="Area3D" groups=["boss"]]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 0)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_1")
+
+[node name="Visuals" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+
+[node name="Body" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+mesh = SubResource("CapsuleMesh_1")
+
+[node name="Head" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("SphereMesh_1")
+
+[node name="EyeLeft" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06, 0.32, 0.12)
+mesh = SubResource("SphereMesh_2")
+
+[node name="EyeRight" type="MeshInstance3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06, 0.32, 0.12)
+mesh = SubResource("SphereMesh_2")
+
+[node name="LegLeft" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.2, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/LegLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+mesh = SubResource("CapsuleMesh_2")
+
+[node name="LegRight" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, -0.2, 0)
+
+[node name="Mesh" type="MeshInstance3D" parent="Visuals/LegRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.12, 0)
+mesh = SubResource("CapsuleMesh_2")
+
+[node name="Crown" type="Node3D" parent="Visuals"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.44, 0)
+
+[node name="Base" type="MeshInstance3D" parent="Visuals/Crown"]
+mesh = SubResource("CylinderMesh_CrownBase")
+
+[node name="Spike1" type="MeshInstance3D" parent="Visuals/Crown"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.06, 0)
+mesh = SubResource("ConeMesh_CrownSpike")
+
+[node name="Spike2" type="MeshInstance3D" parent="Visuals/Crown"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 0.06, 0)
+mesh = SubResource("ConeMesh_CrownSpike")
+
+[node name="Spike3" type="MeshInstance3D" parent="Visuals/Crown"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, 0.1)
+mesh = SubResource("ConeMesh_CrownSpike")
+
+[node name="Spike4" type="MeshInstance3D" parent="Visuals/Crown"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.06, -0.1)
+mesh = SubResource("ConeMesh_CrownSpike")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+billboard = 1
+double_sided = false
+text = "KING BOSS
+HP: 50/50"
+font_size = 32
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+vertical_alignment = 1
+line_spacing = 0.0

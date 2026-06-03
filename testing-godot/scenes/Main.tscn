@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://bgb21xchll0bp"]
+
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="1_y5jlo"]
+[ext_resource type="Script" path="res://scripts/pushable_target.gd" id="2_a6wtx"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_owgwe"]
+size = Vector2(30, 30)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dajqp"]
+albedo_color = Color(0.28, 0.38, 0.3, 1)
+roughness = 0.85
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(30, 0.2, 30)
+
+[sub_resource type="Environment" id="Environment_rim5u"]
+background_mode = 1
+background_color = Color(0.58, 0.72, 0.86, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.75, 0.78, 0.82, 1)
+ambient_light_energy = 0.45
+
+[sub_resource type="BoxMesh" id="BoxMesh_target"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_target"]
+albedo_color = Color(0.85, 0.18, 0.12, 1)
+roughness = 0.6
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_target"]
+size = Vector3(1, 1, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rim5u")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.872665, 0.610865, 0)
+light_energy = 2.5
+shadow_enabled = true
+
+[node name="Ground" type="StaticBody3D" parent="."]
+
+[node name="GroundMesh" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("PlaneMesh_owgwe")
+surface_material_override/0 = SubResource("StandardMaterial3D_dajqp")
+
+[node name="GroundCollision" type="CollisionShape3D" parent="Ground"]
+position = Vector3(0, -0.1, 0)
+shape = SubResource("BoxShape3D_ground")
+
+[node name="PushableTarget" type="StaticBody3D" parent="."]
+position = Vector3(0, 0.5, -5)
+script = ExtResource("2_a6wtx")
+
+[node name="TargetMesh" type="MeshInstance3D" parent="PushableTarget"]
+mesh = SubResource("BoxMesh_target")
+surface_material_override/0 = SubResource("StandardMaterial3D_target")
+
+[node name="TargetCollision" type="CollisionShape3D" parent="PushableTarget"]
+shape = SubResource("BoxShape3D_target")
+
+[node name="Player" parent="." instance=ExtResource("1_y5jlo")]
+position = Vector3(0, 0.05, 3)

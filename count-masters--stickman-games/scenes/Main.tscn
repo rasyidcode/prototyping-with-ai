@@ -1,0 +1,135 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_main"]
+
+[sub_resource type="StandardMaterial3D" id="mat_road"]
+albedo_color = Color(0.2, 0.24, 0.28, 1)
+roughness = 0.62
+
+[sub_resource type="StandardMaterial3D" id="mat_grass"]
+albedo_color = Color(0.16, 0.72, 0.42, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="mat_player"]
+albedo_color = Color(0.12, 0.56, 1, 1)
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="mat_enemy"]
+albedo_color = Color(1, 0.18, 0.16, 1)
+roughness = 0.55
+
+[sub_resource type="StandardMaterial3D" id="mat_gate_good"]
+albedo_color = Color(0.1, 0.72, 0.95, 0.82)
+transparency = 1
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="mat_gate_bad"]
+albedo_color = Color(0.94, 0.12, 0.12, 0.82)
+transparency = 1
+roughness = 0.35
+
+[sub_resource type="StandardMaterial3D" id="mat_gold"]
+albedo_color = Color(1, 0.82, 0.18, 1)
+roughness = 0.4
+
+[sub_resource type="StandardMaterial3D" id="mat_stone"]
+albedo_color = Color(0.64, 0.66, 0.72, 1)
+roughness = 0.7
+
+[sub_resource type="BoxMesh" id="mesh_track"]
+size = Vector3(9.1, 0.08, 120)
+
+[sub_resource type="BoxMesh" id="mesh_side"]
+size = Vector3(2.1, 0.06, 120)
+
+[sub_resource type="BoxMesh" id="mesh_gate"]
+size = Vector3(2.55, 1.45, 0.12)
+
+[sub_resource type="SphereMesh" id="mesh_sphere"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="PreviewRoot" type="Node3D" parent="."]
+
+[node name="PreviewCamera" type="Camera3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0, 8.4, 16)
+current = true
+fov = 58.0
+
+[node name="PreviewSun" type="DirectionalLight3D" parent="PreviewRoot"]
+transform = Transform3D(0.882948, 0.246746, -0.399519, 0, 0.850904, 0.525322, 0.469472, -0.463841, 0.751351, 0, 8, 0)
+light_energy = 2.4
+
+[node name="Track" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.04, -42)
+mesh = SubResource("mesh_track")
+material_override = SubResource("mat_road")
+
+[node name="LeftGrass" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.6, -0.06, -42)
+mesh = SubResource("mesh_side")
+material_override = SubResource("mat_grass")
+
+[node name="RightGrass" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.6, -0.06, -42)
+mesh = SubResource("mesh_side")
+material_override = SubResource("mat_grass")
+
+[node name="PlayerPreview" type="Node3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 4)
+
+[node name="Runner1" type="MeshInstance3D" parent="PreviewRoot/PlayerPreview"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, -0.55, 0, 0)
+mesh = SubResource("mesh_sphere")
+material_override = SubResource("mat_player")
+
+[node name="Runner2" type="MeshInstance3D" parent="PreviewRoot/PlayerPreview"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0, 0, 0)
+mesh = SubResource("mesh_sphere")
+material_override = SubResource("mat_player")
+
+[node name="Runner3" type="MeshInstance3D" parent="PreviewRoot/PlayerPreview"]
+transform = Transform3D(0.55, 0, 0, 0, 0.55, 0, 0, 0, 0.55, 0.55, 0, 0)
+mesh = SubResource("mesh_sphere")
+material_override = SubResource("mat_player")
+
+[node name="GoodGate" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.15, 1.25, -12)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_gate_good")
+
+[node name="BadGate" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.15, 1.25, -12)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_gate_bad")
+
+[node name="TrapPreview" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1.4, 0, 0, 0, 0.14, 0, 0, 0, 0.28, 0, 0.35, -28)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_gate_bad")
+
+[node name="EnemyPreview" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 1, -46)
+mesh = SubResource("mesh_sphere")
+material_override = SubResource("mat_enemy")
+
+[node name="CastleBase" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(4.8, 0, 0, 0, 2, 0, 0, 0, 1.25, 0, 1, -82)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_stone")
+
+[node name="CastleLeftTower" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1.2, 0, 0, 0, 2.6, 0, 0, 0, 1.5, -3, 1.3, -82)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_stone")
+
+[node name="CastleRightTower" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(1.2, 0, 0, 0, 2.6, 0, 0, 0, 1.5, 3, 1.3, -82)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_stone")
+
+[node name="CastleCrown" type="MeshInstance3D" parent="PreviewRoot"]
+transform = Transform3D(5.4, 0, 0, 0, 0.45, 0, 0, 0, 1.4, 0, 2.95, -82)
+mesh = SubResource("mesh_gate")
+material_override = SubResource("mat_gold")

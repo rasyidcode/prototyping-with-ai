@@ -1,0 +1,7 @@
+res://scenes/player.gd
+res://scenes/main.gd
+res://scenes/gate.gd
+res://scenes/stickman.gd
+res://scenes/king_boss.gd
+res://scenes/castle.gd
+res://scenes/obstacle.gd

@@ -1,0 +1,82 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx60m31u635j0"]
+
+[ext_resource type="Script" path="res://scenes/castle.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://cb3p2w877h83" path="res://scenes/king_boss.tscn" id="2_boss"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_Pole"]
+top_radius = 0.04
+bottom_radius = 0.04
+height = 6.0
+radial_segments = 8
+
+[sub_resource type="BoxMesh" id="BoxMesh_Flag"]
+size = Vector3(1.2, 0.8, 0.04)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Trigger"]
+size = Vector3(10.0, 3.0, 2.0)
+
+[node name="Castle" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="MainWall" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0, -4.0)
+size = Vector3(12.0, 4.0, 4.0)
+
+[node name="GateHole" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -4.0)
+operation = 2
+size = Vector3(3.0, 3.0, 5.0)
+
+[node name="TowerLeft" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.0, 3.0, -4.0)
+radius = 1.6
+height = 6.0
+sides = 12
+
+[node name="RoofLeft" type="CSGCylinder3D" parent="CSGCombiner3D/TowerLeft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0, 0)
+radius = 1.9
+height = 2.0
+sides = 12
+cone = true
+
+[node name="TowerRight" type="CSGCylinder3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0, 3.0, -4.0)
+radius = 1.6
+height = 6.0
+sides = 12
+
+[node name="RoofRight" type="CSGCombiner3D" parent="CSGCombiner3D/TowerRight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0, 0)
+
+[node name="Cone" type="CSGCylinder3D" parent="CSGCombiner3D/TowerRight/RoofRight"]
+radius = 1.9
+height = 2.0
+sides = 12
+cone = true
+
+[node name="Flagpole" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.0, -4.0)
+
+[node name="Pole" type="MeshInstance3D" parent="Flagpole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.0, 0)
+mesh = SubResource("CylinderMesh_Pole")
+
+[node name="Flag" type="MeshInstance3D" parent="Flagpole"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 2.0, 0)
+mesh = SubResource("BoxMesh_Flag")
+
+[node name="BossTrigger" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.0)
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BossTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+shape = SubResource("BoxShape3D_Trigger")
+
+[node name="KingBoss" parent="." instance=ExtResource("2_boss")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, 0, 0, 2.0)

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://tq1p5wh12jky"]
+
+[ext_resource type="Script" path="res://scenes/enemy.gd" id="1_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_Detection"]
+size = Vector3(10.0, 3.0, 8.0)
+
+[node name="Enemy" type="Area3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="DetectionCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 4.0)
+shape = SubResource("BoxShape3D_Detection")
+
+[node name="Crowd" type="Node3D" parent="."]
