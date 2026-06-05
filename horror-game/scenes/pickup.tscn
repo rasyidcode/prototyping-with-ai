@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://bux3u77c385l8"]
+
+[ext_resource type="Script" path="res://scripts/pickup.gd" id="1_pickup"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pickup"]
+size = Vector3(0.4, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gold"]
+metalness = 0.9
+roughness = 0.2
+albedo_color = Color(0.823529, 0.705882, 0.27451, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bat_body"]
+metalness = 0.6
+roughness = 0.4
+albedo_color = Color(0.2, 0.588235, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_silver"]
+metalness = 0.95
+roughness = 0.15
+albedo_color = Color(0.862745, 0.862745, 0.862745, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_paper"]
+roughness = 0.95
+albedo_color = Color(0.941176, 0.921569, 0.862745, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_board"]
+roughness = 0.9
+albedo_color = Color(0.235294, 0.156863, 0.0980392, 1)
+
+[node name="Pickup" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1_pickup")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_pickup")
+
+[node name="Visuals" type="Node3D" parent="."]
+
+[node name="KeyVisual" type="Node3D" parent="Visuals"]
+visible = false
+
+[node name="Ring" type="CSGBox3D" parent="Visuals/KeyVisual"]
+size = Vector3(0.08, 0.02, 0.08)
+material = SubResource("StandardMaterial3D_gold")
+
+[node name="Shaft" type="CSGBox3D" parent="Visuals/KeyVisual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.08)
+size = Vector3(0.02, 0.02, 0.14)
+material = SubResource("StandardMaterial3D_gold")
+
+[node name="Teeth" type="CSGBox3D" parent="Visuals/KeyVisual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.025, 0, -0.13)
+size = Vector3(0.04, 0.02, 0.03)
+material = SubResource("StandardMaterial3D_gold")
+
+[node name="BatteryVisual" type="Node3D" parent="Visuals"]
+visible = false
+
+[node name="Body" type="CSGCylinder3D" parent="Visuals/BatteryVisual"]
+radius = 0.04
+height = 0.15
+radial_segments = 12
+material = SubResource("StandardMaterial3D_bat_body")
+
+[node name="Tip" type="CSGCylinder3D" parent="Visuals/BatteryVisual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.085, 0)
+radius = 0.015
+height = 0.02
+radial_segments = 8
+material = SubResource("StandardMaterial3D_silver")
+
+[node name="NoteVisual" type="Node3D" parent="Visuals"]
+visible = false
+
+[node name="Board" type="CSGBox3D" parent="Visuals/NoteVisual"]
+size = Vector3(0.2, 0.01, 0.26)
+material = SubResource("StandardMaterial3D_board")
+
+[node name="Paper" type="CSGBox3D" parent="Visuals/NoteVisual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.006, 0)
+size = Vector3(0.18, 0.005, 0.24)
+material = SubResource("StandardMaterial3D_paper")

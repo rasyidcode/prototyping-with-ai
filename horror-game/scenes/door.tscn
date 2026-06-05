@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=3 uid="uid://c65jym2h1jveq"]
+
+[ext_resource type="Script" path="res://scripts/door.gd" id="1_door"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wood"]
+albedo_color = Color(0.180392, 0.109804, 0.0666667, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_metal"]
+metalness = 0.95
+roughness = 0.2
+albedo_color = Color(0.627451, 0.54902, 0.352941, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_door"]
+size = Vector3(0.9, 2.0, 0.08)
+
+[node name="Door" type="StaticBody3D"]
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1_door")
+
+[node name="Hinge" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.45, 0, 0)
+
+[node name="DoorMesh" type="CSGBox3D" parent="Hinge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1, 0)
+size = Vector3(0.9, 2, 0.08)
+material = SubResource("StandardMaterial3D_wood")
+
+[node name="Handle" type="CSGBox3D" parent="Hinge/DoorMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0, 0)
+size = Vector3(0.04, 0.06, 0.12)
+material = SubResource("StandardMaterial3D_metal")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hinge"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1, 0)
+shape = SubResource("BoxShape3D_door")
+
+[node name="AudioPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -2.0
+max_distance = 15.0

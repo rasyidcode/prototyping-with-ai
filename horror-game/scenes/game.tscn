@@ -1,0 +1,337 @@
+[gd_scene load_steps=18 format=3 uid="uid://bpdqy5a210jty"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="PackedScene" uid="uid://dd8exm8n36x3x" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://c65jym2h1jveq" path="res://scenes/door.tscn" id="3_door"]
+[ext_resource type="PackedScene" uid="uid://bux3u77c385l8" path="res://scenes/pickup.tscn" id="4_pickup"]
+[ext_resource type="Script" path="res://scripts/flickering_light.gd" id="5_flicker"]
+[ext_resource type="Script" path="res://scripts/trigger_event.gd" id="6_trigger"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_sky"]
+sky_top_color = Color(0.02, 0.02, 0.04, 1)
+sky_horizon_color = Color(0.005, 0.005, 0.01, 1)
+ground_bottom_color = Color(0, 0, 0, 1)
+ground_horizon_color = Color(0.005, 0.005, 0.01, 1)
+
+[sub_resource type="Sky" id="Sky_sky"]
+sky_material = SubResource("ProceduralSkyMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_game"]
+background_mode = 2
+sky = SubResource("Sky_sky")
+ambient_light_source = 1
+ambient_light_color = Color(0.0117647, 0.0117647, 0.0156863, 1)
+tonemap_mode = 2
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.18
+volumetric_fog_albedo = Color(0.0588235, 0.0784314, 0.0980392, 1)
+volumetric_fog_emission = Color(0.00392157, 0.00392157, 0.00784314, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor_wood"]
+albedo_color = Color(0.117647, 0.0980392, 0.0784314, 1)
+roughness = 0.7
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor_concrete"]
+albedo_color = Color(0.137255, 0.137255, 0.137255, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_floor_tiles"]
+albedo_color = Color(0.196078, 0.235294, 0.254902, 1)
+roughness = 0.3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_plaster"]
+albedo_color = Color(0.176471, 0.176471, 0.188235, 1)
+roughness = 0.95
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_desk_wood"]
+albedo_color = Color(0.235294, 0.137255, 0.0784314, 1)
+roughness = 0.8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_slam"]
+size = Vector3(1.5, 2, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_whisper"]
+size = Vector3(1.5, 2, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_win"]
+size = Vector3(1.5, 2, 1.2)
+
+[node name="Game" type="Node3D"]
+script = ExtResource("1_game")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_game")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.321394, 0.383022, 0, 0.766044, 0.642788, -0.5, -0.55667, 0.663414, 0, 5, 0)
+light_color = Color(0.470588, 0.54902, 0.686275, 1)
+light_energy = 0.04
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Floor_Bedroom" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+size = Vector3(8, 0.1, 6.2)
+material = SubResource("StandardMaterial3D_floor_wood")
+
+[node name="Floor_Hall" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 11.9)
+size = Vector3(1.5, 0.1, 17.6)
+material = SubResource("StandardMaterial3D_floor_concrete")
+
+[node name="Floor_Bathroom" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.45, -0.05, 9.2)
+size = Vector3(3.2, 0.1, 2.6)
+material = SubResource("StandardMaterial3D_floor_tiles")
+
+[node name="Floor_Study" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.45, -0.05, 14.5)
+size = Vector3(5.2, 0.1, 5)
+material = SubResource("StandardMaterial3D_floor_wood")
+
+[node name="Floor_Exit" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 22.6)
+size = Vector3(1.5, 0.1, 4)
+material = SubResource("StandardMaterial3D_floor_concrete")
+
+[node name="Ceiling" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.05, 11)
+size = Vector3(20, 0.1, 40)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Walls" type="Node3D" parent="Map"]
+
+[node name="Wall_Bedroom_Back" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3.1)
+size = Vector3(8, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bedroom_Left" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 1.5, 0)
+size = Vector3(0.2, 3, 6.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bedroom_Right" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.1, 1.5, 0)
+size = Vector3(0.2, 3, 6.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bedroom_Front_Left" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4, 1.5, 3.1)
+size = Vector3(3.2, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bedroom_Front_Right" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.4, 1.5, 3.1)
+size = Vector3(3.2, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bedroom_Header" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 3.1)
+size = Vector3(1.6, 1, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Left_1" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 1.5, 5.5)
+size = Vector3(0.2, 3, 4.8)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Left_Header" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 2.5, 8.65)
+size = Vector3(0.2, 1, 1.5)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Left_2" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 1.5, 15)
+size = Vector3(0.2, 3, 11.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Right_1" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1.5, 7.5)
+size = Vector3(0.2, 3, 8.8)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Right_Header" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 2.5, 12.65)
+size = Vector3(0.2, 1, 1.5)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_Right_2" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1.5, 16.75)
+size = Vector3(0.2, 3, 6.7)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_End_Left" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 1.5, 20.6)
+size = Vector3(0.4, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_End_Right" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.5, 20.6)
+size = Vector3(0.4, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Hall_End_Header" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 20.6)
+size = Vector3(0.8, 1, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Exit_Left" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 1.5, 22.6)
+size = Vector3(0.2, 3, 4.0)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Exit_Right" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 1.5, 22.6)
+size = Vector3(0.2, 3, 4.0)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Exit_End" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 24.6)
+size = Vector3(1.5, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bath_Back" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 10.6)
+size = Vector3(3.5, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bath_Left" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.1, 1.5, 9.2)
+size = Vector3(0.2, 3, 2.6)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Bath_Front" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 7.8)
+size = Vector3(3.5, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Study_Back" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55, 1.5, 17.1)
+size = Vector3(5.4, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Study_Right" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.15, 1.5, 14.5)
+size = Vector3(0.2, 3, 5)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="Wall_Study_Front" type="CSGBox3D" parent="Map/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.55, 1.5, 11.9)
+size = Vector3(5.4, 3, 0.2)
+material = SubResource("StandardMaterial3D_plaster")
+
+[node name="BedroomDesk" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.4, -2)
+size = Vector3(1.6, 0.8, 0.8)
+material = SubResource("StandardMaterial3D_desk_wood")
+
+[node name="StudyTable" type="CSGBox3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.4, 14.5)
+size = Vector3(1.2, 0.8, 1.8)
+material = SubResource("StandardMaterial3D_desk_wood")
+
+[node name="ExitKey" parent="Map/StudyTable" instance=ExtResource("4_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48, 0)
+key_id = "exit_key"
+
+[node name="DeskNote" parent="Map" instance=ExtResource("4_pickup")]
+transform = Transform3D(0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, 0.965926, -3.2, 0.82, -2.1)
+type = 2
+note_text = "I shouldn't have stayed here. The front door is locked. The key must be in the study at the far end of the hallway... but I heard whispers outside the bedroom door. If you explore, watch your flashlight battery."
+
+[node name="DeskBattery" parent="Map" instance=ExtResource("4_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0.88, -1.9)
+type = 1
+battery_amount = 50.0
+
+[node name="BathBattery" parent="Map" instance=ExtResource("4_pickup")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0.1, 9.2)
+type = 1
+battery_amount = 50.0
+
+[node name="BedroomDoor" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.1)
+
+[node name="BathroomDoor" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.85, 0, 8.65)
+open_angle = -90.0
+
+[node name="StudyDoor" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.85, 0, 12.65)
+
+[node name="ExitDoor" parent="." instance=ExtResource("3_door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20.6)
+is_locked = true
+key_id = "exit_key"
+
+[node name="Lights" type="Node3D" parent="."]
+
+[node name="BedroomLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+light_color = Color(0.980392, 0.941176, 0.862745, 1)
+light_energy = 0.6
+shadow_enabled = true
+
+[node name="HallwayLight1" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 6)
+light_color = Color(0.941176, 0.941176, 0.941176, 1)
+shadow_enabled = true
+script = ExtResource("5_flicker")
+play_audio = false
+
+[node name="HallwayLight2" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 15)
+light_color = Color(0.941176, 0.941176, 0.941176, 1)
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="BathroomLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.6, 9.2)
+light_color = Color(0.705882, 0.862745, 0.705882, 1)
+light_energy = 0.8
+shadow_enabled = true
+script = ExtResource("5_flicker")
+
+[node name="StudyLight" type="OmniLight3D" parent="Lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 2.6, 14.5)
+light_color = Color(0.980392, 0.901961, 0.823529, 1)
+light_energy = 0.6
+shadow_enabled = true
+
+[node name="Triggers" type="Node3D" parent="."]
+
+[node name="SlamTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 5)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_trigger")
+event_type = 0
+target_door = NodePath("../../BedroomDoor")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/SlamTrigger"]
+shape = SubResource("BoxShape3D_slam")
+
+[node name="WhisperTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.5)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_trigger")
+event_type = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/WhisperTrigger"]
+shape = SubResource("BoxShape3D_whisper")
+
+[node name="WinTrigger" type="Area3D" parent="Triggers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 22.5)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_trigger")
+event_type = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Triggers/WinTrigger"]
+shape = SubResource("BoxShape3D_win")
