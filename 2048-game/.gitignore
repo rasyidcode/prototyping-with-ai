@@ -1,3 +1,5 @@
 2048
 src/*.o
+tests/test_game
 2048_save.dat
+2048_save.txt

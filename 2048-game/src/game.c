@@ -3,6 +3,18 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct LineCell {
+    int value;
+    int row;
+    int col;
+} LineCell;
+
+static int DefaultRandomInt(int maxExclusive, void *userData)
+{
+    (void)userData;
+    return rand() % maxExclusive;
+}
+
 static void CopyBoard(int destination[BOARD_SIZE][BOARD_SIZE],
                       int source[BOARD_SIZE][BOARD_SIZE])
 {
@@ -28,7 +40,50 @@ static bool HasEmptyCell(const Game *game)
     return false;
 }
 
-static void SpawnTile(Game *game)
+static void ResetMoveResult(MoveResult *result)
+{
+    if (result != NULL) {
+        memset(result, 0, sizeof(*result));
+        result->spawnedRow = -1;
+        result->spawnedCol = -1;
+    }
+}
+
+static void AddMotion(MoveResult *result, int value, int fromRow, int fromCol,
+                      int toRow, int toCol, bool merged)
+{
+    if (result == NULL || result->motionCount >= MAX_TILE_MOTIONS) {
+        return;
+    }
+
+    TileMotion *motion = &result->motions[result->motionCount++];
+    motion->value = value;
+    motion->fromRow = fromRow;
+    motion->fromCol = fromCol;
+    motion->toRow = toRow;
+    motion->toCol = toCol;
+    motion->merged = merged;
+}
+
+static int RandomInt(Game *game, int maxExclusive)
+{
+    GameRandomInt randomInt = game->randomInt != NULL ? game->randomInt : DefaultRandomInt;
+    return randomInt(maxExclusive, game->randomUserData);
+}
+
+static void UpdateTerminalState(Game *game)
+{
+    bool reachedWin = GameReachedWin(game);
+
+    if (!reachedWin) {
+        game->keepPlayingAfterWin = false;
+    }
+
+    game->won = reachedWin;
+    game->gameOver = !GameHasMoves(game);
+}
+
+static void SpawnTile(Game *game, MoveResult *result)
 {
     int emptyCells[BOARD_SIZE * BOARD_SIZE][2];
     int emptyCount = 0;
@@ -47,39 +102,96 @@ static void SpawnTile(Game *game)
         return;
     }
 
-    int index = rand() % emptyCount;
+    int index = RandomInt(game, emptyCount);
     int row = emptyCells[index][0];
     int col = emptyCells[index][1];
-    game->board[row][col] = ((rand() % 10) == 0) ? 4 : 2;
+    int value = RandomInt(game, 10) == 0 ? 4 : 2;
+
+    game->board[row][col] = value;
+
+    if (result != NULL) {
+        result->spawnedRow = row;
+        result->spawnedCol = col;
+        result->spawnedValue = value;
+    }
 }
 
-static int ProcessLine(int line[BOARD_SIZE])
+static int CellRow(Direction direction, int lineIndex, int offset)
 {
-    int compact[BOARD_SIZE] = { 0 };
-    int result[BOARD_SIZE] = { 0 };
+    switch (direction) {
+    case DIR_LEFT:
+    case DIR_RIGHT:
+        return lineIndex;
+    case DIR_UP:
+        return offset;
+    case DIR_DOWN:
+        return BOARD_SIZE - 1 - offset;
+    }
+
+    return 0;
+}
+
+static int CellCol(Direction direction, int lineIndex, int offset)
+{
+    switch (direction) {
+    case DIR_LEFT:
+        return offset;
+    case DIR_RIGHT:
+        return BOARD_SIZE - 1 - offset;
+    case DIR_UP:
+    case DIR_DOWN:
+        return lineIndex;
+    }
+
+    return 0;
+}
+
+static LineCell ReadCell(const Game *game, Direction direction, int lineIndex, int offset)
+{
+    LineCell cell = { 0, CellRow(direction, lineIndex, offset),
+                      CellCol(direction, lineIndex, offset) };
+    cell.value = game->board[cell.row][cell.col];
+    return cell;
+}
+
+static int ProcessLine(Game *game, Direction direction, int lineIndex, MoveResult *result)
+{
+    LineCell compact[BOARD_SIZE] = { 0 };
     int compactCount = 0;
-    int resultCount = 0;
+    int writeOffset = 0;
     int gained = 0;
 
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        if (line[i] != 0) {
-            compact[compactCount++] = line[i];
+    for (int offset = 0; offset < BOARD_SIZE; offset++) {
+        LineCell cell = ReadCell(game, direction, lineIndex, offset);
+
+        if (cell.value != 0) {
+            compact[compactCount++] = cell;
         }
+
+        game->board[cell.row][cell.col] = 0;
     }
 
     for (int i = 0; i < compactCount; i++) {
-        if ((i + 1 < compactCount) && compact[i] == compact[i + 1]) {
-            result[resultCount] = compact[i] * 2;
-            gained += result[resultCount];
-            resultCount++;
+        int row = CellRow(direction, lineIndex, writeOffset);
+        int col = CellCol(direction, lineIndex, writeOffset);
+
+        if ((i + 1 < compactCount) && compact[i].value == compact[i + 1].value) {
+            int mergedValue = compact[i].value * 2;
+
+            game->board[row][col] = mergedValue;
+            gained += mergedValue;
+            AddMotion(result, compact[i].value, compact[i].row, compact[i].col,
+                      row, col, true);
+            AddMotion(result, compact[i + 1].value, compact[i + 1].row,
+                      compact[i + 1].col, row, col, true);
             i++;
         } else {
-            result[resultCount++] = compact[i];
+            game->board[row][col] = compact[i].value;
+            AddMotion(result, compact[i].value, compact[i].row, compact[i].col,
+                      row, col, false);
         }
-    }
 
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        line[i] = result[i];
+        writeOffset++;
     }
 
     return gained;
@@ -87,19 +199,31 @@ static int ProcessLine(int line[BOARD_SIZE])
 
 void GameInit(Game *game, int bestScore)
 {
+    GameInitWithRandom(game, bestScore, DefaultRandomInt, NULL);
+}
+
+void GameInitWithRandom(Game *game, int bestScore, GameRandomInt randomInt, void *userData)
+{
     memset(game, 0, sizeof(*game));
     game->bestScore = bestScore;
+    game->randomInt = randomInt != NULL ? randomInt : DefaultRandomInt;
+    game->randomUserData = userData;
     GameRestart(game);
 }
 
 void GameRestart(Game *game)
 {
     int bestScore = game->bestScore;
+    GameRandomInt randomInt = game->randomInt;
+    void *randomUserData = game->randomUserData;
 
     memset(game, 0, sizeof(*game));
     game->bestScore = bestScore;
-    SpawnTile(game);
-    SpawnTile(game);
+    game->randomInt = randomInt != NULL ? randomInt : DefaultRandomInt;
+    game->randomUserData = randomUserData;
+    SpawnTile(game, NULL);
+    SpawnTile(game, NULL);
+    UpdateTerminalState(game);
 }
 
 bool GameHasMoves(const Game *game)
@@ -138,60 +262,27 @@ bool GameReachedWin(const Game *game)
     return false;
 }
 
-bool GameMove(Game *game, Direction direction, int changed[BOARD_SIZE][BOARD_SIZE])
+bool GameMove(Game *game, Direction direction, MoveResult *result)
 {
-    int before[BOARD_SIZE][BOARD_SIZE];
+    MoveResult localResult;
+    MoveResult *move = result != NULL ? result : &localResult;
     int previousScore = game->score;
     int totalGained = 0;
 
-    memset(changed, 0, sizeof(int) * BOARD_SIZE * BOARD_SIZE);
-    CopyBoard(before, game->board);
+    ResetMoveResult(move);
+    CopyBoard(move->before, game->board);
 
     for (int index = 0; index < BOARD_SIZE; index++) {
-        int line[BOARD_SIZE] = { 0 };
-
-        for (int offset = 0; offset < BOARD_SIZE; offset++) {
-            switch (direction) {
-            case DIR_LEFT:
-                line[offset] = game->board[index][offset];
-                break;
-            case DIR_RIGHT:
-                line[offset] = game->board[index][BOARD_SIZE - 1 - offset];
-                break;
-            case DIR_UP:
-                line[offset] = game->board[offset][index];
-                break;
-            case DIR_DOWN:
-                line[offset] = game->board[BOARD_SIZE - 1 - offset][index];
-                break;
-            }
-        }
-
-        totalGained += ProcessLine(line);
-
-        for (int offset = 0; offset < BOARD_SIZE; offset++) {
-            switch (direction) {
-            case DIR_LEFT:
-                game->board[index][offset] = line[offset];
-                break;
-            case DIR_RIGHT:
-                game->board[index][BOARD_SIZE - 1 - offset] = line[offset];
-                break;
-            case DIR_UP:
-                game->board[offset][index] = line[offset];
-                break;
-            case DIR_DOWN:
-                game->board[BOARD_SIZE - 1 - offset][index] = line[offset];
-                break;
-            }
-        }
+        totalGained += ProcessLine(game, direction, index, move);
     }
 
-    if (BoardsEqual(before, game->board)) {
+    if (BoardsEqual(move->before, game->board)) {
+        CopyBoard(game->board, move->before);
+        ResetMoveResult(move);
         return false;
     }
 
-    CopyBoard(game->previousBoard, before);
+    CopyBoard(game->previousBoard, move->before);
     game->previousScore = previousScore;
     game->hasUndo = true;
 
@@ -200,17 +291,17 @@ bool GameMove(Game *game, Direction direction, int changed[BOARD_SIZE][BOARD_SIZ
         game->bestScore = game->score;
     }
 
-    SpawnTile(game);
+    SpawnTile(game, move);
+    CopyBoard(move->after, game->board);
 
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int col = 0; col < BOARD_SIZE; col++) {
-            changed[row][col] = (before[row][col] != game->board[row][col] &&
-                                 game->board[row][col] != 0);
+            move->changed[row][col] = (move->before[row][col] != game->board[row][col] &&
+                                      game->board[row][col] != 0);
         }
     }
 
-    game->won = GameReachedWin(game);
-    game->gameOver = !GameHasMoves(game);
+    UpdateTerminalState(game);
     return true;
 }
 
@@ -223,7 +314,6 @@ bool GameUndo(Game *game)
     CopyBoard(game->board, game->previousBoard);
     game->score = game->previousScore;
     game->hasUndo = false;
-    game->won = GameReachedWin(game);
-    game->gameOver = !GameHasMoves(game);
+    UpdateTerminalState(game);
     return true;
 }

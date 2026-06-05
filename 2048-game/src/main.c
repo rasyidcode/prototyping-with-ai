@@ -10,9 +10,13 @@
 #define SCREEN_WIDTH 720
 #define SCREEN_HEIGHT 860
 #define BOARD_PIXELS 560.0f
+#define BOARD_X ((SCREEN_WIDTH - BOARD_PIXELS) * 0.5f)
+#define BOARD_Y 245.0f
 #define TILE_GAP 12.0f
 #define TILE_SIZE ((BOARD_PIXELS - (TILE_GAP * (BOARD_SIZE + 1))) / BOARD_SIZE)
 #define MAX_THEMES 3
+#define MOVE_ANIMATION_SECONDS 0.13f
+#define SPAWN_POP_SECONDS 0.18f
 
 typedef struct Theme {
     const char *name;
@@ -32,6 +36,12 @@ typedef struct Button {
     Rectangle bounds;
     const char *label;
 } Button;
+
+typedef struct MoveAnimation {
+    MoveResult result;
+    float elapsed;
+    bool active;
+} MoveAnimation;
 
 static const Theme THEMES[MAX_THEMES] = {
     {
@@ -108,6 +118,12 @@ static int TileColorIndex(int value)
     return index;
 }
 
+static float EaseOutCubic(float t)
+{
+    float inverse = 1.0f - t;
+    return 1.0f - inverse * inverse * inverse;
+}
+
 static void DrawCenteredText(const char *text, Rectangle bounds, int fontSize, Color color)
 {
     int width = MeasureText(text, fontSize);
@@ -141,50 +157,100 @@ static void DrawScorePanel(Rectangle bounds, const char *label, int value, const
                      26, theme->textLight);
 }
 
-static Rectangle TileRect(int row, int col, float boardX, float boardY, float scale)
+static Rectangle TileRect(int row, int col, float scale)
 {
     float size = TILE_SIZE * scale;
-    float x = boardX + TILE_GAP + col * (TILE_SIZE + TILE_GAP) + (TILE_SIZE - size) * 0.5f;
-    float y = boardY + TILE_GAP + row * (TILE_SIZE + TILE_GAP) + (TILE_SIZE - size) * 0.5f;
+    float x = BOARD_X + TILE_GAP + col * (TILE_SIZE + TILE_GAP) + (TILE_SIZE - size) * 0.5f;
+    float y = BOARD_Y + TILE_GAP + row * (TILE_SIZE + TILE_GAP) + (TILE_SIZE - size) * 0.5f;
 
     return (Rectangle){ x, y, size, size };
 }
 
-static void DrawBoard(const Game *game, float pulse[BOARD_SIZE][BOARD_SIZE],
-                      const Theme *theme)
+static Vector2 TileCenter(int row, int col)
 {
-    float boardX = (SCREEN_WIDTH - BOARD_PIXELS) * 0.5f;
-    float boardY = 245.0f;
+    Rectangle bounds = TileRect(row, col, 1.0f);
+    return (Vector2){ bounds.x + bounds.width * 0.5f, bounds.y + bounds.height * 0.5f };
+}
 
-    DrawRectangleRounded((Rectangle){ boardX, boardY, BOARD_PIXELS, BOARD_PIXELS },
+static Rectangle CenteredTileRect(Vector2 center, float scale)
+{
+    float size = TILE_SIZE * scale;
+    return (Rectangle){ center.x - size * 0.5f, center.y - size * 0.5f, size, size };
+}
+
+static void DrawTileValue(int value, Rectangle bounds, const Theme *theme)
+{
+    char text[16];
+    int fontSize = value < 100 ? 48 : (value < 1000 ? 42 : 34);
+    Color tileColor = theme->tiles[TileColorIndex(value)];
+    Color textColor = value <= 4 ? theme->textDark : theme->textLight;
+
+    DrawRectangleRounded(bounds, 0.08f, 8, tileColor);
+    snprintf(text, sizeof(text), "%d", value);
+    DrawCenteredText(text, bounds, fontSize, textColor);
+}
+
+static void DrawBoardBackground(const Theme *theme)
+{
+    DrawRectangleRounded((Rectangle){ BOARD_X, BOARD_Y, BOARD_PIXELS, BOARD_PIXELS },
                          0.025f, 8, theme->board);
 
     for (int row = 0; row < BOARD_SIZE; row++) {
         for (int col = 0; col < BOARD_SIZE; col++) {
+            DrawRectangleRounded(TileRect(row, col, 1.0f), 0.08f, 8, theme->emptyTile);
+        }
+    }
+}
+
+static void DrawStaticBoard(const Game *game, float spawnPop, int spawnRow, int spawnCol, const Theme *theme)
+{
+    DrawBoardBackground(theme);
+
+    for (int row = 0; row < BOARD_SIZE; row++) {
+        for (int col = 0; col < BOARD_SIZE; col++) {
             int value = game->board[row][col];
-            float scale = 1.0f + pulse[row][col] * 0.55f;
-            Rectangle bounds = TileRect(row, col, boardX, boardY, scale);
+            float scale = 1.0f;
 
             if (value == 0) {
-                DrawRectangleRounded(TileRect(row, col, boardX, boardY, 1.0f),
-                                     0.08f, 8, theme->emptyTile);
-            } else {
-                char text[16];
-                int fontSize = value < 100 ? 48 : (value < 1000 ? 42 : 34);
-                Color tileColor = theme->tiles[TileColorIndex(value)];
-                Color textColor = value <= 4 ? theme->textDark : theme->textLight;
-
-                DrawRectangleRounded(bounds, 0.08f, 8, tileColor);
-                snprintf(text, sizeof(text), "%d", value);
-                DrawCenteredText(text, bounds, fontSize, textColor);
+                continue;
             }
+
+            if (spawnPop > 0.0f && row == spawnRow && col == spawnCol) {
+                scale = 1.0f + spawnPop * 0.28f;
+            }
+
+            DrawTileValue(value, TileRect(row, col, scale), theme);
         }
+    }
+}
+
+static void DrawMovingBoard(const MoveAnimation *animation, const Theme *theme)
+{
+    float progress = animation->elapsed / MOVE_ANIMATION_SECONDS;
+
+    if (progress > 1.0f) {
+        progress = 1.0f;
+    }
+
+    progress = EaseOutCubic(progress);
+    DrawBoardBackground(theme);
+
+    for (int i = 0; i < animation->result.motionCount; i++) {
+        TileMotion motion = animation->result.motions[i];
+        Vector2 from = TileCenter(motion.fromRow, motion.fromCol);
+        Vector2 to = TileCenter(motion.toRow, motion.toCol);
+        Vector2 center = {
+            from.x + (to.x - from.x) * progress,
+            from.y + (to.y - from.y) * progress
+        };
+
+        DrawTileValue(motion.value, CenteredTileRect(center, 1.0f), theme);
     }
 }
 
 static void DrawOverlay(const char *title, const char *subtitle, const Theme *theme)
 {
-    Rectangle overlay = { 80, 245, BOARD_PIXELS, BOARD_PIXELS };
+    Rectangle overlay = { 80, BOARD_Y, BOARD_PIXELS, BOARD_PIXELS };
 
     DrawRectangleRounded(overlay, 0.025f, 8, theme->overlay);
     DrawCenteredText(title, (Rectangle){ overlay.x, overlay.y + 190, overlay.width, 62 },
@@ -193,39 +259,23 @@ static void DrawOverlay(const char *title, const char *subtitle, const Theme *th
                      22, theme->textDark);
 }
 
-static void SetPulseFromChanges(float pulse[BOARD_SIZE][BOARD_SIZE],
-                                int changed[BOARD_SIZE][BOARD_SIZE])
+static void StartAnimation(MoveAnimation *animation, const MoveResult *result)
 {
-    for (int row = 0; row < BOARD_SIZE; row++) {
-        for (int col = 0; col < BOARD_SIZE; col++) {
-            if (changed[row][col]) {
-                pulse[row][col] = 1.0f;
-            }
-        }
-    }
-}
-
-static void UpdatePulse(float pulse[BOARD_SIZE][BOARD_SIZE], float deltaTime)
-{
-    for (int row = 0; row < BOARD_SIZE; row++) {
-        for (int col = 0; col < BOARD_SIZE; col++) {
-            if (pulse[row][col] > 0.0f) {
-                pulse[row][col] -= deltaTime * 5.5f;
-                if (pulse[row][col] < 0.0f) {
-                    pulse[row][col] = 0.0f;
-                }
-            }
-        }
-    }
+    animation->result = *result;
+    animation->elapsed = 0.0f;
+    animation->active = true;
 }
 
 int main(void)
 {
     SaveData save = StorageLoad();
     Game game;
-    float pulse[BOARD_SIZE][BOARD_SIZE] = { 0 };
+    MoveAnimation animation = { 0 };
+    float spawnPop = 0.0f;
     int themeIndex = save.themeIndex % MAX_THEMES;
     bool shouldSave = false;
+    int popRow = -1;
+    int popCol = -1;
 
     srand((unsigned int)time(NULL));
     GameInit(&game, save.bestScore);
@@ -235,34 +285,61 @@ int main(void)
 
     while (!WindowShouldClose()) {
         const Theme *theme = &THEMES[themeIndex];
-        int changed[BOARD_SIZE][BOARD_SIZE] = { 0 };
+        MoveResult moveResult;
         bool moved = false;
         bool undo = false;
+        float deltaTime = GetFrameTime();
 
-        UpdatePulse(pulse, GetFrameTime());
-
-        if (!game.gameOver && (!game.won || game.keepPlayingAfterWin)) {
-            if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
-                moved = GameMove(&game, DIR_LEFT, changed);
-            } else if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
-                moved = GameMove(&game, DIR_RIGHT, changed);
-            } else if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
-                moved = GameMove(&game, DIR_UP, changed);
-            } else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
-                moved = GameMove(&game, DIR_DOWN, changed);
+        if (animation.active) {
+            animation.elapsed += deltaTime;
+            if (animation.elapsed >= MOVE_ANIMATION_SECONDS) {
+                animation.active = false;
+                spawnPop = SPAWN_POP_SECONDS;
+                popRow = animation.result.spawnedRow;
+                popCol = animation.result.spawnedCol;
+            }
+        } else if (spawnPop > 0.0f) {
+            spawnPop -= deltaTime;
+            if (spawnPop < 0.0f) {
+                spawnPop = 0.0f;
+                popRow = -1;
+                popCol = -1;
             }
         }
 
-        if (IsKeyPressed(KEY_R)) {
-            GameRestart(&game);
+        if (!animation.active && !game.gameOver && (!game.won || game.keepPlayingAfterWin)) {
+            if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) {
+                moved = GameMove(&game, DIR_LEFT, &moveResult);
+            } else if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) {
+                moved = GameMove(&game, DIR_RIGHT, &moveResult);
+            } else if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) {
+                moved = GameMove(&game, DIR_UP, &moveResult);
+            } else if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) {
+                moved = GameMove(&game, DIR_DOWN, &moveResult);
+            }
         }
 
-        if (IsKeyPressed(KEY_U)) {
+        if (!animation.active && IsKeyPressed(KEY_R)) {
+            GameRestart(&game);
+            spawnPop = SPAWN_POP_SECONDS;
+            popRow = -1;
+            popCol = -1;
+        }
+
+        if (!animation.active && IsKeyPressed(KEY_U)) {
             undo = GameUndo(&game);
+            if (undo) {
+                spawnPop = 0.0f;
+                popRow = -1;
+                popCol = -1;
+            }
         }
 
         if (moved) {
-            SetPulseFromChanges(pulse, changed);
+            StartAnimation(&animation, &moveResult);
+            spawnPop = 0.0f;
+            popRow = -1;
+            popCol = -1;
             shouldSave = true;
         }
 
@@ -286,17 +363,25 @@ int main(void)
 
         if (DrawButton(restart, theme)) {
             GameRestart(&game);
+            animation.active = false;
+            spawnPop = SPAWN_POP_SECONDS;
+            popRow = -1;
+            popCol = -1;
         }
 
-        if (DrawButton(undoButton, theme)) {
+        if (!animation.active && DrawButton(undoButton, theme)) {
             undo = GameUndo(&game);
             if (undo) {
                 shouldSave = true;
+                spawnPop = 0.0f;
+                popRow = -1;
+                popCol = -1;
             }
         }
 
         if (DrawButton(themeButton, theme)) {
             themeIndex = (themeIndex + 1) % MAX_THEMES;
+            theme = &THEMES[themeIndex];
             shouldSave = true;
         }
 
@@ -309,11 +394,16 @@ int main(void)
             DrawCenteredText("WASD", continueButton.bounds, 20, theme->textLight);
         }
 
-        DrawBoard(&game, pulse, theme);
+        if (animation.active) {
+            DrawMovingBoard(&animation, theme);
+        } else {
+            float pop = spawnPop > 0.0f ? spawnPop / SPAWN_POP_SECONDS : 0.0f;
+            DrawStaticBoard(&game, pop, popRow, popCol, theme);
+        }
 
-        if (game.won && !game.keepPlayingAfterWin) {
+        if (!animation.active && game.won && !game.keepPlayingAfterWin) {
             DrawOverlay("You win", "Press Enter or Continue to keep playing", theme);
-        } else if (game.gameOver) {
+        } else if (!animation.active && game.gameOver) {
             DrawOverlay("Game over", "Press R or Restart to play again", theme);
         }
 
