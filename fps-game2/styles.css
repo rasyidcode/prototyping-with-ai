@@ -1,0 +1,570 @@
+/* styles.css - Cyberpunk HUD and UI System for FPS Game */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Rajdhani:wght@500;700&display=swap');
+
+:root {
+    --primary: #00f3ff;
+    --primary-glow: rgba(0, 243, 255, 0.4);
+    --secondary: #ff0055;
+    --secondary-glow: rgba(255, 0, 85, 0.4);
+    --accent: #00ff66;
+    --accent-glow: rgba(0, 255, 102, 0.4);
+    --bg-glass: rgba(10, 12, 18, 0.65);
+    --border-glass: rgba(255, 255, 255, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #050608;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+}
+
+/* Three.js Canvas Container */
+#canvas-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+/* Glassmorphic Cyberpunk Card Styles */
+.cyber-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 8px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover {
+    border-color: rgba(0, 243, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(0, 243, 255, 0.1);
+}
+
+/* Main Menu Overlay (Pointer Lock entry) */
+#overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(4, 5, 8, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease;
+}
+
+#overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-content {
+    text-align: center;
+    max-width: 600px;
+    width: 90%;
+    padding: 40px;
+    border-top: 3px solid var(--primary);
+    border-bottom: 3px solid var(--secondary);
+    box-shadow: 0 0 40px rgba(0, 243, 255, 0.05);
+}
+
+.title-glow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #00f3ff, #ff0055);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.3));
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #8892b0;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    letter-spacing: 1.5px;
+}
+
+/* Cyber Button styling */
+.cyber-btn {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 14px 40px;
+    cursor: pointer;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px var(--primary-glow);
+    border-radius: 4px;
+}
+
+.cyber-btn:hover {
+    background: var(--primary);
+    color: #050608;
+    box-shadow: 0 0 25px var(--primary);
+    transform: translateY(-2px);
+}
+
+.cyber-btn:active {
+    transform: translateY(1px);
+}
+
+/* Settings Box */
+.settings-box {
+    margin-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    text-align: left;
+}
+
+.settings-box h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.setting-row label {
+    color: #a8b2d1;
+}
+
+.setting-row input[type="range"] {
+    -webkit-appearance: none;
+    width: 120px;
+    height: 4px;
+    background: #242b35;
+    border-radius: 2px;
+    outline: none;
+}
+
+.setting-row input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 8px var(--primary);
+}
+
+/* Instructions Box */
+.instructions {
+    margin-top: 30px;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.instructions h4 {
+    color: #ffffff;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+}
+
+.instructions ul {
+    list-style: none;
+    font-size: 0.85rem;
+    color: #8892b0;
+    line-height: 1.6;
+}
+
+.instructions li span {
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* --- HUD OVERLAYS (Z-index: 5) --- */
+.hud-element {
+    position: absolute;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Top Center Scoreboard */
+#hud-score {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 30px;
+    padding: 12px 30px;
+    border-radius: 4px;
+    border-top: 2px solid var(--primary);
+    text-align: center;
+}
+
+.hud-stat-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.hud-stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #8892b0;
+    letter-spacing: 1px;
+}
+
+.hud-stat-val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.hud-stat-val.highlight {
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.hud-stat-val.accent {
+    color: var(--secondary);
+    text-shadow: 0 0 10px var(--secondary-glow);
+}
+
+/* Bottom Left Weapon & Ammo */
+#hud-weapon {
+    bottom: 20px;
+    left: 20px;
+    min-width: 220px;
+    border-left: 3px solid var(--primary);
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.weapon-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-shadow: 0 0 8px var(--primary-glow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ammo-container {
+    display: flex;
+    align-items: baseline;
+    margin-top: 5px;
+}
+
+.ammo-current {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.ammo-separator {
+    color: #4b5363;
+    font-size: 1.5rem;
+    margin: 0 5px;
+}
+
+.ammo-max {
+    color: #8892b0;
+    font-size: 1.3rem;
+}
+
+/* Ammo Bar indicators (horizontal ticks) */
+.ammo-bar {
+    display: flex;
+    gap: 3px;
+    margin-top: 8px;
+    height: 6px;
+    width: 100%;
+}
+
+.ammo-tick {
+    flex-grow: 1;
+    background: rgba(0, 243, 255, 0.1);
+    border-radius: 1px;
+    transition: background-color 0.1s ease;
+}
+
+.ammo-tick.active {
+    background: var(--primary);
+    box-shadow: 0 0 5px var(--primary-glow);
+}
+
+/* Bottom Right Sessions/Difficulty & Targets hit progression */
+#hud-level-progress {
+    bottom: 20px;
+    right: 20px;
+    min-width: 250px;
+    border-right: 3px solid var(--secondary);
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.progress-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--secondary);
+    text-transform: uppercase;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: #a8b2d1;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--secondary), #ff00c8);
+    box-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Floating Interactivity UI Prompt (e.g. Press E to Equip) */
+#interact-prompt {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+    background: rgba(10, 12, 18, 0.85);
+    border: 1px solid var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+    display: none;
+    pointer-events: none;
+    z-index: 4;
+}
+
+#interact-prompt.show {
+    display: block;
+    animation: pulse-glow 1.5s infinite alternate;
+}
+
+/* Crosshair overlay in center */
+#crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 4;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+#crosshair.recoil {
+    transform: translate(-50%, -50%) scale(1.6);
+}
+
+#crosshair.hidden {
+    opacity: 0;
+}
+
+.cross-dot {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    width: 2px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 50%;
+    box-shadow: 0 0 4px var(--primary);
+}
+
+/* Crosshair brackets */
+.cross-bracket {
+    position: absolute;
+    border-color: var(--primary);
+    border-style: solid;
+    width: 6px;
+    height: 6px;
+}
+
+.cross-bracket.tl { top: 0; left: 0; border-width: 1.5px 0 0 1.5px; }
+.cross-bracket.tr { top: 0; right: 0; border-width: 1.5px 1.5px 0 0; }
+.cross-bracket.bl { bottom: 0; left: 0; border-width: 0 0 1.5px 1.5px; }
+.cross-bracket.br { bottom: 0; right: 0; border-width: 0 1.5px 1.5px 0; }
+
+/* Reloading Spinner Overlay */
+#reload-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 243, 255, 0.1);
+    border-top-color: var(--primary);
+    z-index: 4;
+    display: none;
+    pointer-events: none;
+    animation: spin 0.8s linear infinite;
+}
+
+#reload-indicator.active {
+    display: block;
+}
+
+/* Sniper Scope Overlay */
+#sniper-scope {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, rgba(0,0,0,0) 25%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.98) 85%);
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+#sniper-scope.active {
+    opacity: 1;
+}
+
+.scope-grid {
+    width: 400px;
+    height: 400px;
+    border: 1px solid rgba(0, 255, 102, 0.3);
+    border-radius: 50%;
+    position: relative;
+    box-shadow: 0 0 25px rgba(0, 255, 102, 0.05);
+}
+
+.scope-grid::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0, 255, 102, 0) 5%, rgba(0, 255, 102, 0.6) 50%, rgba(0, 255, 102, 0) 95%);
+}
+
+.scope-grid::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(0, 255, 102, 0) 5%, rgba(0, 255, 102, 0.6) 50%, rgba(0, 255, 102, 0) 95%);
+}
+
+.scope-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    transform: translate(-50%, -50%);
+    border: 1px solid #00ff66;
+    border-radius: 50%;
+    background: rgba(0, 255, 102, 0.5);
+    box-shadow: 0 0 8px #00ff66;
+}
+
+/* Weapon Flash Red on Empty / Fire effect */
+#damage-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    box-shadow: inset 0 0 0px rgba(255, 0, 85, 0);
+    transition: box-shadow 0.05s ease-out;
+}
+
+#damage-vignette.flash {
+    box-shadow: inset 0 0 80px rgba(255, 0, 85, 0.3);
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulse-glow {
+    from {
+        box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+        border-color: rgba(0, 243, 255, 0.6);
+    }
+    to {
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.8);
+        border-color: rgba(0, 243, 255, 1.0);
+    }
+}

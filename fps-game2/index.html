@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonRange - Cyberpunk 3D FPS Practice Arena</title>
+    <meta name="description" content="A high-performance 3D First Person Shooter practice room featuring modular weapons, a dynamic target scaling in difficulty, and responsive synthesized audio.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Red Screen Flash for Recoil/Muzzle/Damage Vignette -->
+    <div id="damage-vignette"></div>
+
+    <!-- Center Reticle / Crosshair -->
+    <div id="crosshair">
+        <div class="cross-dot"></div>
+        <div class="cross-bracket tl"></div>
+        <div class="cross-bracket tr"></div>
+        <div class="cross-bracket bl"></div>
+        <div class="cross-bracket br"></div>
+    </div>
+
+    <!-- Reload Spinner -->
+    <div id="reload-indicator"></div>
+
+    <!-- Sniper Rifle Scope Vignette -->
+    <div id="sniper-scope">
+        <div class="scope-grid">
+            <div class="scope-center"></div>
+        </div>
+    </div>
+
+    <!-- Interact Display Prompt (Walk up to pedestal) -->
+    <div id="interact-prompt">PRESS <span style="color: #00f3ff; font-weight: 900;">[E]</span> TO EQUIP WEAPON</div>
+
+    <!-- 3D Three.js Render Target -->
+    <div id="canvas-container"></div>
+
+    <!-- HUD Overlay -->
+    <!-- Top Center Scoreboard -->
+    <div id="hud-score" class="hud-element cyber-card">
+        <div class="hud-stat-box">
+            <span class="hud-stat-label">Session Score</span>
+            <span id="score-val" class="hud-stat-val highlight">0000</span>
+        </div>
+        <div class="hud-stat-box">
+            <span class="hud-stat-label">Accuracy</span>
+            <span id="accuracy-val" class="hud-stat-val">0.0%</span>
+        </div>
+        <div class="hud-stat-box">
+            <span class="hud-stat-label">High Score</span>
+            <span id="highscore-val" class="hud-stat-val accent">0000</span>
+        </div>
+    </div>
+
+    <!-- Bottom Left Weapon Selector Card -->
+    <div id="hud-weapon" class="hud-element cyber-card">
+        <div id="weapon-name-lbl" class="weapon-name">Cyber Pistol</div>
+        <div class="ammo-container">
+            <span id="ammo-clip-lbl" class="ammo-current">12</span>
+            <span class="ammo-separator">/</span>
+            <span id="ammo-max-lbl" class="ammo-max">12</span>
+        </div>
+        <div id="ammo-bar-ticks" class="ammo-bar">
+            <!-- Ticks generated dynamically in JS -->
+        </div>
+    </div>
+
+    <!-- Bottom Right Training Progress Card -->
+    <div id="hud-level-progress" class="hud-element cyber-card">
+        <div class="progress-header">
+            <span id="level-lbl" class="progress-title">Difficulty Level 1</span>
+            <span id="progress-ratio" class="progress-text">0 / 5 Hits</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Main Menu / Lock Pointer Screen Overlay -->
+    <div id="overlay">
+        <div class="menu-content cyber-card">
+            <h1 class="title-glow">NeonRange</h1>
+            <p class="subtitle">FPS Target Practice Room</p>
+            
+            <button id="start-btn" class="cyber-btn">Enter Practice Range</button>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h4>Movement & Action Keys</h4>
+                <ul>
+                    <li><span>W, A, S, D</span> — Move Player Around</li>
+                    <li><span>MOUSE</span> — Look Around (Aim)</li>
+                    <li><span>LEFT CLICK</span> — Shoot Weapon</li>
+                    <li><span>RIGHT CLICK</span> — Scope (Sniper Zoom)</li>
+                    <li><span>R</span> — Reload Clip</li>
+                    <li><span>E</span> — Walk to Pedestal & Equip Weapon</li>
+                    <li><span>SPACEBAR</span> — Jump</li>
+                    <li><span>ESC</span> — Pause Game & Adjust Settings</li>
+                </ul>
+            </div>
+
+            <!-- Settings -->
+            <div class="settings-box">
+                <h3>Calibration & Audio</h3>
+                
+                <div class="setting-row">
+                    <label for="sens-range">Look Sensitivity</label>
+                    <input type="range" id="sens-range" min="0.5" max="4.0" step="0.1" value="2.0">
+                </div>
+
+                <div class="setting-row">
+                    <label for="vol-range">Sound FX Volume</label>
+                    <input type="range" id="vol-range" min="0.0" max="1.0" step="0.05" value="0.5">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Game Source Scripts -->
+    <script src="audio.js"></script>
+    <script src="weapons.js"></script>
+    <script src="targets.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>

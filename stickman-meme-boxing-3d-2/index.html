@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Stickman Meme Boxing 3D</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Three.js Canvas Container -->
+      <div id="canvas-container"></div>
+
+      <!-- UI Layers -->
+      <div id="ui-container">
+        
+        <!-- Main Menu -->
+        <div id="menu-screen" class="ui-screen active">
+          <div class="menu-content">
+            <h1 class="game-title">MEME BOXING <span class="neon-text">3D</span></h1>
+            <p class="game-subtitle">Stickman Showdown Championship</p>
+            
+            <div class="menu-options">
+              <button id="btn-random-fight" class="btn btn-primary btn-glow">
+                <span class="btn-icon">⚡</span> FIGHT RANDOM MEME
+              </button>
+              <button id="btn-select-opponent" class="btn btn-secondary">
+                <span class="btn-icon">👤</span> CHOOSE OPPONENT
+              </button>
+              <button id="btn-how-to-play" class="btn btn-info">
+                <span class="btn-icon">❓</span> HOW TO PLAY
+              </button>
+            </div>
+            
+            <!-- Quick Info/Credits -->
+            <div class="menu-footer">
+              Use WASD/Arrows to Move • J/K to Punch • Space to Block • L for Special
+            </div>
+          </div>
+        </div>
+
+        <!-- Opponent Selection Modal -->
+        <div id="select-screen" class="ui-screen hidden">
+          <div class="select-content">
+            <button id="btn-back-menu" class="btn-back">&larr; BACK</button>
+            <h2 class="screen-title">SELECT YOUR OPPONENT</h2>
+            
+            <div class="opponent-grid">
+              <!-- John Cena Card -->
+              <div class="opponent-card" data-opponent="john_cena">
+                <div class="card-image-container">
+                  <img src="/memes/john_cena.png" alt="John Cena" class="card-image">
+                </div>
+                <div class="card-info">
+                  <h3>John Cena</h3>
+                  <p class="tagline">"You Can't See Me"</p>
+                  <div class="stats">
+                    <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-fill" style="width: 90%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">PWR</span><div class="stat-bar"><div class="stat-fill" style="width: 65%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-fill" style="width: 50%"></div></div></div>
+                  </div>
+                  <div class="trait">Special: Becomes semi-invisible</div>
+                </div>
+              </div>
+              
+              <!-- Harold Card -->
+              <div class="opponent-card" data-opponent="harold">
+                <div class="card-image-container">
+                  <img src="/memes/harold.png" alt="Harold" class="card-image">
+                </div>
+                <div class="card-info">
+                  <h3>Pain Harold</h3>
+                  <p class="tagline">"Endure the Pain"</p>
+                  <div class="stats">
+                    <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-fill" style="width: 50%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">PWR</span><div class="stat-bar"><div class="stat-fill" style="width: 60%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-fill" style="width: 95%"></div></div></div>
+                  </div>
+                  <div class="trait">Special: Health regeneration</div>
+                </div>
+              </div>
+
+              <!-- Gigachad Card -->
+              <div class="opponent-card" data-opponent="gigachad">
+                <div class="card-image-container">
+                  <img src="/memes/gigachad.png" alt="Gigachad" class="card-image">
+                </div>
+                <div class="card-info">
+                  <h3>Gigachad</h3>
+                  <p class="tagline">"Absolute Power"</p>
+                  <div class="stats">
+                    <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-fill" style="width: 40%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">PWR</span><div class="stat-bar"><div class="stat-fill" style="width: 100%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-fill" style="width: 75%"></div></div></div>
+                  </div>
+                  <div class="trait">Special: Guard-breaking punches</div>
+                </div>
+              </div>
+
+              <!-- Doge Card -->
+              <div class="opponent-card" data-opponent="doge">
+                <div class="card-image-container">
+                  <img src="/memes/doge.png" alt="Doge" class="card-image">
+                </div>
+                <div class="card-info">
+                  <h3>Doge</h3>
+                  <p class="tagline">"Much Dodge, Very Wow"</p>
+                  <div class="stats">
+                    <div class="stat-row"><span class="stat-label">SPD</span><div class="stat-bar"><div class="stat-fill" style="width: 85%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">PWR</span><div class="stat-bar"><div class="stat-fill" style="width: 50%"></div></div></div>
+                    <div class="stat-row"><span class="stat-label">DEF</span><div class="stat-bar"><div class="stat-fill" style="width: 75%"></div></div></div>
+                  </div>
+                  <div class="trait">Special: High auto-dodge rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Random Selector Spinner Overlay -->
+        <div id="spinner-screen" class="ui-screen hidden">
+          <div class="spinner-container">
+            <h2 class="spinner-title">SELECTING OPPONENT...</h2>
+            <div class="spinner-wheel">
+              <div class="spinner-reel" id="spinner-reel">
+                <!-- Reels items will be duplicated dynamically -->
+              </div>
+              <div class="spinner-indicator"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How To Play Modal -->
+        <div id="instructions-screen" class="ui-screen hidden">
+          <div class="instructions-content">
+            <button id="btn-instructions-back" class="btn-back">&larr; BACK</button>
+            <h2 class="screen-title">HOW TO PLAY</h2>
+            
+            <div class="instructions-grid">
+              <div class="instruction-item">
+                <div class="key-display">W A S D</div>
+                <p><strong>Move / Dodge</strong><br>Circle around, dodge left/right, move in/out.</p>
+              </div>
+              <div class="instruction-item">
+                <div class="key-display">J</div>
+                <p><strong>Left Jab</strong><br>Quick punch. Low stamina cost. Fills Special meter.</p>
+              </div>
+              <div class="instruction-item">
+                <div class="key-display">K</div>
+                <p><strong>Right Cross</strong><br>Heavy punch. Higher stamina cost. Heavy damage.</p>
+              </div>
+              <div class="instruction-item">
+                <div class="key-display">Space</div>
+                <p><strong>Block</strong><br>Hold to block incoming punches. Watch your stamina!</p>
+              </div>
+              <div class="instruction-item">
+                <div class="key-display">L</div>
+                <p><strong>Super Punch</strong><br>Massive damage punch. Requires 100% Special Meter.</p>
+              </div>
+            </div>
+            
+            <div class="boxing-tips">
+              <h3>💡 Pro Boxing Tips</h3>
+              <ul>
+                <li>Don't spam punches! Exhausting your stamina leaves you <strong>staggered</strong> and unable to block.</li>
+                <li>Watch the opponent's arms. If they wind back, get ready to <strong>block</strong> or <strong>dodge</strong>!</li>
+                <li>Doge will automatically dodge a lot of your standing punches, time your hits after she misses!</li>
+                <li>John Cena will turn invisible, look for his glowing blue outline!</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Match HUD -->
+        <div id="hud-screen" class="ui-screen hidden">
+          <!-- Top Status Bar -->
+          <div class="hud-top">
+            <!-- Player Status -->
+            <div class="hud-character player-status">
+              <div class="avatar-circle player-avatar">🥊</div>
+              <div class="status-bars">
+                <div class="character-name">PLAYER (YOU)</div>
+                <div class="bar-container hp-container">
+                  <div class="bar-fill player-hp" id="player-hp-bar" style="width: 100%"></div>
+                  <span class="bar-text" id="player-hp-text">100 / 100</span>
+                </div>
+                <div class="bar-container stamina-container">
+                  <div class="bar-fill player-stamina" id="player-stamina-bar" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timer / Round -->
+            <div class="hud-center">
+              <div class="round-display">ROUND 1</div>
+              <div class="timer-display" id="timer">60</div>
+            </div>
+
+            <!-- Opponent Status -->
+            <div class="hud-character opponent-status">
+              <div class="status-bars">
+                <div class="character-name" id="opponent-name">MEME</div>
+                <div class="bar-container hp-container">
+                  <div class="bar-fill opponent-hp" id="opponent-hp-bar" style="width: 100%"></div>
+                  <span class="bar-text" id="opponent-hp-text">100 / 100</span>
+                </div>
+                <div class="bar-container stamina-container">
+                  <div class="bar-fill opponent-stamina" id="opponent-stamina-bar" style="width: 100%"></div>
+                </div>
+              </div>
+              <div class="avatar-circle opponent-avatar" id="hud-opponent-avatar"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Action HUD -->
+          <div class="hud-bottom">
+            <!-- Special Attack indicator -->
+            <div class="special-container">
+              <div class="special-label">SPECIAL METER</div>
+              <div class="special-bar-outer">
+                <div class="special-bar-fill" id="special-bar" style="width: 0%"></div>
+              </div>
+              <div class="special-hint" id="special-hint">PRESS L FOR SUPER SLAM!</div>
+            </div>
+            
+            <!-- Combo & Fight Info -->
+            <div class="fight-messages">
+              <div id="combo-display" class="combo-counter hidden">3x COMBO</div>
+              <div id="fight-announce" class="fight-announcement">FIGHT!</div>
+            </div>
+
+            <!-- On-Screen Controls for Mobile/Clickers -->
+            <div class="onscreen-controls">
+              <button id="ctrl-dodge-l" class="ctrl-btn">◀ DODGE L (A)</button>
+              <button id="ctrl-punch-l" class="ctrl-btn punch">JAB (J)</button>
+              <button id="ctrl-block" class="ctrl-btn block">BLOCK (SPACE)</button>
+              <button id="ctrl-punch-r" class="ctrl-btn punch">CROSS (K)</button>
+              <button id="ctrl-dodge-r" class="ctrl-btn">DODGE R (D)</button>
+              <button id="ctrl-special" class="ctrl-btn special locked">SUPER (L)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Game Over / Victory Screen -->
+        <div id="game-over-screen" class="ui-screen hidden">
+          <div class="game-over-content">
+            <h1 id="game-over-title" class="neon-text-red">K.O.</h1>
+            <p id="game-over-subtitle">YOU WERE KNOCKED OUT!</p>
+            
+            <div class="ending-details">
+              <div class="ending-avatar-container">
+                <img id="ending-opponent-img" src="/memes/john_cena.png" alt="Opponent" class="ending-avatar">
+              </div>
+              <blockquote id="ending-quote" class="ending-quote">
+                "You couldn't see me coming!"
+              </blockquote>
+            </div>
+
+            <div class="game-over-buttons">
+              <button id="btn-rematch" class="btn btn-primary btn-glow">REMATCH</button>
+              <button id="btn-back-to-menu" class="btn btn-secondary">MAIN MENU</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

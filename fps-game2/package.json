@@ -1,0 +1,12 @@
+{
+  "name": "neon-range",
+  "version": "1.0.0",
+  "description": "Cyberpunk 3D FPS Shooting Arena",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx -y http-server -p 8080"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
