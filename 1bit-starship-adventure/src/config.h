@@ -1,0 +1,17 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define SCREEN_WIDTH 960
+#define SCREEN_HEIGHT 540
+
+#define MAX_BULLETS 48
+#define MAX_ALIENS 40
+#define MAX_STARS 96
+#define MAX_PARTICLES 128
+
+#define PLAYER_WIDTH 44.0f
+#define PLAYER_HEIGHT 24.0f
+#define PLAYER_SPEED 330.0f
+#define BULLET_SPEED 560.0f
+
+#endif
