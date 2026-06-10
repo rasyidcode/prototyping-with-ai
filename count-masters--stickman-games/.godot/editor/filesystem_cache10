@@ -1,3 +1,12 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1780477613
+::res://::1781085866
 icon.svg::CompressedTexture2D::6993894287748974061::1780477609::1780477614::1::::<><><>0<>0<>40f15aa2cc39bfbc3bdbd92e4dc99f9c<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://scenes/::1780478174
+Main.tscn::PackedScene::-1::1780478749::0::1::::<><><>0<>0<><>::res://scripts/Main.gd
+::res://scripts/::1780478568
+Boss.gd::GDScript::971533630896795471::1780479314::0::1::::Boss<>Node3D<><>0<>0<><>::
+Crowd.gd::GDScript::7034675805937554102::1780479171::0::1::::Crowd<>Node3D<><>0<>0<><>::
+EnemyCrowd.gd::GDScript::334842459423748378::1780478567::0::1::::EnemyCrowd<>Crowd<><>0<>0<><>::
+Gate.gd::GDScript::3452187013908536248::1780479314::0::1::::Gate<>Node3D<><>0<>0<><>::
+Main.gd::GDScript::4274597652841002851::1780479201::0::1::::<>Node3D<><>0<>0<><>::
+Trap.gd::GDScript::91160555923110898::1780479314::0::1::::Trap<>Node3D<><>0<>0<><>::
