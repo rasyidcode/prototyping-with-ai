@@ -1,0 +1,11 @@
+# Build output
+/dota2lock
+
+# Editor and workspace files
+.vscode/
+
+# Common local clutter
+*.o
+*.a
+*.so
+*.log

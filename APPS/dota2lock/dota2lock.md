@@ -1,0 +1,4 @@
+- Project: dota2lock
+- Stack: C with GTK3.
+- Behavior: block Dota 2 on weekdays; allow Saturday and Sunday.
+- Build: `make` with GTK3 development headers available via pkg-config.

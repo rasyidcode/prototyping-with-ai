@@ -1,0 +1,3 @@
+- Keep project reference local to this repo rather than global memory.
+- Repo path: /home/nb81/My-Work/prototyping-with-ai/APPS/dota2lock
+- Important context: GTK3 C app with live UI, GLib timer, and /proc-based process enforcement.
